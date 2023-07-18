@@ -6,7 +6,7 @@ const PORT = process.env.PORT || 4202
 
 app.use(express.static(__dirname + '/dist/granja-nascimento-angular/'))
 
-app.get('/*', (req,res) => {
+app.get('/**', (req,res) => {
   res.sendFile(__dirname + '/dist/granja-nascimento-angular/index.html')
 })
 

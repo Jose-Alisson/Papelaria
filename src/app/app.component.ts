@@ -8,6 +8,12 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'Granja-Nascimento-Angular';
 
+  menuActive = false
+
+  toogleActive(){
+    this.menuActive = !this.menuActive
+  }
+
   products: any[] = [
     {
       photoUrl: 'assets//images-13.jpg',

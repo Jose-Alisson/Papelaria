@@ -6,18 +6,21 @@
       </div>
       <h4 class="site-title">Granja Nascimento</h4>
     </h2>
-    <ul>
+    <!-- <ul>
       <li><a href="#">Inicio</a></li>
       <li><a href="#">Cantato</a></li>
       <li><a href="#">Sobre</a></li>
     </ul>
-    <div class="menu">
+    <div class="menu" [ngClass]="{'change' : menuActive}" (click)="toogleActive()">
       <div class="line-1"></div>
       <div class="line-2"></div>
       <div class="line-3"></div>
-    </div>
+    </div> -->
   </nav>
 </header>
+<div class="sidebar">
+
+</div>
 <section class="banner">
   <div class="banner-content">
     <div class="banner-text">
@@ -95,12 +98,22 @@
         <div class="box-title">Redes Sociais</div>
         <ul>
           <li>
-            <a href="https://www.instagram.com/granja_nascimento1/"
-              >Instagram</a
-            >
+            <a href="https://www.instagram.com/granja_nascimento1/">Instagram</a>
           </li>
         </ul>
       </div>
+    </div>
+  </div>
+</section>
+<section class="info">
+  <div class="text">
+    <div class="text-box">
+      <div class="box-title" style="font-size: large;">Website Desenvolvido Por</div>
+      <ul>
+        <li>
+          <a style="color: var(--color-black);font-size: medium;" href="https://www.instagram.com/js.aliss0n/">@js.aliss0n</a>
+        </li>
+      </ul>
     </div>
   </div>
 </section>
