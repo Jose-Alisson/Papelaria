@@ -23,6 +23,17 @@ html, body{
   width: 100vw;
 }
 
+html{
+  font-size: 62.5%;
+}
+
 body{
   overflow-x: hidden;
+  font-size: 1.6rem;
+}
+
+@media screen and (max-width: 652px) {
+  html{
+    font-size: 50%;
+  }
 }

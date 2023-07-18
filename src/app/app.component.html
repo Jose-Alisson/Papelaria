@@ -4,13 +4,18 @@
       <div class="icon">
         <img src="assets//Logo Granja Nascimento.png" alt="" />
       </div>
-      <h4>Granja Nascimento</h4>
+      <h4 class="site-title">Granja Nascimento</h4>
     </h2>
     <ul>
-      <li><a href="#">Casa</a></li>
+      <li><a href="#">Inicio</a></li>
       <li><a href="#">Cantato</a></li>
       <li><a href="#">Sobre</a></li>
     </ul>
+    <div class="menu">
+      <div class="line-1"></div>
+      <div class="line-2"></div>
+      <div class="line-3"></div>
+    </div>
   </nav>
 </header>
 <section class="banner">
@@ -18,7 +23,7 @@
     <div class="banner-text">
       <div class="title">Bem-vindo a Granja Nascimento</div>
       <div class="text">Alimentos Frescos e Saudáveis para Você</div>
-      <button>Saiba Mais</button>
+      <button>Saiba Mais <i class="fa-solid fa-right-from-bracket"></i></button>
     </div>
     <div class="space"></div>
   </div>
@@ -32,6 +37,27 @@
     ovos para preparar refeições saudáveis e deliciosas para toda a família.
   </div>
 </section>
+<section class="info line-bottom">
+  <section class="info" *ngFor="let item of products">
+    <div class="text">
+      <div class="product-view">
+        <div class="img-view">
+          <img [src]="item.photoUrl" alt="" />
+        </div>
+        <div class="product-info">
+          <h4 class="product-name">{{ item.name }}</h4>
+          <p>{{ item.description }}</p>
+          <p>{{ item.price | currency : "BRL" : "symbol-narrow" }}</p>
+        </div>
+      </div>
+      <button class="btn-buy" (click)="comprar('Olá, gostaria comprar' + item.article + item.name)">Comprar</button>
+    </div>
+  </section>
+  <div class="text" style="font-size: medium">
+    Para visualizar nosso catálogo completo, entre em contato conosco pelo
+    WhatsApp ou telefone
+  </div>
+</section>
 <section class="info">
   <div class="text text-italic">
     “Conheça nossa loja de granja, dedicada a fornecer produtos frescos e
@@ -40,7 +66,7 @@
   </div>
   <div class="text" style="font-size: medium">Granja Nascimento</div>
 </section>
-<section class="info info-whatsapp">
+<section class="info info-whatsapp" id="contato">
   <div class="text">
     <h2>Nosso Whatsapp</h2>
     <div class="whatsapp">
@@ -54,7 +80,7 @@
     <div class="text-box">
       <div class="box-title">Nosso Endereço</div>
       <ul>
-        <li>Rua Pico da Neblina</li>
+        <li>Rua Pico da Neblina, 24</li>
         <li>Cep: 51340-155</li>
       </ul>
     </div>
@@ -68,7 +94,11 @@
       <div class="text-box">
         <div class="box-title">Redes Sociais</div>
         <ul>
-          <li><a href="#">Instagram</a></li>
+          <li>
+            <a href="https://www.instagram.com/granja_nascimento1/"
+              >Instagram</a
+            >
+          </li>
         </ul>
       </div>
     </div>
