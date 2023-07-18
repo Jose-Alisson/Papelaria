@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -9,6 +9,13 @@ export class AppComponent {
   title = 'Granja-Nascimento-Angular';
 
   menuActive = false
+
+  @ViewChild('initialText', {static: true})
+  initialText!: ElementRef<HTMLElement>
+
+  saibaMais(){
+    this.initialText.nativeElement.scrollIntoView({behavior: 'smooth'})
+  }
 
   toogleActive(){
     this.menuActive = !this.menuActive

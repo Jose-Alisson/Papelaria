@@ -26,12 +26,12 @@
     <div class="banner-text">
       <div class="title">Bem-vindo a Granja Nascimento</div>
       <div class="text">Alimentos Frescos e Saudáveis para Você</div>
-      <button>Saiba Mais <i class="fa-solid fa-right-from-bracket"></i></button>
+      <button (click)="saibaMais()">Saiba Mais <i class="fa-solid fa-right-from-bracket"></i></button>
     </div>
     <div class="space"></div>
   </div>
 </section>
-<section class="info line-bottom">
+<section class="info line-bottom" #initialText>
   <div class="text">
     Ovos Frescos da Granja Nascimento: Qualidade Direto para sua Mesa!Nossos
     ovos são selecionados e colhidos diariamente de aves criadas em um ambiente
