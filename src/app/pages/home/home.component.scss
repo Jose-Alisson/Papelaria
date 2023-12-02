@@ -97,17 +97,6 @@ nav ul li a:hover::before {
   transform: translate(0, -11px) rotate(45deg);
 }
 
-@media screen and (max-width: 570px) {
-  header nav ul {
-    display: none;
-  }
-
-  header nav .menu{
-    display: block;
-  }
-}
-
-/*
 .banner {
   max-height: 80vh;
   height: 100%;
@@ -118,7 +107,7 @@ nav ul li a:hover::before {
   justify-content: center;
   background-attachment: fixed;
   background-repeat: no-repeat;
-  background-image: url(../assets/lojas-de-papelaria-fofas.png);
+  background-image: url(../../../assets/lojas-de-papelaria-fofas.png);
 }
 
 .banner-content {
@@ -365,5 +354,3 @@ nav ul li a:hover::before {
 .btn-buy:hover{
   letter-spacing: 2px;
 }
-
-*/

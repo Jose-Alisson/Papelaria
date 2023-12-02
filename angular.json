@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "Granja-Nascimento-Angular": {
+    "Papelaria": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/granja-nascimento-angular",
+            "outputPath": "dist/papelaria",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [
@@ -65,10 +65,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "Granja-Nascimento-Angular:build:production"
+              "browserTarget": "Papelaria:build:production"
             },
             "development": {
-              "browserTarget": "Granja-Nascimento-Angular:build:development"
+              "browserTarget": "Papelaria:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -76,7 +76,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "Granja-Nascimento-Angular:build"
+            "browserTarget": "Papelaria:build"
           }
         },
         "test": {

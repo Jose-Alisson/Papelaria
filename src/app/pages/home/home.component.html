@@ -1,0 +1,98 @@
+
+<section class="banner">
+  <div class="banner-content">
+    <div class="banner-text">
+      <div class="title">Bem-vindo a Papelart</div>
+      <div class="text">Produtos e decorações para você</div>
+      <button (click)="saibaMais()">
+        Saiba Mais <i class="fa-solid fa-right-from-bracket"></i>
+      </button>
+    </div>
+    <div class="space"></div>
+  </div>
+</section>
+<section class="info line-bottom" #initialText>
+  <div class="text">
+    Na Papelart, cada produto é meticulosamente selecionado para oferecer
+    qualidade excepcional. Desde papéis luxuosos até canetas suaves, garantimos
+    durabilidade, elegância e inovação. Descubra uma experiência de papelaria
+    que transcende o comum e inspira sua expressão criativa
+  </div>
+</section>
+<section class="info line-bottom">
+  <section class="info" *ngFor="let item of products">
+    <div class="text">
+      <div class="product-view">
+        <div class="img-view">
+          <img [src]="item.photoUrl" alt="" />
+        </div>
+        <div class="product-info">
+          <h4 class="product-name">{{ item.name }}</h4>
+          <p>{{ item.description }}</p>
+          <p>{{ item.price | currency : "BRL" : "symbol-narrow" }}</p>
+        </div>
+      </div>
+      <button class="btn-buy">Comprar</button>
+    </div>
+  </section>
+  <div class="text" style="font-size: medium">
+    Para visualizar nosso catálogo completo, entre em contato conosco pelo
+    WhatsApp ou telefone, ou clique <a [routerLink]="['../cart']" style="color: #ef88a6">aqui</a>
+  </div>
+</section>
+<section class="info">
+  <div class="text text-italic">
+    “Explore nossa papelaria, dedicada a oferecer uma variedade de produtos
+    criativos e úteis para atender às suas necessidades. Descubra mais sobre
+    nossa trajetória e compromisso com a excelência em qualidade e inovação.”
+  </div>
+  <div class="text" style="font-size: medium">Papelart</div>
+</section>
+<!-- <section class="info info-whatsapp" id="contato">
+  <div class="text">
+    <h2>Nosso Whatsapp</h2>
+    <div class="whatsapp">
+      <img src="assets//whatsapp.png" alt="logo whatsapp" />
+      <h1>(81) 9 9934-0962</h1>
+    </div>
+  </div>
+</section> -->
+<section class="footer">
+  <div class="footer-content">
+    <div class="text-box">
+      <div class="box-title">Nosso Endereço</div>
+      <ul>
+        <li>Rua Fulano de Tal, 99</li>
+        <li>Cep: 99999-999</li>
+      </ul>
+    </div>
+    <div class="text-box wraper">
+      <div class="text-box">
+        <div class="box-title">Contato</div>
+        <ul>
+          <li>(99) 9 9999-9999</li>
+        </ul>
+      </div>
+      <div class="text-box">
+        <div class="box-title">Redes Sociais</div>
+        <ul>
+          <li>
+            <a href="https://www.instagram.com/papelart.__/">Instagram</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- <section class="info">
+  <div class="text">
+    <div class="text-box">
+      <div class="box-title" style="font-size: large;">Website Desenvolvido Por</div>
+      <ul>
+        <li>
+          <a style="color: var(--color-black);font-size: medium;" href="https://www.instagram.com/js.aliss0n/">@js.aliss0n</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section> -->
