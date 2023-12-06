@@ -2,22 +2,45 @@
   <nav>
     <h2 class="header-title">
       <div class="icon">
-        <img src="assets//papelart.jpg" alt="" style="border-radius: 50%;"/>
+        <img src="assets//papelart.jpg" alt="" style="border-radius: 50%" />
       </div>
       <h4 class="site-title">Papelart</h4>
     </h2>
     <ul>
-      <li><a [routerLink]="['./home']">Inicio</a></li>
-      <li><a [routerLink]="['./cart']">Carrinho</a></li>
+      <li [routerLink]="['./home']"><a>Inicio</a></li>
+      <li [routerLink]="['./cart']"><a>Carrinho</a></li>
       <li><a href="#">Cantato</a></li>
       <li><a href="#">Sobre</a></li>
     </ul>
-    <div class="menu" [ngClass]="{'change' : menuActive}" (click)="toogleActive()">
+    <div
+      class="menu"
+      [ngClass]="{ change: menuActive }"
+      (click)="toogleActive()"
+    >
       <div class="line-1"></div>
       <div class="line-2"></div>
       <div class="line-3"></div>
     </div>
   </nav>
 </header>
-<div class="sidebar"></div>
+<div class="sidebar" [ngClass]="{ active: menuActive }">
+  <div class="side-content">
+    <div class="side-header">
+      <div class="menu" [ngClass]="{ change: menuActive }" (click)="toogleActive()">
+        <div class="line-1"></div>
+        <div class="line-2"></div>
+        <div class="line-3"></div>
+      </div>
+      <h1>Menu</h1>
+    </div>
+    <ul>
+      <li routerLinkActive="active" [routerLink]="['./home']">
+        <a>Inicio</a>
+      </li>
+      <li routerLinkActive="active" [routerLink]="['./cart']">
+        <a>Carrinho</a>
+      </li>
+    </ul>
+  </div>
+</div>
 <router-outlet></router-outlet>

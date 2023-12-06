@@ -33,14 +33,17 @@ nav .header-title .icon img {
   object-fit: contain;
 }
 
-nav ul {
+nav ul,
+.sidebar ul {
   display: flex;
   gap: 20px;
   list-style: none;
 }
 
 nav ul li,
-nav ul li a {
+nav ul li a,
+.sidebar ul li,
+.sidebar ul li a {
   font-size: 1.6rem;
   color: var(--color-black);
   font-family: "Poppins", sans-serif;
@@ -49,11 +52,11 @@ nav ul li a {
   position: relative;
 }
 
-nav ul li {
+nav ul li, .sidebar ul li {
   padding: 10px 15px;
 }
 
-nav ul li a::before {
+nav ul li a::before, .sidebar ul li a::before {
   content: "";
   display: block;
   position: absolute;
@@ -65,21 +68,23 @@ nav ul li a::before {
   transition: 0.2s ease;
 }
 
-nav ul li:hover {
+nav ul li:hover, .sidebar ul li:hover {
   a::before {
     opacity: 1;
   }
 }
 
-nav ul li a:hover::before {
+nav ul li a:hover::before, .sidebar ul li a:hover::before {
   opacity: 1;
 }
 
-.menu{
+nav .menu {
   display: none;
 }
 
-.line-1, .line-2, .line-3 {
+.line-1,
+.line-2,
+.line-3 {
   width: 35px;
   height: 5px;
   background-color: var(--color-black);
@@ -91,7 +96,9 @@ nav ul li a:hover::before {
   transform: translate(0, 11px) rotate(-45deg);
 }
 
-.change .line-2 {opacity: 0;}
+.change .line-2 {
+  opacity: 0;
+}
 
 .change .line-3 {
   transform: translate(0, -11px) rotate(45deg);
@@ -102,8 +109,68 @@ nav ul li a:hover::before {
     display: none;
   }
 
-  header nav .menu{
+  header nav .menu {
     display: block;
+  }
+}
+
+.sidebar {
+  position: fixed;
+  right: 0;
+  background: var(--color-white);
+  height: 100vh;
+  top: 0;
+  overflow: hidden;
+  box-shadow: 0px 2px 20px 5px rgba(128 128 128 / 17%);
+  transition: 0.2s ease;
+  z-index: 3;
+  width: 300px;
+}
+
+.sidebar:not(.active){
+  width: 0px;
+}
+
+.side-header{
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  border-bottom: 2px solid var(--color-black);
+  padding-bottom: 10px;
+  align-items: center;
+}
+
+.sidebar .side-content{
+  padding: 2em;
+}
+
+.sidebar ul{
+  flex-direction: column;
+}
+
+.sidebar ul li a {
+  text-align: center;
+}
+
+.sidebar ul li {
+  border-radius: 7px;
+  transition: 0.2s ease;
+  padding: 10px 15px 10px 15px;
+}
+
+.sidebar ul li.active {
+  background: var(--color-black);
+
+  a {
+    color: var(--color-white);
+  }
+}
+
+.sidebar ul li:hover {
+  background: rgba(128 128 128 / 17%);
+
+  a {
+    color: var(--color-black);
   }
 }
 
