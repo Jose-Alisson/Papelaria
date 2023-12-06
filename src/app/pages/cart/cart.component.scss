@@ -98,6 +98,11 @@ $rosa-choque: #f820c2;
 
 .sidebar .side-content{
   padding: 2em;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr; /* Apenas uma coluna */
+  grid-template-rows: auto 1fr auto; /* A primeira e terceira linhas têm altura automática, a segunda ocupa o restante */
+  gap: 10px; /* Espaçamento entre as linhas */
 }
 
 .items {
@@ -119,12 +124,17 @@ $rosa-choque: #f820c2;
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
+  cursor: pointer;
 }
 
 .card:hover{
   border: 2px solid var(--color-black);
   transform: translateX(-5px);
-  box-shadow: 10px 10px 0px 2px var(--color-black);
+  box-shadow: 10px 10px 0px 2px rgb(12,12,12) /*var(--color-black)*/;
+
+  .card-preview img {
+    transform: scale(1.1, 1.1);
+  }
 }
 
 .card-preview{
@@ -133,12 +143,29 @@ $rosa-choque: #f820c2;
   height: 200px;
   width: calc(270px - 1.5em);
   flex-grow: 1;
+  overflow: hidden;
+}
+
+.card-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: 0.2s ease;
 }
 
 .card-content{
   display: flex;
   flex-direction: column;
   gap: 10px;
+}
+
+.description{
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  -webkit-line-clamp: 2;
+  text-overflow: ellipsis;
+  font-size: 14px;
 }
 
 .side-header{
@@ -148,4 +175,53 @@ $rosa-choque: #f820c2;
   border-bottom: 2px solid var(--color-black);
   padding-bottom: 10px;
   align-items: center;
+}
+
+.subtotal {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--color-4);
+  flex-wrap: nowrap;
+}
+
+.subtotal * {
+  font-family: 'Avenir Bold', sans-serif;
+}
+
+.message p{
+  font-size: 14px;
+  color: #cccccc;
+}
+
+
+.btn-buy{
+  padding: 10px 15px;
+  border: 2px solid var(--color-black);
+  border-radius: 7px;
+  background: var(--color-white);
+  color: var(--color-black);
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+  box-shadow: 0px 6px 0px 0px var(--color-black), 0px 12px 0px 0px rgba(128 128 128 / 17%);
+  font-size: 1.8rem;
+  flex-grow: 1;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-wrap: nowrap;
+}
+
+.btn-buy:hover{
+  //letter-spacing: 1.25px;
+  transform: translateY(4px);
+  border-color: var(--color-black);
+  box-shadow: 0px 2px 0px 0px var(--color-black), 0px 6px 0px 0px rgba(128 128 128 / 17%);
+}
+
+.btn-buy:focus{
+  transform: translateY(8px);
+  box-shadow: 0px 0px 0px 0px var(--color-black), 0px 0px 0px 0px rgba(128 128 128 / 17%);
 }

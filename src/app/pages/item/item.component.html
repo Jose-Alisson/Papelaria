@@ -35,24 +35,43 @@
     <i class="fa-solid fa-cart-shopping"></i>
   </div>
 </section>
-<section class="items">
-  <div
-    class="card"
-    (click)="viewItem(item)"
-    *ngFor="let item of [1, 2, 3, 4, 5, 6, 7, 8, 9]"
-  >
-    <div class="card-preview">
+<section class="item">
+  <div class="side-left">
+    <div class="item-img-preview">
       <img src="" alt="" />
     </div>
-    <div class="card-content">
-      <h1 class="title">Produto</h1>
-      <p class="description">
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Inventore
-        sapiente in adipisci voluptatem esse reprehenderit?
-      </p>
-      <h1 class="price">
-        {{ 10.0 | currency : "BRL" : "symbol-narrow" }}
-      </h1>
+  </div>
+  <div class="side-right">
+    <h1 class="title">Produto</h1>
+    <p class="description">
+      Lorem ipsum dolor sit, amet consectetur adipisicing elit. Libero, delectus
+      at sit ad vero expedita fuga enim numquam possimus. Eos harum impedit qui
+      nesciunt tenetur.
+    </p>
+    <h1 class="price">{{ 10.0 | currency : "BRL" : "symbol-narrow" }}</h1>
+    <div class="amount">
+      <div class="decrement" (click)="decrement()">
+        <i class="fa-solid fa-minus"></i>
+      </div>
+      <div class="counter">
+        <p>{{ counter }}</p>
+      </div>
+      <div class="increment" (click)="increment()">
+        <i class="fa-solid fa-plus"></i>
+      </div>
+    </div>
+    <div class="btns">
+      <button class="btn-buy">
+        Comprar Agora
+        <!-- <i class="fa-solid fa-bag-shopping"></i> -->
+      </button>
+      <button class="btn-add-cart">
+        Adicionar ao Carrinho
+        <!-- <i class="fa-solid fa-cart-shopping"></i> -->
+      </button>
     </div>
   </div>
 </section>
+
+
+
