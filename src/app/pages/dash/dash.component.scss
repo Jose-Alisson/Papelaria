@@ -1,5 +1,3 @@
-@import url(../cart/cart.component.scss);
-
 header {
   display: flex;
   background: var(--color-white);
@@ -35,14 +33,17 @@ nav .header-title .icon img {
   object-fit: contain;
 }
 
-nav ul {
+nav ul,
+.sidebar ul {
   display: flex;
   gap: 20px;
   list-style: none;
 }
 
 nav ul li,
-nav ul li a {
+nav ul li a,
+.sidebar ul li,
+.sidebar ul li a {
   font-size: 1.6rem;
   color: var(--color-black);
   font-family: "Poppins", sans-serif;
@@ -51,11 +52,11 @@ nav ul li a {
   position: relative;
 }
 
-nav ul li {
+nav ul li, .sidebar ul li {
   padding: 10px 15px;
 }
 
-nav ul li a::before {
+nav ul li a::before, .sidebar ul li a::before {
   content: "";
   display: block;
   position: absolute;
@@ -67,40 +68,155 @@ nav ul li a::before {
   transition: 0.2s ease;
 }
 
-nav ul li:hover {
+nav ul li:hover, .sidebar ul li:hover {
   a::before {
     opacity: 1;
   }
 }
 
-nav ul li a:hover::before {
+nav ul li a:hover::before, .sidebar ul li a:hover::before {
   opacity: 1;
 }
 
-.menu{
+nav .menu {
   display: none;
 }
 
-.line-1, .line-2, .line-3 {
+.line-1,
+.line-2,
+.line-3 {
   width: 35px;
   height: 5px;
   background-color: var(--color-black);
   margin: 6px 0;
   transition: 0.4s;
+  border-radius: 3px;
 }
 
 .change .line-1 {
   transform: translate(0, 11px) rotate(-45deg);
 }
 
-.change .line-2 {opacity: 0;}
+.change .line-2 {
+  opacity: 0;
+}
 
 .change .line-3 {
   transform: translate(0, -11px) rotate(45deg);
 }
 
+@media screen and (max-width: 570px) {
+  header nav ul {
+    display: none;
+  }
+
+ /* header nav .btns{
+    display: none;
+  }*/
+
+  header nav .menu {
+    display: block;
+  }
+}
+
+.sidebar {
+  position: fixed;
+  right: 0;
+  background: var(--color-white);
+  height: 100vh;
+  top: 0;
+  overflow: hidden;
+  box-shadow: 0px 2px 20px 5px rgba(128 128 128 / 17%);
+  transition: 0.2s ease;
+  z-index: 3;
+  width: 300px;
+}
+
+.sidebar:not(.active){
+  width: 0px;
+}
+
+.side-header{
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  border-bottom: 2px solid var(--color-black);
+  padding-bottom: 10px;
+  align-items: center;
+}
+
+.sidebar .side-content{
+  padding: 2em;
+}
+
+.sidebar ul{
+  flex-direction: column;
+}
+
+.sidebar ul li a {
+  text-align: center;
+}
+
+.sidebar ul li {
+  border-radius: 7px;
+  transition: 0.2s ease;
+  padding: 10px 15px 10px 15px;
+}
+
+.sidebar ul li.active {
+  background: var(--color-black);
+
+  a {
+    color: var(--color-white);
+  }
+}
+
+.sidebar ul li:hover {
+  background: rgba(128 128 128 / 17%);
+
+  a {
+    color: var(--color-black);
+  }
+}
+
+nav .btns{
+  display: flex;
+  gap: 10px;
+}
+
+nav .btns button, .btn-pink{
+  padding: 10px 15px;
+  border: 0;
+  background: var(--color-black);
+  border-radius: 20px;
+  color: var(--color-white);
+  text-transform: uppercase;
+  font-weight: 600;
+  font-family: 'Avenir Bold', sans-serif;
+  transition: 0.2s ease;
+  box-shadow: 0px 2px 10px 0px rgba(0 0 0 / 17%);
+
+  &:hover{
+    transform: scale(0.950);
+  }
+}
+
+nav .btns .btn-login, .btn-pink{
+  background: rgb(255, 149, 176);
+  box-shadow: 0px 2px 10px 0px rgba(255 149 176 / 52%);
+  color: var(--color-white);
+}
+
+/*
+@media screen and (max-width: 575px) {
+  nav .btns {
+    display: none;
+  }
+}*/
+
+/*
 .banner {
-  /*max-height: 80vh;*/
+  max-height: 80vh;
   height: 100%;
   background-position: center;
   background-size: cover;
@@ -109,81 +225,51 @@ nav ul li a:hover::before {
   justify-content: center;
   background-attachment: fixed;
   background-repeat: no-repeat;
-  background-image: url(../../../assets/lojas-de-papelaria-fofas.png);
-  position: relative;
-  overflow: hidden;
+  background-image: url(../assets/lojas-de-papelaria-fofas.png);
 }
-
-.banner::before{
-   content: '';
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background: rgba(0 0 0 / 17%);
-}
-
-.banner::after {
-  content: '';
-  clip-path: polygon(0% 65%, 100% 85%, 100% 100%, 0% 100%);
-  background: rgb( 245 245 245);
-  width: 100%;
-  height: 100%;
-  position: absolute;
-}
-
 
 .banner-content {
-  width:90%;
-  color: var(--color-white);
+  width: 80%;
+  color: var(--color-black);
   display: flex;
   justify-content: space-between;
-  z-index: 1;
-  flex-wrap: wrap;
-}
-
-@media screen and (max-width: 1020px) {
-  .banner-content{
-    justify-content: center;
-  }
 }
 
 .banner-text {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  justify-content: center;
   align-items: flex-start;
 }
 
 .banner-text .title {
-  font-size: 7.2rem;
-  /*color: var(--color-black);*/
-  font-family: "Ubuntu", sans-serif;
-  font-weight: 700;
+  font-size: 42px;
+  color: var(--color-black);
+  font-family: "Avenir Bold", sans-serif;
 }
 
 .banner-text .text {
-  font-size: 2.0rem;
+  font-size: 20px;
   font-family: "Poppins", sans-serif;
 }
 
 .banner-text button {
-  padding: 1.5em 3em;
-  background: var(--color-black);
-  color: var(--color-white);
+  padding: 15px 20px;
+  background: transparent;
+  color: var(--color-black);
   font-family: "Avenir Bold", sans-serif;
   letter-spacing: 1.25px;
   text-transform: uppercase;
-  border: 0;
+  border: 2px var(--color-black) solid;
   outline: none;
   cursor: pointer;
   transition: 0.2s ease;
-  box-shadow: 0px 2px 20px 0px rgba(0 0 0 / 17%);
-  border-radius: 2em;
 }
 
 .banner-text button:hover {
-  transform: scale(0.950);
+  background: var(--color-black);
+  color: var(--color-white);
+  border-color: var(--color-white);
 }
 
 .info {
@@ -198,66 +284,16 @@ nav ul li a:hover::before {
   flex-direction: column;
   align-items: center;
 }
-/*
+
 .line-bottom {
   border-bottom: 1px #dcdcdc solid;
-}
-*/
-
-.info-title{
-  font-family: 'Ubuntu', sans-serif;
-  font-size: 4.2rem;
-  text-align: center;
-  //text-transform: uppercase;
 }
 
 .info .text {
   width: 50%;
-  font-size: 2.4rem;
+  text-align: center;
+  font-size: 28px;
   font-family: "Poppins", sans-serif;
-}
-
-.info.pink{
-  background: #FF95B0;
-  color: white;
-  position: relative;
-
-  &::before{
-    content: '';
-    width: 50px;
-    height: 50px;
-    bottom: 0;
-    left: 50%;
-    background: #FF95B0;
-    position: absolute;
-    transform: translate(-50%, 50%) rotate(45deg);
-  }
-}
-
-.info > *{
-  z-index: 1;
-}
-
-.dp-flex{
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-
-.img-unique-preview{
-  width: 300px;
-  height: 300px;
-  overflow: hidden;
-  border-radius: 20px;
-  flex-grow: 1;
-
-  img{
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
 }
 
 .info-whatsapp {
@@ -397,16 +433,13 @@ nav ul li a:hover::before {
 
 .img-view{
   flex-grow: 1;
-  overflow: hidden;
-  border-radius: 20px;
   max-height: 300px;
 }
 
 .img-view img {
   width: 100%;
   height: 100%;
-
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .product-view{
@@ -439,3 +472,5 @@ nav ul li a:hover::before {
 .btn-buy:hover{
   letter-spacing: 2px;
 }
+
+*/

@@ -1,62 +1,79 @@
-
 <section class="banner">
   <div class="banner-content">
     <div class="banner-text">
-      <div class="title">Bem-vindo a Papelart</div>
+      <div class="title">Papelart</div>
       <div class="text">Produtos e decorações para você</div>
       <button (click)="saibaMais()">
         Saiba Mais <i class="fa-solid fa-right-from-bracket"></i>
       </button>
     </div>
-    <div class="space"></div>
+    <div class="space">
+      <img
+        src="../../../assets/papelaria.png"
+        alt=""
+        style="
+          max-width: 100%;
+          filter: drop-shadow(10px 10px 10px rgba(0 0 0 / 52%));
+        "
+      />
+    </div>
   </div>
 </section>
-<section class="info line-bottom" #initialText>
-  <div class="text">
-    Na Papelart, cada produto é meticulosamente selecionado para oferecer
-    qualidade excepcional. Desde papéis luxuosos até canetas suaves, garantimos
-    durabilidade, elegância e inovação. Descubra uma experiência de papelaria
-    que transcende o comum e inspira sua expressão criativa
-  </div>
-</section>
-<section class="info line-bottom">
-  <section class="info" *ngFor="let item of products">
-    <div class="text">
-      <div class="product-view">
-        <div class="img-view">
-          <img [src]="item.photoUrl" alt="" />
-        </div>
-        <div class="product-info">
-          <h4 class="product-name">{{ item.name }}</h4>
-          <p>{{ item.description }}</p>
-          <p>{{ item.price | currency : "BRL" : "symbol-narrow" }}</p>
-        </div>
+<section class="info" style="background: rgb(245 245 245)">
+  <h1 class="info-title">Recomendaçoes</h1>
+  <p class="sub-title" style="font-size: 1.8rem">Especialmente para você</p>
+  <section class="items" style="padding: 0em">
+    <div class="card" (click)="({})" *ngFor="let item of [1, 2, 3]">
+      <div class="card-preview">
+        <img src="../../../assets/luluzinho.jpg" alt="" />
       </div>
-      <button class="btn-buy">Comprar</button>
+      <div class="card-content">
+        <h1 class="title">Produto</h1>
+        <p class="description">
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Inventore
+          sapiente in adipisci voluptatem esse reprehenderit?
+        </p>
+        <h1 class="price">
+          {{ 10.0 | currency : "BRL" : "symbol-narrow" }}
+        </h1>
+      </div>
     </div>
   </section>
-  <div class="text" style="font-size: medium">
-    Para visualizar nosso catálogo completo, entre em contato conosco pelo
-    WhatsApp ou telefone, ou clique <a [routerLink]="['../cart']" style="color: #ef88a6">aqui</a>
-  </div>
 </section>
-<section class="info">
-  <div class="text text-italic">
-    “Explore nossa papelaria, dedicada a oferecer uma variedade de produtos
-    criativos e úteis para atender às suas necessidades. Descubra mais sobre
-    nossa trajetória e compromisso com a excelência em qualidade e inovação.”
-  </div>
-  <div class="text" style="font-size: medium">Papelart</div>
-</section>
-<!-- <section class="info info-whatsapp" id="contato">
+<section class="info pink dp-flex">
   <div class="text">
-    <h2>Nosso Whatsapp</h2>
-    <div class="whatsapp">
-      <img src="assets//whatsapp.png" alt="logo whatsapp" />
-      <h1>(81) 9 9934-0962</h1>
-    </div>
+    <h1 class="info-title">Especial do Mês</h1>
+    <p class="sub-title" style="font-size: 2.1rem">
+      Encante alguém especial com este presente cuidadosamente selecionado. Uma
+      lembrança única para aquela pessoa maravilhosa em sua vida. Surpreenda e
+      compartilhe a alegria neste mês especial!
+    </p>
   </div>
-</section> -->
+  <div class="img-unique-preview img-rounded">
+    <img src="../../../assets/foto_casamento.jpg" alt="" />
+  </div>
+</section>
+<section class="info" style="background: rgb(245 245 245)">
+  <h1 class="info-title">Já pensou no que presentear?</h1>
+  <p class="sub-title" style="font-size: 1.8rem">Faça a escolha certa</p>
+  <section class="items" style="padding: 0em">
+    <div class="card" (click)="({})" *ngFor="let item of [1, 2, 3, 4, 5, 6]">
+      <div class="card-preview">
+        <img src="../../../assets/caixa_de_presente.jpg" alt="" />
+      </div>
+      <div class="card-content">
+        <h1 class="title">Produto</h1>
+        <p class="description">
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Inventore
+          sapiente in adipisci voluptatem esse reprehenderit?
+        </p>
+        <h1 class="price">
+          {{ 5.0 | currency : "BRL" : "symbol-narrow" }}
+        </h1>
+      </div>
+    </div>
+  </section>
+</section>
 <section class="footer">
   <div class="footer-content">
     <div class="text-box">

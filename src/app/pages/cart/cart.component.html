@@ -1,3 +1,4 @@
+<div class="fade" style="z-index: 2;" *ngIf="sideActive"></div>
 <div class="sidebar" [ngClass]="{ active: sideActive }">
   <div class="side-content">
     <div class="side-header">
@@ -9,8 +10,31 @@
       <h1>Carrinho</h1>
     </div>
     <div class="list-items">
+      <div class="item-product" *ngFor="let item of getProductList()">
+        <div class="item-view">
+          <img src="../../../assets/luluzinho.jpg">
+        </div>
+        <div class="item-description">
+          <h3>{{ item.productName }}</h3>
+          <p>{{ item.description }}</p>
+          <div class="unique">
+            <h3>{{ item.price| currency : 'BRL' : 'symbol-narrow'}}</h3>
+            <div class="amount">
+              <div class="decrement" (click)="{}">
+                <i class="fa-solid fa-minus"></i>
+              </div>
+              <div class="counter">
+                <p>{{ 1 }}</p>
+              </div>
+              <div class="increment" (click)="{}">
+                <i class="fa-solid fa-plus"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div>
+    <div style="padding: 0em 2em 2em 2em;">
       <div class="subtotal">
         <div class="message">
           <span>Sub-Total</span>
@@ -31,18 +55,14 @@
       <i class="fa-solid fa-magnifying-glass"></i>
     </button>
   </div>
-  <div class="btn-slider-cart" (click)="toogleActive()">
+  <!-- <div class="btn-slider-cart" (click)="toogleActive()" [ngClass]="{'cart-not-empty' : getCartLength() > 1}" [attr.counter]="getCartLength()">
     <i class="fa-solid fa-cart-shopping"></i>
-  </div>
+  </div> -->
 </section>
 <section class="items">
-  <div
-    class="card"
-    (click)="viewItem(item)"
-    *ngFor="let item of [1, 2, 3, 4, 5, 6, 7, 8, 9]"
-  >
+  <div class="card" (click)="viewItem(item)" *ngFor="let item of [1, 2, 3, 4, 5, 6, 7, 8, 9]">
     <div class="card-preview">
-      <img src="" alt="" />
+      <img src="../../../assets/albumfotos.jpg" alt="" />
     </div>
     <div class="card-content">
       <h1 class="title">Produto</h1>

@@ -1,49 +1,87 @@
+<div class="fade" style="z-index: 2" *ngIf="sideActive"></div>
 <div class="sidebar" [ngClass]="{ active: sideActive }">
   <div class="side-content">
     <div class="side-header">
-      <div class="menu" [ngClass]="{ change: sideActive }"(click)="toogleActive()">
+      <div
+        class="menu"
+        [ngClass]="{ change: sideActive }"
+        (click)="toogleActive()"
+      >
         <div class="line-1"></div>
         <div class="line-2"></div>
         <div class="line-3"></div>
       </div>
-      <h1>Carrinho</h1>
+      <h1>Quantidade</h1>
     </div>
     <div class="list-items">
+      <div class="item-product" *ngFor="let item of getProductList()">
+        <div class="item-view">
+          <img src="../../../assets/luluzinho.jpg" />
+        </div>
+        <div class="item-description">
+          <h3>{{ item.productName }}</h3>
+          <p>{{ item.description }}</p>
+          <div class="unique">
+            <h3>{{ item.price | currency : "BRL" : "symbol-narrow" }}</h3>
+            <div class="amount">
+              <div class="decrement" (click)="({})">
+                <i class="fa-solid fa-minus"></i>
+              </div>
+              <div class="counter">
+                <p>{{ 1 }}</p>
+              </div>
+              <div class="increment" (click)="({})">
+                <i class="fa-solid fa-plus"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div>
+    <div style="padding: 0em 2em 2em 2em">
       <div class="subtotal">
         <div class="message">
           <span>Sub-Total</span>
           <p>{{ 0 }} {{ 0 === 0 ? "items" : "item" }}</p>
         </div>
         <div class="value">
-          <h3>{{ 0.0 | currency : 'BRL' : 'symbol-narrow' }}</h3>
+          <h3>{{ 0.0 | currency : "BRL" : "symbol-narrow" }}</h3>
         </div>
       </div>
-      <button class="btn-buy">Fazer Pedido</button>
+      <button class="btn-buy">Adicionar ao Carrinho</button>
     </div>
   </div>
 </div>
 <section class="top-search">
   <div class="search">
-    <input type="text" placeholder="Pesquisar" />
+    <input type="text" placeholder="Pesquisar" #search required />
     <button class="icon">
       <i class="fa-solid fa-magnifying-glass"></i>
     </button>
+    <div class="auto-complete">
+      <ul>
+        <li *ngFor="let item of []">Produto</li>
+      </ul>
+    </div>
   </div>
-  <div class="btn-slider-cart" (click)="toogleActive()">
+  <!-- <div
+    class="btn-slider-cart"
+    (click)="toogleActive()"
+    [ngClass]="{ 'cart-not-empty': getCartLength() > 1 }"
+    [attr.counter]="getCartLength()"
+  >
     <i class="fa-solid fa-cart-shopping"></i>
-  </div>
+  </div> -->
 </section>
 <section class="item">
   <div class="side-left">
     <div class="item-img-preview">
-      <img src="" alt="" />
+      <img src="../../../assets/luluzinho.jpg" alt="" />
     </div>
   </div>
   <div class="side-right">
     <h1 class="title">Produto</h1>
-    <p class="description">
+    <p class="item-description">
       Lorem ipsum dolor sit, amet consectetur adipisicing elit. Libero, delectus
       at sit ad vero expedita fuga enim numquam possimus. Eos harum impedit qui
       nesciunt tenetur.
@@ -62,16 +100,33 @@
     </div>
     <div class="btns">
       <button class="btn-buy">
-        Comprar Agora
+        <i class="fa-solid fa-bag-shopping"></i>&nbsp; Comprar Agora
         <!-- <i class="fa-solid fa-bag-shopping"></i> -->
       </button>
-      <button class="btn-add-cart">
-        Adicionar ao Carrinho
+      <button class="btn-add-cart" (click)="toogleActive()">
+        <i class="fa-solid fa-cart-shopping"></i>&nbsp; Adicionar ao Carrinho
         <!-- <i class="fa-solid fa-cart-shopping"></i> -->
       </button>
     </div>
   </div>
 </section>
-
-
-
+<section class="info" style="background: rgb( 245 245 245);">
+  <h1 class="info-title">Você também pode gostar</h1>
+  <section class="items">
+    <div class="card" (click)="({})" *ngFor="let item of [1, 2, 3, 4, 5, 6]">
+      <div class="card-preview">
+        <img src="../../../assets/albumfotos.jpg" alt="" />
+      </div>
+      <div class="card-content">
+        <h1 class="title">Produto</h1>
+        <p class="description">
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Inventore
+          sapiente in adipisci voluptatem esse reprehenderit?
+        </p>
+        <h1 class="price">
+          {{ 10.0 | currency : "BRL" : "symbol-narrow" }}
+        </h1>
+      </div>
+    </div>
+  </section>
+</section>

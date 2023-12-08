@@ -1,0 +1,31 @@
+<section class="vertical-information" *ngIf="isLogged; else menssage">
+  <div class="box">
+    <div class="account">
+      <div class="img-profile">
+        <img [src]="getAccount()?.photo" alt="" />
+      </div>
+      <div class="info">
+        <h1 class="name">{{ getAccount()?.name }}</h1>
+        <p class="email">{{ getAccount()?.email }}</p>
+      </div>
+    </div>
+    <div class="phone">
+      <p>Telefone</p>
+      <h2>{{ getAccount()?.phone }}</h2>
+    </div>
+    <button class="btn-edit-profile">
+      <i class="fa-solid fa-pen"></i>&nbsp;Editar Perfil
+    </button>
+  </div>
+  <div class="box">
+    <button class="btn-sign-out" (click)="signOut()">
+      <i class="fa-solid fa-right-from-bracket"></i>&nbsp; Sair da Conta
+    </button>
+  </div>
+</section>
+
+<ng-template #menssage>
+  <section class="message">
+    <app-not-logged-in></app-not-logged-in>
+  </section>
+</ng-template>

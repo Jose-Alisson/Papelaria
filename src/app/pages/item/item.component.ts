@@ -1,27 +1,40 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
+import { CartService } from 'src/app/services/cart/cart.service';
 
 @Component({
   selector: 'app-item',
   templateUrl: './item.component.html',
-  styleUrls: ['./item.component.scss', '../cart/cart.component.scss']
+  styleUrls: ['./item.component.scss', '../cart/cart.component.scss'],
 })
 export class ItemComponent {
-
-  counter = 1
+  counter = 1;
 
   sideActive = false;
 
+  @ViewChild('search', { static: true })
+  search!: HTMLInputElement;
+
   toogleActive() {
-    this.sideActive = !this.sideActive
+    this.sideActive = !this.sideActive;
   }
 
-  increment(){
+  constructor(private cart: CartService) {}
+
+  increment() {
     this.counter++;
   }
 
-  decrement(){
-    if(this.counter > 1){
+  getProductList() {
+    return this.cart.cart;
+  }
+
+  decrement() {
+    if (this.counter > 1) {
       this.counter--;
     }
+  }
+
+  getCartLength() {
+    return this.cart.cart.length;
   }
 }

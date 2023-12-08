@@ -1,4 +1,4 @@
-<!-- <header>
+<header>
   <nav>
     <h2 class="header-title">
       <div class="icon">
@@ -8,19 +8,28 @@
     </h2>
     <ul>
       <li [routerLink]="['./home']"><a>Inicio</a></li>
-      <li [routerLink]="['./cart']"><a>Carrinho</a></li>
+      <li [routerLink]="['./buscar']"><a>Catálogo</a></li>
+      <li [routerLink]="['./profile']"><a>Seu Perfil</a></li>
     </ul>
-    <div
-      class="menu"
-      [ngClass]="{ change: menuActive }"
-      (click)="toogleActive()"
-    >
+    <div class="menu" [ngClass]="{ change: menuActive }" (click)="toogleActive()">
       <div class="line-1"></div>
       <div class="line-2"></div>
       <div class="line-3"></div>
     </div>
+    <div class="btns" *ngIf="getAccount() === undefined;else youProfile">
+      <button class="btn-login">Fazer Login</button>
+      <button class="btn-register">Criar Conta</button>
+    </div>
   </nav>
 </header>
+
+<ng-template #youProfile>
+  <div class="btns">
+    <button class="btn-pink"><i class="fa-solid fa-caret-down"></i>&nbsp;<i class="fa-solid fa-cart-shopping"></i></button>
+  </div>
+</ng-template>
+
+
 <div class="fade" *ngIf="menuActive"></div>
 <div class="sidebar" [ngClass]="{ active: menuActive }">
   <div class="side-content">
@@ -36,11 +45,14 @@
       <li routerLinkActive="active" [routerLink]="['./home']">
         <a>Inicio</a>
       </li>
-      <li routerLinkActive="active" [routerLink]="['./cart']">
-        <a>Carrinho</a>
+      <li routerLinkActive="active" [routerLink]="['./buscar']">
+        <a>Catálogo</a>
+      </li>
+      <li routerLinkActive="active" [routerLink]="['./profile']">
+        <a>Seu Perfil</a>
       </li>
     </ul>
   </div>
-</div> -->
+</div>
 <router-outlet></router-outlet>
 

@@ -1,436 +1,438 @@
-header {
-  display: flex;
-  background: var(--color-white);
-  box-shadow: 0px 2px 40px rgba(128 128 128 / 17%);
-  justify-content: center;
-  align-items: center;
-  padding: 5px;
-}
-
-header nav {
-  width: 90%;
-  height: 70px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-nav .header-title {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-family: "Avenir Bold", sans-serif;
-}
-
-nav .header-title .icon {
-  width: 60px;
-  height: 60px;
-}
-
-nav .header-title .icon img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-
-nav ul,
-.sidebar ul {
-  display: flex;
-  gap: 20px;
-  list-style: none;
-}
-
-nav ul li,
-nav ul li a,
-.sidebar ul li,
-.sidebar ul li a {
-  font-size: 1.6rem;
-  color: var(--color-black);
-  font-family: "Poppins", sans-serif;
-  font-weight: 600;
-  text-decoration: none;
-  position: relative;
-}
-
-nav ul li, .sidebar ul li {
-  padding: 10px 15px;
-}
-
-nav ul li a::before, .sidebar ul li a::before {
-  content: "";
-  display: block;
-  position: absolute;
-  height: 1px;
-  width: 100%;
-  bottom: 0;
-  opacity: 0;
-  background: var(--color-black);
-  transition: 0.2s ease;
-}
-
-nav ul li:hover, .sidebar ul li:hover {
-  a::before {
-    opacity: 1;
-  }
-}
-
-nav ul li a:hover::before, .sidebar ul li a:hover::before {
-  opacity: 1;
-}
-
-nav .menu {
-  display: none;
-}
-
-.line-1,
-.line-2,
-.line-3 {
-  width: 35px;
-  height: 5px;
-  background-color: var(--color-black);
-  margin: 6px 0;
-  transition: 0.4s;
-}
-
-.change .line-1 {
-  transform: translate(0, 11px) rotate(-45deg);
-}
-
-.change .line-2 {
-  opacity: 0;
-}
-
-.change .line-3 {
-  transform: translate(0, -11px) rotate(45deg);
-}
-
-@media screen and (max-width: 570px) {
-  header nav ul {
-    display: none;
-  }
-
-  header nav .menu {
-    display: block;
-  }
-}
-
-.sidebar {
-  position: fixed;
-  right: 0;
-  background: var(--color-white);
-  height: 100vh;
-  top: 0;
-  overflow: hidden;
-  box-shadow: 0px 2px 20px 5px rgba(128 128 128 / 17%);
-  transition: 0.2s ease;
-  z-index: 3;
-  width: 300px;
-}
-
-.sidebar:not(.active){
-  width: 0px;
-}
-
-.side-header{
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 10px;
-  border-bottom: 2px solid var(--color-black);
-  padding-bottom: 10px;
-  align-items: center;
-}
-
-.sidebar .side-content{
-  padding: 2em;
-}
-
-.sidebar ul{
-  flex-direction: column;
-}
-
-.sidebar ul li a {
-  text-align: center;
-}
-
-.sidebar ul li {
-  border-radius: 7px;
-  transition: 0.2s ease;
-  padding: 10px 15px 10px 15px;
-}
-
-.sidebar ul li.active {
-  background: var(--color-black);
-
-  a {
-    color: var(--color-white);
-  }
-}
-
-.sidebar ul li:hover {
-  background: rgba(128 128 128 / 17%);
-
-  a {
-    color: var(--color-black);
-  }
-}
-
-/*
-.banner {
-  max-height: 80vh;
-  height: 100%;
-  background-position: center;
-  background-size: cover;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-attachment: fixed;
-  background-repeat: no-repeat;
-  background-image: url(../assets/lojas-de-papelaria-fofas.png);
-}
-
-.banner-content {
-  width: 80%;
-  color: var(--color-black);
-  display: flex;
-  justify-content: space-between;
-}
-
-.banner-text {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  align-items: flex-start;
-}
-
-.banner-text .title {
-  font-size: 42px;
-  color: var(--color-black);
-  font-family: "Avenir Bold", sans-serif;
-}
-
-.banner-text .text {
-  font-size: 20px;
-  font-family: "Poppins", sans-serif;
-}
-
-.banner-text button {
-  padding: 15px 20px;
-  background: transparent;
-  color: var(--color-black);
-  font-family: "Avenir Bold", sans-serif;
-  letter-spacing: 1.25px;
-  text-transform: uppercase;
-  border: 2px var(--color-black) solid;
-  outline: none;
-  cursor: pointer;
-  transition: 0.2s ease;
-}
-
-.banner-text button:hover {
-  background: var(--color-black);
-  color: var(--color-white);
-  border-color: var(--color-white);
-}
-
-.info {
-  gap: 10px;
-}
-
-.info,
-.footer {
-  padding: 3em;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.line-bottom {
-  border-bottom: 1px #dcdcdc solid;
-}
-
-.info .text {
-  width: 50%;
-  text-align: center;
-  font-size: 28px;
-  font-family: "Poppins", sans-serif;
-}
-
-.info-whatsapp {
-  color: var(--color-white);
-  background: rgb(41, 181, 63);
-}
-
-.footer {
-  background: var(--color-black);
-  color: var(--color-white);
-  font-family: "Roboto", sans-serif;
-}
-
-.footer-content {
-  width: 90%;
-  flex-wrap: wrap;
-  display: flex;
-  justify-content: space-between;
-  gap: 20px;
-  font-size: 18px;
-  font-family: "Poppins", sans-serif;
-  text-decoration: none;
-}
-
-.text-box.wraper {
-  display: flex;
-  gap: 20px;
-  width: 60%;
-  flex-wrap: wrap;
-  justify-content: space-between;
-}
-
-.text-box a {
-  color: var(--color-white);
-}
-
-.box-title {
-  font-family: "Avenir Bold", sans-serif;
-  font-weight: bold;
-}
-
-.text-box ul {
-  list-style: none;
-}
-
-.whatsapp {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-}
-
-.whatsapp img {
-  width: 100%;
-  object-fit: contain;
-  max-width: 100px;
-}
-
-.whatsapp h1 {
-  font-family: "Avenir Bold", sans-serif;
-  white-space: nowrap;
-}
-
-@media screen and (max-width: 1080px) {
-  .info .text {
-    width: 50%;
-  }
-}
-
-@media screen and (max-width: 980px) {
-  .info .text {
-    width: 60%;
-    font-size: 26px;
-  }
-}
-
-@media screen and (max-width: 880px) {
-  .info .text {
-    width: 70%;
-    font-size: 24px;
-  }
-}
-
-.info-whatsapp .text {
-  width: 70%;
-}
-
-@media screen and (max-width: 780px) {
-  .info .text {
-    width: 80%;
-    font-size: 22px;
-  }
-
-  .info,
-  .footer {
-    padding: 2.5em;
-  }
-}
-
-@media screen and (max-width: 680px) {
-  .info .text {
-    width: 90%;
-    font-size: 20px;
-  }
-
-  .text-box.wraper {
-    width: 90%;
-  }
-}
-
-.text-italic {
-  font-style: italic;
-}
-
-.info-whatsapp .text .whatsapp {
-  justify-content: center;
-  gap: 15px;
-}
-
-@media screen and (max-width: 570px) {
-  header nav ul {
-    display: none;
-  }
-
-  header nav .menu{
-    display: block;
-  }
-
-  .info,
-  .footer {
-    padding: 2em;
-  }
-}
-
-.product-view{
-  font-family: 'Poppins';
-}
-
-.img-view{
-  flex-grow: 1;
-  max-height: 300px;
-}
-
-.img-view img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-
-.product-view{
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.product-info{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-}
-
-.btn-buy{
-  padding: 15px 20px;
-  background: var(--color-black);
-  color: var(--color-white);
-  font-family: "Avenir Bold", sans-serif;
-  letter-spacing: 1.25px;
-  text-transform: uppercase;
-  border: 2px var(--color-black) solid;
-  outline: none;
-  border-radius: 7px;
-  transition: 0.2s ease;
-  cursor: pointer;
-}
-
-.btn-buy:hover{
-  letter-spacing: 2px;
-}
-
-*/
+// header {
+//   display: flex;
+//   background: var(--color-white);
+//   box-shadow: 0px 2px 40px rgba(128 128 128 / 17%);
+//   justify-content: center;
+//   align-items: center;
+//   padding: 5px;
+// }
+
+// header nav {
+//   width: 90%;
+//   height: 70px;
+//   display: flex;
+//   align-items: center;
+//   justify-content: space-between;
+// }
+
+// nav .header-title {
+//   display: flex;
+//   align-items: center;
+//   gap: 10px;
+//   font-family: "Avenir Bold", sans-serif;
+// }
+
+// nav .header-title .icon {
+//   width: 60px;
+//   height: 60px;
+// }
+
+// nav .header-title .icon img {
+//   width: 100%;
+//   height: 100%;
+//   object-fit: contain;
+// }
+
+// nav ul,
+// .sidebar ul {
+//   display: flex;
+//   gap: 20px;
+//   list-style: none;
+// }
+
+// nav ul li,
+// nav ul li a,
+// .sidebar ul li,
+// .sidebar ul li a {
+//   font-size: 1.6rem;
+//   color: var(--color-black);
+//   font-family: "Poppins", sans-serif;
+//   font-weight: 600;
+//   text-decoration: none;
+//   position: relative;
+// }
+
+// nav ul li, .sidebar ul li {
+//   padding: 10px 15px;
+// }
+
+// nav ul li a::before, .sidebar ul li a::before {
+//   content: "";
+//   display: block;
+//   position: absolute;
+//   height: 1px;
+//   width: 100%;
+//   bottom: 0;
+//   opacity: 0;
+//   background: var(--color-black);
+//   transition: 0.2s ease;
+// }
+
+// nav ul li:hover, .sidebar ul li:hover {
+//   a::before {
+//     opacity: 1;
+//   }
+// }
+
+// nav ul li a:hover::before, .sidebar ul li a:hover::before {
+//   opacity: 1;
+// }
+
+// nav .menu {
+//   display: none;
+// }
+
+// .line-1,
+// .line-2,
+// .line-3 {
+//   width: 35px;
+//   height: 5px;
+//   background-color: var(--color-black);
+//   margin: 6px 0;
+//   transition: 0.4s;
+// }
+
+// .change .line-1 {
+//   transform: translate(0, 11px) rotate(-45deg);
+// }
+
+// .change .line-2 {
+//   opacity: 0;
+// }
+
+// .change .line-3 {
+//   transform: translate(0, -11px) rotate(45deg);
+// }
+
+// @media screen and (max-width: 570px) {
+//   header nav ul {
+//     display: none;
+//   }
+
+//   header nav .menu {
+//     display: block;
+//   }
+// }
+
+// .sidebar {
+//   position: fixed;
+//   right: 0;
+//   background: var(--color-white);
+//   height: 100vh;
+//   top: 0;
+//   overflow: hidden;
+//   box-shadow: 0px 2px 20px 5px rgba(128 128 128 / 17%);
+//   transition: 0.2s ease;
+//   z-index: 3;
+//   width: 300px;
+// }
+
+// .sidebar:not(.active){
+//   width: 0px;
+// }
+
+// .side-header{
+//   display: flex;
+//   justify-content: space-between;
+//   margin-bottom: 10px;
+//   border-bottom: 2px solid var(--color-black);
+//   padding-bottom: 10px;
+//   align-items: center;
+// }
+
+// .sidebar .side-content{
+//   padding: 2em;
+// }
+
+// .sidebar ul{
+//   flex-direction: column;
+// }
+
+// .sidebar ul li a {
+//   text-align: center;
+// }
+
+// .sidebar ul li {
+//   border-radius: 7px;
+//   transition: 0.2s ease;
+//   padding: 10px 15px 10px 15px;
+// }
+
+// .sidebar ul li.active {
+//   background: var(--color-black);
+
+//   a {
+//     color: var(--color-white);
+//   }
+// }
+
+// .sidebar ul li:hover {
+//   background: rgba(128 128 128 / 17%);
+
+//   a {
+//     color: var(--color-black);
+//   }
+// }
+
+
+
+// /*
+// .banner {
+//   max-height: 80vh;
+//   height: 100%;
+//   background-position: center;
+//   background-size: cover;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   background-attachment: fixed;
+//   background-repeat: no-repeat;
+//   background-image: url(../assets/lojas-de-papelaria-fofas.png);
+// }
+
+// .banner-content {
+//   width: 80%;
+//   color: var(--color-black);
+//   display: flex;
+//   justify-content: space-between;
+// }
+
+// .banner-text {
+//   display: flex;
+//   flex-direction: column;
+//   gap: 10px;
+//   align-items: flex-start;
+// }
+
+// .banner-text .title {
+//   font-size: 42px;
+//   color: var(--color-black);
+//   font-family: "Avenir Bold", sans-serif;
+// }
+
+// .banner-text .text {
+//   font-size: 20px;
+//   font-family: "Poppins", sans-serif;
+// }
+
+// .banner-text button {
+//   padding: 15px 20px;
+//   background: transparent;
+//   color: var(--color-black);
+//   font-family: "Avenir Bold", sans-serif;
+//   letter-spacing: 1.25px;
+//   text-transform: uppercase;
+//   border: 2px var(--color-black) solid;
+//   outline: none;
+//   cursor: pointer;
+//   transition: 0.2s ease;
+// }
+
+// .banner-text button:hover {
+//   background: var(--color-black);
+//   color: var(--color-white);
+//   border-color: var(--color-white);
+// }
+
+// .info {
+//   gap: 10px;
+// }
+
+// .info,
+// .footer {
+//   padding: 3em;
+//   width: 100%;
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+// }
+
+// .line-bottom {
+//   border-bottom: 1px #dcdcdc solid;
+// }
+
+// .info .text {
+//   width: 50%;
+//   text-align: center;
+//   font-size: 28px;
+//   font-family: "Poppins", sans-serif;
+// }
+
+// .info-whatsapp {
+//   color: var(--color-white);
+//   background: rgb(41, 181, 63);
+// }
+
+// .footer {
+//   background: var(--color-black);
+//   color: var(--color-white);
+//   font-family: "Roboto", sans-serif;
+// }
+
+// .footer-content {
+//   width: 90%;
+//   flex-wrap: wrap;
+//   display: flex;
+//   justify-content: space-between;
+//   gap: 20px;
+//   font-size: 18px;
+//   font-family: "Poppins", sans-serif;
+//   text-decoration: none;
+// }
+
+// .text-box.wraper {
+//   display: flex;
+//   gap: 20px;
+//   width: 60%;
+//   flex-wrap: wrap;
+//   justify-content: space-between;
+// }
+
+// .text-box a {
+//   color: var(--color-white);
+// }
+
+// .box-title {
+//   font-family: "Avenir Bold", sans-serif;
+//   font-weight: bold;
+// }
+
+// .text-box ul {
+//   list-style: none;
+// }
+
+// .whatsapp {
+//   display: flex;
+//   flex-wrap: wrap;
+//   align-items: center;
+// }
+
+// .whatsapp img {
+//   width: 100%;
+//   object-fit: contain;
+//   max-width: 100px;
+// }
+
+// .whatsapp h1 {
+//   font-family: "Avenir Bold", sans-serif;
+//   white-space: nowrap;
+// }
+
+// @media screen and (max-width: 1080px) {
+//   .info .text {
+//     width: 50%;
+//   }
+// }
+
+// @media screen and (max-width: 980px) {
+//   .info .text {
+//     width: 60%;
+//     font-size: 26px;
+//   }
+// }
+
+// @media screen and (max-width: 880px) {
+//   .info .text {
+//     width: 70%;
+//     font-size: 24px;
+//   }
+// }
+
+// .info-whatsapp .text {
+//   width: 70%;
+// }
+
+// @media screen and (max-width: 780px) {
+//   .info .text {
+//     width: 80%;
+//     font-size: 22px;
+//   }
+
+//   .info,
+//   .footer {
+//     padding: 2.5em;
+//   }
+// }
+
+// @media screen and (max-width: 680px) {
+//   .info .text {
+//     width: 90%;
+//     font-size: 20px;
+//   }
+
+//   .text-box.wraper {
+//     width: 90%;
+//   }
+// }
+
+// .text-italic {
+//   font-style: italic;
+// }
+
+// .info-whatsapp .text .whatsapp {
+//   justify-content: center;
+//   gap: 15px;
+// }
+
+// @media screen and (max-width: 570px) {
+//   header nav ul {
+//     display: none;
+//   }
+
+//   header nav .menu{
+//     display: block;
+//   }
+
+//   .info,
+//   .footer {
+//     padding: 2em;
+//   }
+// }
+
+// .product-view{
+//   font-family: 'Poppins';
+// }
+
+// .img-view{
+//   flex-grow: 1;
+//   max-height: 300px;
+// }
+
+// .img-view img {
+//   width: 100%;
+//   height: 100%;
+//   object-fit: contain;
+// }
+
+// .product-view{
+//   display: flex;
+//   flex-wrap: wrap;
+//   justify-content: center;
+// }
+
+// .product-info{
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+//   gap: 10px;
+// }
+
+// .btn-buy{
+//   padding: 15px 20px;
+//   background: var(--color-black);
+//   color: var(--color-white);
+//   font-family: "Avenir Bold", sans-serif;
+//   letter-spacing: 1.25px;
+//   text-transform: uppercase;
+//   border: 2px var(--color-black) solid;
+//   outline: none;
+//   border-radius: 7px;
+//   transition: 0.2s ease;
+//   cursor: pointer;
+// }
+
+// .btn-buy:hover{
+//   letter-spacing: 2px;
+// }
+
+// */

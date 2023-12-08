@@ -1,0 +1,129 @@
+<div class="container">
+  <h1>Registrar-se</h1>
+  <div class="select-steps">
+    <div class="step-group">
+      <input type="radio" name="stp" id="stp-1" checked/>
+      <input type="radio" name="stp" id="stp-2" />
+      <input type="radio" name="stp" id="stp-3" />
+      <input type="radio" name="stp" id="stp-4" />
+      <div class="step first" >
+        <div class="fields first">
+          <div class="box">
+            <div class="box-field">
+              <input type="text" name="" id="email-field" required/>
+              <label for="email-field">E-mail</label>
+            </div>
+            <div class="invalid">
+
+            </div>
+          </div>
+          <div class="box">
+            <div class="box-field">
+              <input type="password" name="" id="password-field" #loginPassword required/>
+              <label for="password-field">Senha</label>
+              <span (click)="{}">
+                <i #icon class="fa-solid fa-eye-slash"></i >
+              </span>
+            </div>
+            <div class="invalid">
+            </div>
+          </div>
+          <!-- <div class="box">
+            <div class="box-field">
+              <input type="password" name="" id="comfirm-password-field" #confirmPassword required formControlName="confirmPassword" [ngClass]="{'input-invalid': isValidControlForm(step1Form,'confirmPassword')}"/>
+              <label for="comfirm-password-field">Confirmar Senha</label>
+              <span (click)="passwordVisible(confirmPassword, iconConfirm)"
+                ><i #iconConfirm class="fa-solid fa-eye-slash"></i
+              ></span>
+            </div>
+            <div class="invalid">
+              <div *ngIf="step1Form.get('confirmPassword')?.errors?.['required'] && getInteractionForm(step1Form,'confirmPassword')">
+                O campo é obrigatorio.
+              </div>
+              <div *ngIf="step1Form.get('confirmPassword')?.errors?.['confirmPasswordInvalid'] && getInteractionForm(step1Form,'confirmPassword')">
+                A confirmação de senha não corresponde à senha digitada.
+              </div>
+            </div>
+          </div> -->
+        </div>
+        <br>
+        <div class="buttons-controll" style="width: 100%;" *ngIf="1 < 4">
+          <button class="btn-prosseguir" (click)="{}">Prosseguir</button>
+        </div>
+      </div>
+      <div class="step">
+        <div class="fields first">
+          <div class="box">
+            <div class="box-field">
+              <input type="text" name="" id="name-field" required formControlName="nome"/>
+              <label for="name-field">Nome</label>
+            </div>
+            <div class="invalid">
+
+            </div>
+          </div>
+          <div class="box-field">
+            <input type="text" name="" id="sobrenome-field" required />
+            <label for="sobrenome-field">Sobrenome (Opcional)</label>
+          </div>
+        </div>
+        <br>
+        <div class="buttons-controll" style="width: 100%;" *ngIf="1 < 4">
+          <button class="btn-prosseguir" (click)="{}">Prosseguir</button>
+          <button class="btn-voltar" (click)="{}">Voltar</button>
+        </div>
+      </div>
+      <div class="step">
+        <div class="fields first">
+          <div class="box">
+            <div class="box-field">
+              <input type="text" name="" id="phone-field" required prefix="+55 " formControlName="contato" >
+              <label for="phone-field" class="label-static">Número de Whatsapp*</label>
+              <span class="selection-contato" (click)="{}">
+                <i class="fa-brands fa-square-whatsapp" style="color: #1AC760;"></i>
+                <!-- <i class="fa-solid fa-caret-up" style="transition: 0.2s;" [ngStyle]="{'transform' : getRotate()}"></i> -->
+              </span>
+            </div>
+            <!-- <div class="phone_mask">
+              *Obs: Em Números de Whastapp o 9 após o ddd é removido'
+            </div> -->
+            <!-- <ul class="contato-section"  [ngClass]="{'show' : cSv}">
+              <li (click)="setTypeContatoPhone()">
+                <i class="fa-solid fa-square-phone"></i>
+                <span>Celular</span>
+              </li>
+              <li (click)="setTypeContatoWhatsapp()">
+                <i class="fa-brands fa-square-whatsapp"></i>
+                <span>Whastapp</span>
+              </li>
+            </ul> -->
+
+            <div class="invalid">
+
+            </div>
+            <br>
+            <div class="buttons-controll" style="width: 100%;" *ngIf="1 < 4">
+              <button  class="btn-enviar-code" (click)="{}">Enviar para Whatsapp</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="step status-create">
+        <img id="img-status-create" src="assets//checked.gif" width="128px">
+      </div>
+    </div>
+  </div>
+</div>
+<!-- <div class="show-code-verify" *ngIf="{}">
+  <div class="show-code-header">
+    <img src="assets//phone.svg" alt="">
+    <h2>Código de Verificação</h2>
+    <p>Verifique o código enviado para seu {{ "" }} de número +55 {{""}}</p>
+  </div>
+  <div class="code-fields" [ngClass]="{'code-invalid': false}">
+    <input type="text" mask="9" *ngFor="let char of []; let i = index" (keyup)="{}">
+  </div>
+  <div class="show-code-control">
+  </div>
+  <button (click)="{}">Verificar</button>
+</div> -->

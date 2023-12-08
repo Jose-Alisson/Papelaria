@@ -4,6 +4,7 @@
   display: flex;
   gap: 2em;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 .item > *{
@@ -13,6 +14,7 @@
 
 .item .side-left{
   width: 300px;
+  max-width: 400px;
 }
 
 .side-right{
@@ -20,6 +22,7 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
+  max-width: 600px;
 }
 
 .item-img-preview{
@@ -36,7 +39,7 @@
   object-fit: cover;
 }
 
-.price{
+.item .price{
   font-size: 3.6rem;
 }
 
@@ -49,7 +52,7 @@
 .btns button{
   padding: 10px 15px;
   border: 2px solid var(--color-black);
-  border-radius: 7px;
+  border-radius: 20px;
   background: var(--color-white);
   color: var(--color-black);
   font-family: 'Poppins', sans-serif;
@@ -73,10 +76,43 @@
   box-shadow: 0px 0px 0px 0px var(--color-black), 0px 0px 0px 0px rgba(128 128 128 / 17%);
 }
 
-.title{
+.btns button:first-child{
+  background: #0d0f12;
+  color: var(--color-white);
+}
+
+.item .title{
   font-size: 3.6rem;
 }
 
+.info {
+  padding: 3em;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.info-title{
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 4.2rem;
+  //text-transform: uppercase;
+}
+
+@media screen and (max-width: 780px) {
+  .info {
+    padding: 2.5em;
+  }
+}
+
+@media screen and (max-width: 570px) {
+  .info {
+    padding: 2em;
+  }
+}
+
+
+/*
 .amount{
   display: flex;
   padding: 7px 0px;
@@ -102,3 +138,4 @@
 .amount .counter p {
   font-family: 'Avenir Bold', sans-serif;
 }
+*/
