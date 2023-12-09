@@ -12,6 +12,7 @@ import { DashComponent } from './pages/dash/dash.component';
 import { AccountComponent } from './pages/account/account.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { NotLoggedInComponent } from './pages/not-logged-in/not-logged-in.component';
+import { BuscarComponent } from './pages/buscar/buscar.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'm', pathMatch: 'full' },
@@ -21,8 +22,9 @@ const routes: Routes = [
     children: [
       { path: '', redirectTo: 'home', pathMatch: 'full' },
       { path: 'home', component: HomeComponent },
-      { path: 'buscar', component: CartComponent },
+      { path: 'buscar', component: BuscarComponent },
       { path: 'profile', component: ProfileComponent },
+      { path: 'cart', component: CartComponent },
       { path: 'item/:id', component: ItemComponent },
     ],
   },
@@ -49,6 +51,7 @@ const routes: Routes = [
     AccountComponent,
     ProfileComponent,
     NotLoggedInComponent,
+    BuscarComponent,
   ],
   imports: [BrowserModule, RouterModule.forRoot(routes, { useHash: true })],
   providers: [],

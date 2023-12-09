@@ -4,7 +4,7 @@ import { CartService } from 'src/app/services/cart/cart.service';
 @Component({
   selector: 'app-item',
   templateUrl: './item.component.html',
-  styleUrls: ['./item.component.scss', '../cart/cart.component.scss'],
+  styleUrls: ['./item.component.scss', '../buscar/buscar.component.scss'],
 })
 export class ItemComponent {
   counter = 1;

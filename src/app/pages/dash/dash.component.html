@@ -6,28 +6,45 @@
       </div>
       <h4 class="site-title">Papelart</h4>
     </h2>
-    <ul>
+    <ul class="links">
       <li [routerLink]="['./home']"><a>Inicio</a></li>
       <li [routerLink]="['./buscar']"><a>Catálogo</a></li>
-      <li [routerLink]="['./profile']"><a>Seu Perfil</a></li>
+      <li [routerLink]="['./profile']"><a>Perfil</a></li>
     </ul>
-    <div class="menu" [ngClass]="{ change: menuActive }" (click)="toogleActive()">
+    <div class="more">
+      <ul class="more-links">
+        <li [routerLink]="['./profile']" *ngIf="getAccount() != undefined;else login">
+          <i class="fa-regular fa-user"></i>
+        </li>
+        <li [routerLink]="['./cart']">
+          <i class="fa-solid fa-cart-shopping"></i>
+        </li>
+        <li (click)="toogleActive()" ><i class="fa-solid fa-bars"></i></li>
+      </ul>
+    </div>
+    <!-- <div class="menu" [ngClass]="{ change: menuActive }" (click)="toogleActive()">
       <div class="line-1"></div>
       <div class="line-2"></div>
       <div class="line-3"></div>
-    </div>
-    <div class="btns" *ngIf="getAccount() === undefined;else youProfile">
+    </div> -->
+    <!-- <div class="btns" *ngIf="getAccount() === undefined;else youProfile">
       <button class="btn-login">Fazer Login</button>
-      <button class="btn-register">Criar Conta</button>
-    </div>
+    </div> -->
   </nav>
 </header>
 
-<ng-template #youProfile>
-  <div class="btns">
-    <button class="btn-pink"><i class="fa-solid fa-caret-down"></i>&nbsp;<i class="fa-solid fa-cart-shopping"></i></button>
-  </div>
+<!-- <ng-template #youProfile>
+  <ul>
+    <li style="font-size: 1.8rem;"></li>
+    <li style="font-size: 1.8rem;"><i class="fa-solid fa-cart-shopping"></i></li>
+    <li style="font-size: 1.8rem;" (click)="toogleActive()" ><i class="fa-solid fa-bars"></i></li>
+  </ul>
+</ng-template> -->
+
+<ng-template #login>
+  <li><p>Login</p></li>
 </ng-template>
+
 
 
 <div class="fade" *ngIf="menuActive"></div>
