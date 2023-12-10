@@ -1,0 +1,31 @@
+.container{
+  max-width: 600px;
+  margin: auto;
+  display: grid;
+  gap: 50px;
+  padding: 2em;
+}
+
+.list-products{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.item-product{
+  padding: 0px !important;
+}
+
+.items-product{
+  display: grid;
+  gap: 30px;
+
+}
+
+
+
+
+.control-cart{
+  display: flex;
+  justify-content: space-between;
+}

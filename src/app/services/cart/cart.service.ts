@@ -6,7 +6,7 @@ import { Product } from 'src/app/model/product.model';
 })
 export class CartService {
 
-  cart: Product[] = []/* [
+  cart: Product[] =  [
     {
       id: '0',
       productName: 'Luluzinho',
@@ -31,7 +31,7 @@ export class CartService {
       price: 5.0,
       photoObject: '',
     },
-  ];*/
+  ];
 
   constructor() {}
 }

@@ -1,1 +1,50 @@
-<p>buscar works!</p>
+<div class="container">
+  <h1><i class="fa-solid fa-cart-shopping"></i>&nbsp;Meu Carrinho</h1>
+  <div class="list-products" *ngFor="let items of getProductList()">
+    <div class="control-cart">
+      <div class="checked">
+        <input type="checkbox" name="" id="" />
+        <span>Tudo</span>
+      </div>
+      <span>{{ "2023-12-06" | date : "dd/MM/yyyy" }}</span>
+    </div>
+    <div class="items-product">
+      <div class="item-product" *ngFor="let item of getProductList()">
+        <input type="checkbox" name="" id="" />
+        <div class="item-view">
+          <img src="../../../assets/luluzinho.jpg" />
+        </div>
+        <div class="item-description">
+          <h3>{{ item.productName }}</h3>
+          <p>{{ item.description }}</p>
+          <div class="unique">
+            <h3>{{ item.price | currency : "BRL" : "symbol-narrow" }}</h3>
+            <div class="amount">
+              <div class="decrement" (click)="({})">
+                <i class="fa-solid fa-minus"></i>
+              </div>
+              <div class="counter">
+                <p>{{ 1 }}</p>
+              </div>
+              <div class="increment" (click)="({})">
+                <i class="fa-solid fa-plus"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="display: flex; flex-direction: column; gap: 10px">
+    <div class="subtotal">
+      <div class="message">
+        <span>Sub-Total</span>
+        <p>{{ 0 }} {{ 0 === 0 ? "items" : "item" }}</p>
+      </div>
+      <div class="value">
+        <h3>{{ 0.0 | currency : "BRL" : "symbol-narrow" }}</h3>
+      </div>
+    </div>
+    <button class="btn-buy">Comprar</button>
+  </div>
+</div>
