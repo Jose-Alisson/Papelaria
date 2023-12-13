@@ -1,32 +1,32 @@
 <div class="container">
-  <h1><i class="fa-solid fa-cart-shopping"></i>&nbsp;Meu Carrinho</h1>
-  <div class="list-products" *ngFor="let items of getProductList()">
+  <h1 class="page-title">Meu Carrinho</h1>
+  <div class="list-products" *ngFor="let items of getAllDateProducts()">
     <div class="control-cart">
-      <div class="checked">
-        <input type="checkbox" name="" id="" />
+      <div class="checked" (click)="checkedAll(items, check.checked)">
+        <input type="checkbox" name="" id="" #check [checked]="isCheckAllActiveDate(items)"/>
         <span>Tudo</span>
       </div>
-      <span>{{ "2023-12-06" | date : "dd/MM/yyyy" }}</span>
+      <span>{{ items | date : "dd/MM/yyyy" }}</span>
     </div>
     <div class="items-product">
-      <div class="item-product" *ngFor="let item of getProductList()">
-        <input type="checkbox" name="" id="" />
+      <div class="item-product" *ngFor="let item of getAllProductFromDate(items)">
+        <input type="checkbox" name="" id="" [checked]="item.checked" #checkItem (click)="item.checked = checkItem.checked; printObject(item)"/>
         <div class="item-view">
           <img src="../../../assets/luluzinho.jpg" />
         </div>
         <div class="item-description">
-          <h3>{{ item.productName }}</h3>
-          <p>{{ item.description }}</p>
+          <h3>{{ item.product.productName }}</h3>
+          <p>{{ item.product.description }}</p>
           <div class="unique">
-            <h3>{{ item.price | currency : "BRL" : "symbol-narrow" }}</h3>
+            <h3>{{ item.product.price | currency : "BRL" : "symbol-narrow" }}</h3>
             <div class="amount">
-              <div class="decrement" (click)="({})">
+              <div class="decrement" (click)="decrement(item)">
                 <i class="fa-solid fa-minus"></i>
               </div>
               <div class="counter">
-                <p>{{ 1 }}</p>
+                <p>{{ item.amount }}</p>
               </div>
-              <div class="increment" (click)="({})">
+              <div class="increment" (click)="increment(item)">
                 <i class="fa-solid fa-plus"></i>
               </div>
             </div>
@@ -39,10 +39,10 @@
     <div class="subtotal">
       <div class="message">
         <span>Sub-Total</span>
-        <p>{{ 0 }} {{ 0 === 0 ? "items" : "item" }}</p>
+        <p>{{ getCartLengthAmountCheck() }} {{ getCartLengthAmountCheck() === 1 ? "item" : "items" }}</p>
       </div>
       <div class="value">
-        <h3>{{ 0.0 | currency : "BRL" : "symbol-narrow" }}</h3>
+        <h3>{{ getAllTotalAmountCheck() | currency : "BRL" : "symbol-narrow" }}</h3>
       </div>
     </div>
     <button class="btn-buy">Comprar</button>

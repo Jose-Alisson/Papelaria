@@ -1,7 +1,7 @@
 
 .top-search {
   padding: 2em;
-  background: var(--color-black);
+  background: transparent /*var(--color-black)*/;
   box-shadow: var(--box-shadow);
   display: flex;
   gap: 10px;
@@ -15,9 +15,9 @@
 
 .search {
   flex-grow: 1;
-  border: 2px solid var(--color-white);
+  border-bottom: 1px solid #dcdcdc;
   background: var(--color-white);
-  border-radius: 20px;
+ /* border-radius: 20px;*/
   position: relative;
 }
 
@@ -196,7 +196,7 @@
   gap: 20px;
   padding: 2em;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  background: rgb(245 245 245);
+  background: var(--color-white) /*rgb(245 245 245)*/;
 }
 
 .card {
@@ -285,24 +285,26 @@
 
 .btn-buy {
   padding: 10px 15px;
-  border: 2px solid var(--color-black);
-  border-radius: 20px;
+  border: 2px solid transparent;
+  border-radius: 7px;
   background: var(--color-black);
   color: var(--color-white);
   font-family: "Poppins", sans-serif;
   font-weight: 600;
   cursor: pointer;
   transition: 0.2s;
-  box-shadow: 0px 6px 0px 0px var(--color-black),
-    0px 12px 0px 0px rgba(128 128 128 / 17%);
+  /*box-shadow: 0px 6px 0px 0px var(--color-black),
+    0px 12px 0px 0px rgba(128 128 128 / 17%);*/
   font-size: 1.8rem;
   flex-grow: 1;
   //width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
   text-wrap: nowrap;
+  background: hsla(345, 100%, 79%, 0.25);
+    color: hsl(345, 100%, 65%);
 }
-
+/*
 .btn-buy:hover {
   //letter-spacing: 1.25px;
   transform: translateY(4px);
@@ -315,7 +317,7 @@
   transform: translateY(8px);
   box-shadow: 0px 0px 0px 0px var(--color-black),
     0px 0px 0px 0px rgba(128 128 128 / 17%);
-}
+}*/
 
 /**/
 .item-product {

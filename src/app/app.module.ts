@@ -13,6 +13,7 @@ import { AccountComponent } from './pages/account/account.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { NotLoggedInComponent } from './pages/not-logged-in/not-logged-in.component';
 import { BuscarComponent } from './pages/buscar/buscar.component';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 const routes: Routes = [
   { path: '', redirectTo: 'm', pathMatch: 'full' },
@@ -29,14 +30,14 @@ const routes: Routes = [
     ],
   },
   {
-    path : 'account',
+    path: 'account',
     component: AccountComponent,
     children: [
       { path: '', redirectTo: 'login', pathMatch: 'full' },
       { path: 'login', component: LoginComponent },
-      { path: 'register', component: RegisterComponent }
-    ]
-  }
+      { path: 'register', component: RegisterComponent },
+    ],
+  },
 ];
 
 @NgModule({
@@ -53,7 +54,11 @@ const routes: Routes = [
     NotLoggedInComponent,
     BuscarComponent,
   ],
-  imports: [BrowserModule, RouterModule.forRoot(routes, { useHash: true })],
+  imports: [
+    BrowserModule,
+    RouterModule.forRoot(routes, { useHash: true }),
+    HttpClientModule,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })

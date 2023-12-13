@@ -16,7 +16,7 @@
         <li [routerLink]="['./profile']" *ngIf="getAccount() != undefined;else login">
           <i class="fa-regular fa-user"></i>
         </li>
-        <li [routerLink]="['./cart']">
+        <li [routerLink]="['./cart']" [ngClass]="{'cart-link' : getnNewAmount()}" [attr.amount]="getnNewAmount()">
           <i class="fa-solid fa-cart-shopping"></i>
         </li>
         <li (click)="toogleActive()" ><i class="fa-solid fa-bars"></i></li>
@@ -56,7 +56,7 @@
         <div class="line-2"></div>
         <div class="line-3"></div>
       </div>
-      <h1>Menu</h1>
+      <!-- <h1>Menu</h1> -->
     </div>
     <ul>
       <li routerLinkActive="active" [routerLink]="['./home']">

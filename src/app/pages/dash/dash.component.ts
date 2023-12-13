@@ -3,6 +3,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
 import { AccountService } from 'src/app/services/account/account.service';
+import { CartService } from 'src/app/services/cart/cart.service';
 
 @Component({
   selector: 'app-dash',
@@ -15,15 +16,23 @@ export class DashComponent implements OnInit {
   @ViewChild('initialText', { static: true })
   initialText!: ElementRef<HTMLElement>;
 
-  constructor(private account: AccountService, private router: Router, private viewportScroller: ViewportScroller) {}
-
+  constructor(
+    private account: AccountService,
+    private router: Router,
+    private viewportScroller: ViewportScroller,
+    private cartService: CartService
+  ) {}
 
   ngOnInit(): void {
-    this.router.events.pipe(
-      filter((event) => event instanceof NavigationEnd)
-    ).subscribe(() => {
-      this.viewportScroller.scrollToPosition([0, 0]);
-    });
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe(() => {
+        this.viewportScroller.scrollToPosition([0, 0]);
+      });
+  }
+
+  getnNewAmount(){
+    return this.cartService.cartNewItems
   }
 
   saibaMais() {
@@ -59,7 +68,7 @@ export class DashComponent implements OnInit {
     window.open(url);
   }
 
-  getAccount(){
-    return this.account.account
+  getAccount() {
+    return this.account.account;
   }
 }
