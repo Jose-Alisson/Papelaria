@@ -10,8 +10,6 @@ import { tap } from 'rxjs';
 export class AccountService {
 
   account?: Account | undefined = 
-
-
   {
     id: '',
     photoUrl: '',

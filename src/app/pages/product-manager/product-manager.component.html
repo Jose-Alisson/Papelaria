@@ -1,1 +1,42 @@
-<p>product-manager works!</p>
+<div class="container">
+
+    <div id="item-0">
+        <h1 class="page-title">Meus Produtos</h1>
+    </div>
+    <div id="item-1" class="box">
+        <div class="search">
+            <input type="text" placeholder="Pesquisar" />
+            <button class="icon">
+              <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+          </div>
+        <div class="cards-sliders">
+            <div class="card" *ngFor="let i of [1,2,3,4,5,6,7,8,9]">
+                <div class="card-content">
+                    <div class="card-preview">
+                        <img src="../../../assets/caixa_de_presente.jpg" alt="">
+                    </div>
+                    <div class="card-description">
+                        <h2 class="title">{{'Produto'}}</h2>
+                        <p class="description">
+                            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Temporibus architecto non quasi!
+                        </p>
+                        <h2 class="price">
+                            {{ 0 | currency : "BRL" : "symbol-narrow" }}
+                        </h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="item-2" class="box"><img src="../../../assets/Add to Cart-bro.svg" alt=""></div>
+    <div id="item-3" class="box">
+        <div class="acts">
+            <button>Adicionar</button>
+            <button>Editar</button>
+            <button>Remover</button>
+        </div>
+    </div>
+    <div id="item-4" class="box">&nbsp;</div>
+    <div id="item-5" class="box">&nbsp;</div>
+</div>
