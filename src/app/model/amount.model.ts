@@ -1,8 +1,10 @@
+import { ProductAttribute } from './ProductAttribute.model';
 import { Product } from './product.model';
 
 export declare class Amount {
-  date: string
+  date: string;
   checked: boolean;
   product: Product;
-  amount: number;
+  quantity: number;
+  productAttributes: ProductAttribute[]
 }

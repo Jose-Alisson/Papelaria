@@ -22,7 +22,7 @@ export class ImageService {
 
       const options = { headers: headers };
 
-      return this.http.post<any>(UrlApiService.URL_API + '/upload', form, options)
+      return this.http.post<any>(UrlApiService.URL_API + '/file/upload', form, options)
       .pipe(catchError((error: HttpErrorResponse) => {
         return throwError(() => new Error(error.error));
       }))
@@ -32,6 +32,6 @@ export class ImageService {
 
   downloadImagem(path: string): Observable<Blob> {
     const params = new HttpParams().set('filePath', path)
-    return this.http.get(UrlApiService.URL_API + '/download', { params: params, responseType: 'blob'});
+    return this.http.get(UrlApiService.URL_API + '/file/download', { params: params, responseType: 'blob'});
   }
 }

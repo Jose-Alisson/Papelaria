@@ -1,42 +1,23 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AccountService } from './services/account/account.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
-  title = 'Granja-Nascimento-Angular';
+export class AppComponent implements OnInit {
 
-  menuActive = false
+  constructor(private as: AccountService){}
 
-  @ViewChild('initialText', {static: true})
-  initialText!: ElementRef<HTMLElement>
+  ngOnInit(): void {
+    this.as.autoSign().subscribe({ next: () => {
 
-  saibaMais(){
-    this.initialText.nativeElement.scrollIntoView({behavior: 'smooth'})
+    }, error: (err: HttpErrorResponse) => {
+      console.log(err);
+    }})
   }
-
-  toogleActive(){
-    this.menuActive = !this.menuActive
-  }
-
-  products: any[] = [
-    {
-      photoUrl: 'assets//foto_casamento.jpg',
-      name: 'Álbum de fotos',
-      price: 20.0,
-      description: 'Álbum de foto feito á mão',
-      article: ' a '
-    },
-    {
-      photoUrl: 'assets//luluzinho.jpg',
-      name: 'Luluzinho',
-      price: 5.0,
-      description: 'Prendedor de cabelo',
-      article: ' o '
-    }
-  ]
 
   comprar(message: string){
     const numeroContato = '+5581999340962'; // Insira o número do seu contato do WhatsApp aqui

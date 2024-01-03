@@ -366,13 +366,14 @@
   display: flex;
   padding: 7px 0px;
   align-items: center;
+  gap: 10px;
 }
 
 .amount .decrement,
 .amount .increment {
   width: 25px;
   height: 25px;
-  background: #cccccc;
+  //background: #cccccc;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -382,11 +383,54 @@
 }
 
 .amount .counter {
-  padding: 0px 20px;
+  padding: 10px 15px;
+  background: #eee;
+  border-radius: 7px;
 }
 
 .amount .counter p {
   font-family: "Avenir Bold", sans-serif;
 }
 
+.item{
+  //padding: 2em;
+  display: flex;
+  gap: 2em;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 90%;
+  margin: auto;
+}
 
+.item > *{
+  flex-grow: 1;
+}
+
+.item .side-left{
+  width: 300px;
+  max-width: 400px;
+}
+
+.side-right{
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 600px;
+}
+
+.empty{
+  h1{
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 3.8rem;
+    color: #263638;
+  }
+
+  span a {
+    color: #ff4d79;
+    cursor: pointer;
+    font-size: 2.2rem;
+    text-decoration: none;
+    font-style: italic;
+  }
+}

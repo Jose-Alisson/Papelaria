@@ -1,334 +1,159 @@
-
-.account-container{
+.container {
   display: flex;
   height: 100%;
 }
 
-.account-container > div {
-  width: 50%;
-  height: 100%;
+.container > div {
+  flex-grow: 1;
 }
 
-.side-left{
+.side-left {
   background: url(../../../assets/lojas-de-papelaria-fofas.png);
   background-size: cover;
-
+  margin: 20px;
+  border-radius: 20px;
 }
 
-.side-right{
-  background: var(--color-white);
-}
-
-.container {
-  background: linear-gradient(45deg, var(--color-1), var(--color-2));
-  display: flex;
-  height: 100%;
-}
-
-.side-left,
 .side-right {
-  width: 50vw;
+  max-width: 600px;
+  overflow-y: auto;
+}
+
+.box {
+  width: 75%;
+  margin: auto;
+  display: grid;
+  gap: 20px;
+  padding: 20px;
+  box-shadow: 0px 7px 10px 0px rgba(0 0 0 / 17%);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  background-color: rgba(17, 25, 40, 0.75);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.125);
+  color: var(--color-white);
+}
+
+.start-message h1 {
+  font-size: 4.2rem;
+  color: rgba(255, 149, 176, 1);
+  font-family: "Pacifico", sans-serif;
+  font-weight: 400;
+}
+
+.start-message span {
+  color: #cccccc;
+
+  a {
+    color: rgba(255, 149, 176, 1);
+  }
+}
+
+.fields {
+  display: grid;
+  gap: 10px;
+}
+
+.box-field {
+  display: grid;
+  gap: 2px;
+}
+
+.field {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.side-right{
-  background: white;
-}
-
-//.side-right {//background: var(--color-4);}
-
-.side-left #img_1 {
-  height: auto;
-  width: 60%;
-  object-fit: cover;
-}
-
-.side-left #img_2 {
-  height: 60%;
-  height: 60%;
-  object-fit: cover;
-}
-
-.card {
-  width: 500px;
-  //height: 650px;
-  padding: 0px calc(5% - 4px) 20px calc(5% - 4px);
-  //border-radius: 20px;
-  box-shadow: 0px 0px 20px 0px rgba(0 0 0 / 17%);
-  display: flex;
-  flex-flow: column;
-  background: var(--color-white);
-  overflow-y: scroll;
-  max-width: 100%;
-  max-height: 100%;
-}
-
-.card::-webkit-scrollbar {
-  display: none;
-}
-
-.card-content {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  flex-grow: 1;
-  flex-basis: auto;
-}
-
-.line {
   position: relative;
-  margin: 15px 0px;
-  height: 1px;
-  background: var(--color-9);
-  padding: 1px 0px 0px 0px;
-}
-
-.line::after {
-  content: "Ou";
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  position: absolute;
-  background: var(--color-white);
-  padding: 2px 15px;
-  font-family: "Poppins", sans-serif;
-}
-
-h1 {
-  text-align: center;
-}
-
-.logo {
-  width: 70px;
-  border-radius: 50%;
-  height: 70px;
-  overflow: hidden;
-}
-
-.logo img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.card-header,
-.login-content {
-  display: flex;
   flex-direction: column;
+}
+
+.fields input {
+  border-radius: 7px;
+  padding: 10px 45px 10px 15px;
+  border: 0px;
+  outline: none;
+  box-shadow: 0px 0px 0px 1px rgba(0 0 0 / 17%);
+  background: rgba(245 245 245 / 17%);
+  transition: 0.2s;
+  font-family: "Poppins";
+  color: var(--color-white);
+
+  &:focus {
+    box-shadow: 0 -1px #0000000a, 0 2px 4px #00000040,
+      0 0 0 3px rgba(255, 149, 176, 0.52);
+  }
+}
+
+.fields input::placeholder {
+  color: #dcdcdc;
+}
+
+.field i {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translate(-50%, -50%);
+  color: #dcdcdc;
+}
+
+.validate{
+  color: rgba(255, 149, 176, 1);
+  font-size: 1.2rem;
+}
+
+.btn-login,
+.btn-register {
+  border: 0;
+  padding: 10px 15px;
+  border-radius: 20px;
+  background: rgb(255, 149, 176);
+  color: white;
+  outline: none;
+  width: 150px;
+  font-family: "Poppins", sans-serif;
+  box-shadow: 2px 2px 5px 0px rgba(255, 149, 176, 0.52);
+  transition: 0.2s;
+  text-transform: uppercase;
+  cursor: pointer;
+
+  &:hover {
+    transform: scale(90%);
+  }
+}
+
+.btn-register {
+  width: 100%;
+  border-radius: 7px;
+}
+
+.remember {
+  display: flex;
   justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.remember > span a {
+  color: rgba(255, 149, 176, 1);
+}
+
+.check {
+  display: flex;
   align-items: center;
-  margin-bottom: 10px;
+  gap: 2px;
 }
 
-.card-header h1 {
-  font-family: "Avenir Bold", sans-serif;
-  align-items: center;
+.privacy {
+  color: #dcdcdc;
+  font-size: 1.2rem;
 }
 
-.login-content > p {
-  font-size: 14px;
-
-}
-
-.card-content > span {
-  text-align: center;
-}
-
-@media screen and (max-width: 414px) {
+@media screen and (max-width: 620px) {
   .side-left {
     display: none;
   }
-
-  .side-right {
-    width: 100vw;
-  }
 }
 
-.login-with-google-btn {
-  transition: background-color 0.3s, box-shadow 0.3s;
-  padding: 12px 16px 12px 42px;
-  border: none;
-  border-radius: 20px;
-  box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.04), 0px 0px 3px rgba(0, 0, 0, 0.25);
-  //max-width: 80%;
-  width: 100%;
-  color: #757575;
-  font-size: 14px;
-  font-weight: 500;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-    Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-  background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgiIGhlaWdodD0iMTgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj48cGF0aCBkPSJNMTcuNiA5LjJsLS4xLTEuOEg5djMuNGg0LjhDMTMuNiAxMiAxMyAxMyAxMiAxMy42djIuMmgzYTguOCA4LjggMCAwIDAgMi42LTYuNnoiIGZpbGw9IiM0Mjg1RjQiIGZpbGwtcnVsZT0ibm9uemVybyIvPjxwYXRoIGQ9Ik05IDE4YzIuNCAwIDQuNS0uOCA2LTIuMmwtMy0yLjJhNS40IDUuNCAwIDAgMS04LTIuOUgxVjEzYTkgOSAwIDAgMCA4IDV6IiBmaWxsPSIjMzRBODUzIiBmaWxsLXJ1bGU9Im5vbnplcm8iLz48cGF0aCBkPSJNNCAxMC43YTUuNCA1LjQgMCAwIDEgMC0zLjRWNUgxYTkgOSAwIDAgMCAwIDhsMy0yLjN6IiBmaWxsPSIjRkJCQzA1IiBmaWxsLXJ1bGU9Im5vbnplcm8iLz48cGF0aCBkPSJNOSAzLjZjMS4zIDAgMi41LjQgMy40IDEuM0wxNSAyLjNBOSA5IDAgMCAwIDEgNWwzIDIuNGE1LjQgNS40IDAgMCAxIDUtMy43eiIgZmlsbD0iI0VBNDMzNSIgZmlsbC1ydWxlPSJub256ZXJvIi8+PHBhdGggZD0iTTAgMGgxOHYxOEgweiIvPjwvZz48L3N2Zz4=);
-  background-color: white;
-  background-repeat: no-repeat;
-  background-position: 12px 11px;
-
-  &:hover {
-    box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.04), 0 2px 4px rgba(0, 0, 0, 0.25);
+@media screen and (max-width: 420px) {
+  .box {
+    width: 90%;
   }
-
-  &:active {
-    background-color: #eeeeee;
-  }
-
-  &:focus {
-    outline: none;
-    box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.04), 0 2px 4px rgba(0, 0, 0, 0.25),
-      0 0 0 3px #c8dafc;
-  }
-
-  &:disabled {
-    filter: grayscale(100%);
-    background-color: #ebebeb;
-    box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.04), 0 1px 1px rgba(0, 0, 0, 0.25);
-    cursor: not-allowed;
-  }
-}
-
-.login-with-facebook-btn {
-  // position: relative;
-  // transition: background-color 0.3s, box-shadow 0.3s;
-  // padding: 12px 16px 12px 42px;
-  // border: none;
-  // border-radius: 20px;
-  // box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.04), 0px 0px 3px rgba(0, 0, 0, 0.25);
-  // //max-width: 80%;
-  // width: 100%;
-  // color: white;
-  // font-size: 0.9rem;
-  // font-family: "Helvetica Neue", Arial, sans-serif;
-  // font-weight: bold;
-  // //background-image: url(/assets//facebook_logo.png);
-  // background-color: #1777f2;
-  // background-repeat: no-repeat;
-  // background-position: 12px 11px;
-
-  // &:hover {
-  //   box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.04), 0 2px 4px rgba(0, 0, 0, 0.25);
-  // }
-
-  // &:active {
-  //   background-color: #eeeeee;
-  // }
-
-  // &:focus {
-  //   outline: none;
-  //   box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.04), 0 2px 4px rgba(0, 0, 0, 0.25),
-  //     0 0 0 3px #c8dafc;
-  // }
-
-  // &:disabled {
-  //   filter: grayscale(100%);
-  //   background-color: #ebebeb;
-  //   box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.04), 0 1px 1px rgba(0, 0, 0, 0.25);
-  //   cursor: not-allowed;
-  // }
-  position: relative;
-  transition: background-color 0.3s, box-shadow 0.3s;
-  padding: 12px 16px 12px 42px;
-  border: none;
-  border-radius: 20px;
-  box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.04), 0px 0px 3px rgba(0, 0, 0, 0.25);
-  //max-width: 80%;
-  width: 100%;
-  color: white;
-  font-size: 14px;
-  font-weight: 500;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-    Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-  //background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgiIGhlaWdodD0iMTgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj48cGF0aCBkPSJNMTcuNiA5LjJsLS4xLTEuOEg5djMuNGg0LjhDMTMuNiAxMiAxMyAxMyAxMiAxMy42djIuMmgzYTguOCA4LjggMCAwIDAgMi42LTYuNnoiIGZpbGw9IiM0Mjg1RjQiIGZpbGwtcnVsZT0ibm9uemVybyIvPjxwYXRoIGQ9Ik05IDE4YzIuNCAwIDQuNS0uOCA2LTIuMmwtMy0yLjJhNS40IDUuNCAwIDAgMS04LTIuOUgxVjEzYTkgOSAwIDAgMCA4IDV6IiBmaWxsPSIjMzRBODUzIiBmaWxsLXJ1bGU9Im5vbnplcm8iLz48cGF0aCBkPSJNNCAxMC43YTUuNCA1LjQgMCAwIDEgMC0zLjRWNUgxYTkgOSAwIDAgMCAwIDhsMy0yLjN6IiBmaWxsPSIjRkJCQzA1IiBmaWxsLXJ1bGU9Im5vbnplcm8iLz48cGF0aCBkPSJNOSAzLjZjMS4zIDAgMi41LjQgMy40IDEuM0wxNSAyLjNBOSA5IDAgMCAwIDEgNWwzIDIuNGE1LjQgNS40IDAgMCAxIDUtMy43eiIgZmlsbD0iI0VBNDMzNSIgZmlsbC1ydWxlPSJub256ZXJvIi8+PHBhdGggZD0iTTAgMGgxOHYxOEgweiIvPjwvZz48L3N2Zz4=);
-  background-color: #1777f2;
-  background-repeat: no-repeat;
-  background-position: 12px 11px;
-
-  &:hover {
-    box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.04), 0 2px 4px rgba(0, 0, 0, 0.25);
-  }
-
-  &:active {
-    background-color: #eeeeee;
-  }
-
-  &:focus {
-    outline: none;
-    box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.04), 0 2px 4px rgba(0, 0, 0, 0.25),
-      0 0 0 3px #c8dafc;
-  }
-
-  &:disabled {
-    filter: grayscale(100%);
-    background-color: #ebebeb;
-    box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.04), 0 1px 1px rgba(0, 0, 0, 0.25);
-    cursor: not-allowed;
-  }
-
-  img {
-    position: absolute;
-    left: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-  }
-}
-
-
-.login-wrapper, .or-select {
-  width: 100%;
-  justify-content: center;
-  justify-items: center;
-  display: grid;
-  grid-gap: 15px;
-  grid-template-columns: repeat(1, 95%);
-}
-
-.or-select{
-  margin-bottom: 15px;
-}
-
-.or{
-
-  &::before{
-    content: 'Ou';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-    padding: 1px 7px;
-    background: var(--color-white);
-  }
-  margin-top: 15px;
-  width: 100%;
-  padding-top: 1px;
-  background: rgba(0,0,0,0.2);
-  position: relative;
-}
-
-.login-wrapper > p {
-  font-size: 14px;
-  text-align: center;
-}
-
-@media screen and (max-width: 735px) {
-  .card{
-    height: 100%;
-    width: 100%;
-    border-radius: 0px;
-  }
-}
-
-.card-content span a{
-  color: #1777f2;
-  text-decoration: none;
-}
-
-.darken{
-  z-index: 1;
-  position: absolute;
-  content: '';
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.3);
 }

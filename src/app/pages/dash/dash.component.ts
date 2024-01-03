@@ -11,7 +11,12 @@ import { CartService } from 'src/app/services/cart/cart.service';
   styleUrls: ['./dash.component.scss'],
 })
 export class DashComponent implements OnInit {
+
   menuActive = false;
+
+  barSearchActive = false
+
+  searchText = ""
 
   @ViewChild('initialText', { static: true })
   initialText!: ElementRef<HTMLElement>;
@@ -43,6 +48,10 @@ export class DashComponent implements OnInit {
     this.menuActive = !this.menuActive;
   }
 
+  toogleBarSearchActive(){
+    this.barSearchActive = !this.barSearchActive
+  }
+
   products: any[] = [
     {
       photoUrl: 'assets//foto_casamento.jpg',
@@ -66,6 +75,12 @@ export class DashComponent implements OnInit {
 
     const url = `https://api.whatsapp.com/send?phone=${numeroContato}&text=${mensagem}`;
     window.open(url);
+  }
+
+  search(event: KeyboardEvent){
+    if(event.key ===  "Enter"){
+      this.router.navigate(['/m/buscar'], {queryParams: {s: this.searchText}})
+    }
   }
 
   getAccount() {

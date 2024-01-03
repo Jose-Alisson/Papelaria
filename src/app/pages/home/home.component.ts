@@ -1,4 +1,5 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -10,6 +11,8 @@ export class HomeComponent {
 
   @ViewChild('initialText', {static: true})
   initialText!: ElementRef<HTMLElement>
+
+  constructor(private router: Router){}
 
   saibaMais(){
     this.initialText.nativeElement.scrollIntoView({behavior: 'smooth'})
@@ -42,5 +45,9 @@ export class HomeComponent {
 
     const url = `https://api.whatsapp.com/send?phone=${numeroContato}&text=${mensagem}`;
     window.open(url);
+  }
+
+  showProduct(id: number){
+    this.router.navigate([`/m/item/${id}`])
   }
 }

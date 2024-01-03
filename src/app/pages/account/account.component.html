@@ -1,32 +1,7 @@
-<div class="container">
-  <div class="side-left"></div>
-  <div class="side-right">
-    <div class="card">
-      <br />
-      <div class="card-header">
-        <div class="logo">
-          <img src="../../../assets/papelart.jpg" alt="" />
-        </div>
-        <!--<h1>Bem-vindo a</h1>
-        <h1>Pizzaria Sapucaian's</h1> -->
-      </div>
-      <div class="card-content">
-        <router-outlet></router-outlet>
-        <div class="or-select">
-          <div class="or"></div>
-          <button type="button" class="login-with-facebook-btn"  (click)="{}">
-            <img src="assets//logo_facebook.png" height="18px" width="18px"/>
-            Login com Facebook
-          </button>
-          <button type="button" class="login-with-google-btn" (click)="{}"  >
-            Login com Google
-          </button>
-        </div>
-        <span *ngIf="entrar" >Não tenho conta, <a (click)="entrar = false" [routerLink]="['./register']">Me Registrar!</a></span>
-        <span *ngIf="!entrar" >Já tenho conta, <a (click)="entrar = true" [routerLink]="['./login']">Entrar</a></span>
-      </div>
-    </div>
+<section class="container">
+  <div class="side-left">
   </div>
-</div>
-
-
+  <div class="side-right">
+    <router-outlet></router-outlet>
+  </div>
+</section>

@@ -1,25 +1,42 @@
 <header>
   <nav>
-    <h2 class="header-title">
+    <h2 class="header-title" [routerLink]="['/m/home']" style="cursor: pointer;">
       <div class="icon">
         <img src="assets//papelart.jpg" alt="" style="border-radius: 50%" />
       </div>
       <h4 class="site-title">Papelart</h4>
     </h2>
-    <ul class="links">
+    <!-- <ul class="links">
       <li [routerLink]="['./home']"><a>Inicio</a></li>
       <li [routerLink]="['./buscar']"><a>Catálogo</a></li>
       <li [routerLink]="['./profile']"><a>Perfil</a></li>
-    </ul>
+    </ul> -->
+    <div class="search">
+      <input type="text" placeholder="Pesquisar" [(ngModel)]="searchText"  (keyup)="search($event)"/>
+      <button class="icon">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </button>
+    </div>
     <div class="more">
       <ul class="more-links">
-        <li [routerLink]="['./profile']" *ngIf="getAccount() != undefined;else login">
+        <li
+          [routerLink]="['./profile']"
+          *ngIf="getAccount() != undefined; else login"
+        >
           <i class="fa-regular fa-user"></i>
         </li>
-        <li [routerLink]="['./cart']" [ngClass]="{'cart-link' : getnNewAmount()}" [attr.amount]="getnNewAmount()">
+        <li class="lupa" (click)="toogleBarSearchActive()">
+          <i class="fi fi-rr-search"></i>
+        </li>
+        <li
+          [routerLink]="['./cart']"
+          *ngIf="getAccount() != undefined"
+          [ngClass]="{ 'cart-link': getnNewAmount() }"
+          [attr.amount]="getnNewAmount()"
+        >
           <i class="fa-solid fa-cart-shopping"></i>
         </li>
-        <li (click)="toogleActive()" ><i class="fa-solid fa-bars"></i></li>
+        <li (click)="toogleActive()"><i class="fa-solid fa-bars"></i></li>
       </ul>
     </div>
     <!-- <div class="menu" [ngClass]="{ change: menuActive }" (click)="toogleActive()">
@@ -42,16 +59,27 @@
 </ng-template> -->
 
 <ng-template #login>
-  <li><p>Login</p></li>
+  <li class="li-login" [routerLink]="['../account/login']"><p>Login</p></li>
 </ng-template>
 
+<div class="search-float" [ngClass]="{'active': barSearchActive}">
+  <div class="search">
+    <input type="text" placeholder="Pesquisar"  [(ngModel)]="searchText"  (keyup)="search($event)"/>
+    <button class="icon">
+      <i class="fa-solid fa-magnifying-glass"></i>
+    </button>
+  </div>
+</div>
 
-
-<div class="fade" *ngIf="menuActive"></div>
+<div class="fade" *ngIf="menuActive" style="z-index: 2;"></div>
 <div class="sidebar" [ngClass]="{ active: menuActive }">
   <div class="side-content">
     <div class="side-header">
-      <div class="menu" [ngClass]="{ change: menuActive }" (click)="toogleActive()">
+      <div
+        class="menu"
+        [ngClass]="{ change: menuActive }"
+        (click)="toogleActive()"
+      >
         <div class="line-1"></div>
         <div class="line-2"></div>
         <div class="line-3"></div>
@@ -68,8 +96,10 @@
       <li routerLinkActive="active" [routerLink]="['./profile']">
         <a>Seu Perfil</a>
       </li>
+      <li routerLinkActive="active" [routerLink]="['./adm']" *ngIf="getAccount()?.typeAccount === 'ADMIN'">
+        <a>Admin</a>
+      </li>
     </ul>
   </div>
 </div>
 <router-outlet></router-outlet>
-

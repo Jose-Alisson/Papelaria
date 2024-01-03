@@ -11,7 +11,11 @@ export class ProductService {
 
   constructor(private http:  HttpClient) { }
 
-  getFindById(id: number){
-    return this.http.get<Product>(`${UrlApiService.URL_API}/findById/${id}`)
+  getFindById(id: string){
+    return this.http.get<Product>(`${UrlApiService.URL_API}/product/findById/${id}`)
+  }
+
+  getAll(){
+    return this.http.get<Product[]>(`${UrlApiService.URL_API}/product/findAll`)
   }
 }

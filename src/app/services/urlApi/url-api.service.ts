@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class UrlApiService {
 
-  static URL_API = ""
+  static URL_API = "http://localhost:8080/api"
 
   constructor() { }
 }

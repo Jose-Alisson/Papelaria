@@ -48,7 +48,7 @@
     </div>
   </div>
 </div> -->
-<section class="top-search">
+<!-- <section class="top-search">
   <div class="search">
     <input type="text" placeholder="Pesquisar" />
     <button class="icon">
@@ -57,22 +57,33 @@
   </div>
   <!-- <div class="btn-slider-cart" (click)="toogleActive()" [ngClass]="{'cart-not-empty' : getCartLength() > 1}" [attr.counter]="getCartLength()">
     <i class="fa-solid fa-cart-shopping"></i>
-  </div> -->
-</section>
-<section class="items">
-  <div class="card" (click)="viewItem(item)" *ngFor="let item of [1, 2, 3, 4, 5, 6, 7, 8, 9]">
+  </div> >--
+</section> -->
+
+<section class="items" *ngIf="products.length > 0; else empty">
+  <div class="card" (click)="viewItem(item.id)" *ngFor="let item of products">
     <div class="card-preview">
-      <img src="../../../assets/albumfotos.jpg" alt="" />
+      <img [src]="item.photoObject" alt="" />
     </div>
     <div class="card-content">
-      <h1 class="title">Produto</h1>
+      <h1 class="title">{{item.productName}}</h1>
       <p class="description">
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Inventore
-        sapiente in adipisci voluptatem esse reprehenderit?
+        {{item.description}}
       </p>
       <h1 class="price">
-        {{ 10.0 | currency : "BRL" : "symbol-narrow" }}
+        {{ item.basePrice | currency : "BRL" : "symbol-narrow" }}
       </h1>
     </div>
   </div>
 </section>
+
+<ng-template #empty>
+  <section class="item empty">
+    <div class="side-left">
+      <img src="../../../assets/Empty-bro.svg" alt="">
+    </div>
+    <div class="side-right" style="justify-content: center;">
+      <h1>Desculpe, estamos trabalhando para adicionar novos produtos em breve. Volte para conferir as novidades</h1>
+    </div>
+  </section>
+</ng-template>

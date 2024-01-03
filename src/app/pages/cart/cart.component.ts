@@ -7,7 +7,7 @@ import { CartService } from 'src/app/services/cart/cart.service';
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.scss', '../buscar/buscar.component.scss'],
 })
-export class CartComponent implements OnInit{
+export class CartComponent implements OnInit {
 
   constructor(private cart: CartService) {}
 
@@ -47,6 +47,13 @@ export class CartComponent implements OnInit{
   }
 
   /*
+  Pegar todos os amontuadores do carrinho
+  */
+  getAllProductFromCart(){
+    return this.cart.cart
+  }
+
+  /*
   Retorna true se todos os amontoados da data especifica estiverem ativos
   */
   isCheckAllActiveDate(date: string) {
@@ -67,8 +74,8 @@ export class CartComponent implements OnInit{
   Incrementar ao amontuador
   */
   increment(amount: Amount) {
-    if(amount.amount < amount.product.available){
-      amount.amount++;
+    if(amount.quantity < amount.product.available){
+      amount.quantity++;
     }
   }
 
@@ -76,8 +83,8 @@ export class CartComponent implements OnInit{
   Decrementar ao amontuador e remover o amonduador caso o valor de decrementação for menor que 1
   */
   decrement(amount: Amount) {
-    if (amount.amount > 1) {
-      amount.amount--;
+    if (amount.quantity > 1) {
+      amount.quantity--;
     } else {
       this.cart.cart = this.cart.cart.filter(amount_ => amount_ !== amount)
     }
@@ -95,7 +102,7 @@ export class CartComponent implements OnInit{
   getTotalAmount(amount: Amount) {
     let value = 0;
 
-    value = amount.product.price * amount.amount;
+    value = amount.product.basePrice * amount.quantity;
 
     return value;
   }

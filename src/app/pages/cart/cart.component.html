@@ -1,6 +1,7 @@
 <div class="container">
+  <ng-container *ngIf="getAllProductFromCart().length > 0;else massageBuy">
   <h1 class="page-title">Meu Carrinho</h1>
-  <div class="list-products" *ngFor="let items of getAllDateProducts()">
+  <!-- <div class="list-products" *ngFor="let items of getAllDateProducts()">
     <div class="control-cart">
       <div class="checked" (click)="checkedAll(items, check.checked)">
         <input type="checkbox" name="" id="" #check [checked]="isCheckAllActiveDate(items)"/>
@@ -34,17 +35,129 @@
         </div>
       </div>
     </div>
-  </div>
-  <div style="display: flex; flex-direction: column; gap: 10px">
-    <div class="subtotal">
-      <div class="message">
-        <span>Sub-Total</span>
-        <p>{{ getCartLengthAmountCheck() }} {{ getCartLengthAmountCheck() === 1 ? "item" : "items" }}</p>
-      </div>
-      <div class="value">
-        <h3>{{ getAllTotalAmountCheck() | currency : "BRL" : "symbol-narrow" }}</h3>
-      </div>
+  </div> -->
+
+  
+  <div class="table-tools">
+    <div class="table-content">
+      <table>
+        <thead>
+          <tr>
+            <th class="minimize">#</th>
+            <!-- <th>id</th> -->
+            <th></th>
+            <th>Produto</th>
+            <th></th>
+            <th class="text-center minimize">Preço</th>
+            <!-- <th>Categoria</th> -->
+            <th class="text-center">Quantidade</th>
+            <th>Subtotal</th>
+            <th class="text-center">Excluir</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="centralize" *ngFor="let p of getAllProductFromCart(); let i = index">
+            <td class="minimize"><span attr-data="#">{{i}}</span></td>
+            <!-- <td><span attr-data="id">{{p.product.id}}</span></td> -->
+            <td>
+              <div class="product-view">
+                 <img [src]="p.product.photoObject" height="70px">
+              </div>
+            </td>
+            <td><span attr-data="Produto">{{p.product.productName}}</span></td>
+            <td><span attr-data="Descrição" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">{{p.product.description}}</span></td>
+            <td class="minimize"><span attr-data="Preço" class="text-center super-text" >{{p.product.basePrice | currency: 'BRL' : 'symbol-narrow'}}</span></td>
+            <!-- <td><span attr-data="Categoria">{{p.product.category}}</span></td> -->
+            <td>
+              <span attr-data="Quantidade" >
+                <div class="amount text-center" style="justify-content: center;">
+                  <div class="decrement" (click)="decrement(p)">
+                    <i class="fa-solid fa-minus"></i>
+                  </div>
+                  <div class="counter">
+                    <p>{{ p.quantity }}</p>
+                  </div>
+                  <div class="increment" (click)="increment(p)">
+                    <i class="fa-solid fa-plus"></i>
+                  </div>
+                </div>
+              </span>
+            </td>
+            <td class="super-text">{{(p.product.basePrice * p.quantity) | currency: 'BRL' : 'symbol-narrow'}}</td>
+            <td class="text-center">
+              <i class="fi fi-rr-trash-xmark"></i>
+              <!-- <div class="action">
+                <button class="btn-ed" (click)="editar(p.idProduct)">Editar</button>
+                <button class="btn-re" (click)="remover(p.idProduct)">Remover</button>
+              </div> -->
+            </td>
+          </tr>
+          <tr>
+            <td colspan="1"></td>
+            <td colspan="3">
+              <div class="fields">
+                <div class="box-field">
+                  <label for="cep" style="text-align: start;">Cep</label>
+                  <div style="display: flex;gap: 10px;flex-wrap: wrap;">
+                    <div class="field" >
+                      <input id="cep" type="text" placeholder="Cep" formControlName="cep" mask="00000-000" [showMaskTyped]="true" [specialCharacters]="['-']"/>
+                      <i class="fa-regular fa-envelope"></i>
+                    </div>
+                    <button class="calculate-delivery">Calcular preço</button>
+                  </div>
+                  <div class="validate">
+                  </div>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <!-- <tr>
+            <td colspan="1"></td>
+            <td colspan="2">
+              <h2>Forma de pagamento</h2>
+              <ul>
+                <li>Pix</li>
+                <li>Cartão</li>
+              </ul>
+            </td>
+          </tr> -->
+          <tr>
+            <td colspan="6"></td>
+            <td colspan="2" style="justify-content: flex-end;">
+              <div class="line-information-table">
+                <div class="line-subtotal">
+                  <span>Total: </span>
+                  <span class="value-total">{{getAllTotalAmountCheck() | currency: 'BRL' : 'symbol-narrow'}}</span>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-    <button class="btn-buy">Comprar</button>
+    <!-- <div class="line-information-table">
+      <div class="line-subtotal">
+        <span>Subtotal</span>
+
+      </div>
+    </div> -->
   </div>
+  <div class="line-information">
+    <div class="line-action" style="justify-content: flex-end;">
+      <a>Continuar comprando</a>
+      <button><i class="fi fi-rr-check"></i> Finalizar Comprar</button>
+    </div>
+  </div>
+  </ng-container>
+  <ng-template #massageBuy>
+    <section class="item empty">
+      <div class="side-left">
+        <img src="../../../assets/Add to Cart-bro.svg" alt="">
+      </div>
+      <div class="side-right" style="justify-content: center;">
+        <h1>Seu carrinhos está vazio no momento. Que tal explorar nossa incrivel seleção de produtos e adicionar um toque especial às compras?</h1>
+        <span [routerLink]="['/m/buscar']"><a>Vá em frente, descubra algo que encante você!</a></span>
+      </div>
+    </section>
+  </ng-template>
 </div>

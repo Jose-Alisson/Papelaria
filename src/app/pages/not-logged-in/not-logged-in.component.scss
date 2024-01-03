@@ -10,6 +10,13 @@
   justify-content: center;
   align-items: center;
   gap: 10px;
+  box-shadow: 0px 7px 10px 0px rgba(0 0 0 / 17%);
+  backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    background-color: rgba(17, 25, 40, 0.75);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.125);
+    color: var(--color-white);
 }
 
 span{
@@ -20,19 +27,23 @@ span{
 .btns{
   display: flex;
   gap: 10px;
+  /*flex-wrap: wrap;*/
+  width: 100%;
 }
 
 .btns button{
   padding: 10px 15px;
   border: 0;
   background: var(--color-black);
-  border-radius: 20px;
+  border-radius: 7px;
   color: var(--color-white);
   text-transform: uppercase;
   font-weight: 600;
   font-family: 'Avenir Bold', sans-serif;
   transition: 0.2s ease;
+  width: 100%;
   box-shadow: 0px 2px 10px 0px rgba(0 0 0 / 17%);
+  text-wrap: nowrap;
 
   &:hover{
     transform: scale(0.950);
@@ -44,3 +55,4 @@ span{
   box-shadow: 0px 2px 10px 0px rgba(255 149 176 / 52%);
   color: var(--color-white);
 }
+

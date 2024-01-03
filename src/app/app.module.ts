@@ -14,6 +14,12 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { NotLoggedInComponent } from './pages/not-logged-in/not-logged-in.component';
 import { BuscarComponent } from './pages/buscar/buscar.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { CheckoutComponent } from './pages/checkout/checkout.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RegisterProductComponent } from './pages/register-product/register-product.component';
+import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
+import { ProductManagerComponent } from './pages/product-manager/product-manager.component';
+import { AdmPageComponent } from './pages/adm-page/adm-page.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'm', pathMatch: 'full' },
@@ -27,6 +33,14 @@ const routes: Routes = [
       { path: 'profile', component: ProfileComponent },
       { path: 'cart', component: CartComponent },
       { path: 'item/:id', component: ItemComponent },
+      {
+        path: 'adm',
+        children: [
+          { path: '', redirectTo: 'page', pathMatch: 'full' },
+          { path: 'page', component : AdmPageComponent,},
+          { path: 'product-manager', component: ProductManagerComponent }
+        ],
+      },
     ],
   },
   {
@@ -53,13 +67,21 @@ const routes: Routes = [
     ProfileComponent,
     NotLoggedInComponent,
     BuscarComponent,
+    CheckoutComponent,
+    RegisterProductComponent,
+    ProductManagerComponent,
+    AdmPageComponent,
   ],
   imports: [
     BrowserModule,
     RouterModule.forRoot(routes, { useHash: true }),
     HttpClientModule,
+    ReactiveFormsModule,
+    NgxMaskDirective,
+    NgxMaskPipe,
+    FormsModule
   ],
-  providers: [],
+  providers: [provideNgxMask()],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

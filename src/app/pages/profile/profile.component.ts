@@ -27,4 +27,8 @@ export class ProfileComponent implements OnInit{
     this.isLogged = false
     this.account.signOut()
   }
+
+  getIsLogged(){
+    return this.account.account != undefined
+  }
 }

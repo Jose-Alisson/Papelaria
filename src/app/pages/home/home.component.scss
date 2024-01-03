@@ -116,6 +116,7 @@ nav ul li a:hover::before {
     background-image:
         radial-gradient(at 47% 33%, hsl(344.72, 100%, 79%) 0, transparent 59%),
         radial-gradient(at 82% 65%, hsl(38.18, 96%, 89%) 0, transparent 55%);
+  padding: 32px;
 }
 
 .banner::before{

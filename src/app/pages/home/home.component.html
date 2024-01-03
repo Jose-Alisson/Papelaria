@@ -23,7 +23,7 @@
   <h1 class="info-title">Recomendaçoes</h1>
   <p class="sub-title" style="font-size: 1.8rem">Especialmente para você</p>
   <section class="items" style="padding: 0em">
-    <div class="card" (click)="({})" *ngFor="let item of [1, 2, 3]">
+    <div class="card" (click)="showProduct(item)" *ngFor="let item of [1, 2, 3]">
       <div class="card-preview">
         <img src="../../../assets/luluzinho.jpg" alt="" />
       </div>
@@ -63,7 +63,7 @@
   <h1 class="info-title">Já pensou no que presentear?</h1>
   <p class="sub-title" style="font-size: 1.8rem">Faça a escolha certa</p>
   <section class="items" style="padding: 0em">
-    <div class="card" (click)="({})" *ngFor="let item of [1, 2, 3, 4, 5, 6]">
+    <div class="card" (click)="showProduct(item)" *ngFor="let item of [1, 2, 3, 4, 5, 6]">
       <div class="card-preview">
         <img src="../../../assets/caixa_de_presente.jpg" alt="" />
       </div>

@@ -1,4 +1,5 @@
 import { SafeUrl } from "@angular/platform-browser";
+import { ProductAttribute } from "./ProductAttribute.model";
 
 export declare class Product {
   id:string;
@@ -6,7 +7,9 @@ export declare class Product {
   photoUrl: string
   productName: string;
   description: string;
-  price: number;
+  allDescription: string;
+  basePrice: number;
   category: string;
   available: number;
+  productAttributes: ProductAttribute[];
 }
