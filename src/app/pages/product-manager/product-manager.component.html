@@ -3,15 +3,16 @@
     <div id="item-0">
         <h1 class="page-title">Meus Produtos</h1>
     </div>
-    <div id="item-1" class="box">
-        <div class="search">
+    <div id="item-3" class="box" style="padding: 0;">
+        <ng-container *ngIf="false; else Empty">
+        <div class="search" >
             <input type="text" placeholder="Pesquisar" />
             <button class="icon">
               <i class="fa-solid fa-magnifying-glass"></i>
             </button>
           </div>
-        <div class="cards-sliders">
-            <div class="card" *ngFor="let i of [1,2,3,4,5,6,7,8,9]">
+        <div class="cards-sliders" >
+            <div class="card" *ngFor="let i of [1,2,3,4,5,6]">
                 <div class="card-content">
                     <div class="card-preview">
                         <img src="../../../assets/caixa_de_presente.jpg" alt="">
@@ -28,15 +29,57 @@
                 </div>
             </div>
         </div>
+    </ng-container>
     </div>
-    <div id="item-2" class="box"><img src="../../../assets/Add to Cart-bro.svg" alt=""></div>
-    <div id="item-3" class="box">
+    <div id="item-4" class="box"><img src="../../../assets/Add to Cart-bro.svg" alt=""></div>
+    <div id="item-1" class="box" style="background: #ff4d7a48;">
+        <h2>Ações</h2>
         <div class="acts">
-            <button>Adicionar</button>
-            <button>Editar</button>
-            <button>Remover</button>
+            <button><i class="fi fi-rr-plus"></i>&nbsp;&nbsp;Adicionar</button>
+            <button><i class="fi fi-rr-pencil"></i>&nbsp;&nbsp;Editar</button>
+            <button><i class="fi fi-rr-trash-xmark"></i>&nbsp;&nbsp;Remover</button>
         </div>
     </div>
-    <div id="item-4" class="box">&nbsp;</div>
-    <div id="item-5" class="box">&nbsp;</div>
+    <div id="item-2" class="box"></div>
+    <div id="item-5" class="box" style="padding: 0;">
+        <!-- <h2>Mais Comprados</h2>
+        <div class="cards-sliders">
+            <div class="card-information" *ngFor="let i of [1,2,3,4,5,6,7,8,9]">
+                <h2>{{'Produto'}}</h2>
+                <span style="text-wrap: nowrap;">Vendidos: <h3>{{i * 20}}</h3></span>
+            </div>
+        </div> -->
+    </div>
+</div>
+
+<ng-template #Empty>
+    <section class="item empty">
+      <div class="side-left">
+        <img src="../../../assets/Empty-bro.svg" alt="">
+      </div>
+      <div class="side-right" style="justify-content: center;">
+        <h1>Nenhum produto cadastrado</h1>
+        <span><a>Começar às vendas</a></span>
+      </div>
+    </section>
+</ng-template>
+
+<div class="fade">
+    <div class="modal">
+        <div class="modal-header">
+            <span>{{'Deletar Produto'}}</span>
+            <span class="close"><i class="fi fi-rr-cross-small"></i></span>
+        </div>
+        <div class="modal-content">
+            <section class="item empty">
+                <div class="side-left">
+                  <img src="../../../assets/Empty-bro.svg" alt="">
+                </div>
+                <div class="side-right" style="justify-content: center;">
+                  <h1>Nenhum produto cadastrado</h1>
+                  <span><a>Começar às vendas</a></span>
+                </div>
+              </section>
+        </div>
+    </div>
 </div>
