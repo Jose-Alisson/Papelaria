@@ -1,0 +1,57 @@
+
+.fade{
+    position: fixed;
+    background: rgba(32 32 32 / 52%);
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: auto;
+}
+
+.modal {
+    margin: 20px;
+    background: var(--color-white);
+    padding: 2em;
+    border-radius: 20px;
+    max-width: 95%;
+    width: 600px;
+}
+
+.modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    span{
+        font-size: 2.8rem;
+        font-family: 'Ubuntu', sans-serif;
+        font-weight: 600;
+        color: #263638;
+    }
+
+    .close{
+        transition: 0.2s;
+        padding: 10px 12px;
+        border-radius: 200px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        i{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        &:hover{
+            color: var(--color-primary);
+        }
+    }
+}

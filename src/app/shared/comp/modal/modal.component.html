@@ -1,0 +1,11 @@
+<div class="fade" *ngIf="open">
+    <div class="modal">
+        <div class="modal-header">
+            <span>{{title}}</span>
+            <span class="close" (click)="open = false"><i class="fi fi-rr-cross-small"></i></span>
+        </div>
+        <div class="modal-content">
+            <ng-content></ng-content>
+        </div>
+    </div>
+</div>

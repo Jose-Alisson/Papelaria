@@ -4,38 +4,41 @@
         <h1 class="page-title">Meus Produtos</h1>
     </div>
     <div id="item-3" class="box" style="padding: 0;">
-        <ng-container *ngIf="false; else Empty">
-        <div class="search" >
-            <input type="text" placeholder="Pesquisar" />
-            <button class="icon">
-              <i class="fa-solid fa-magnifying-glass"></i>
-            </button>
-          </div>
-        <div class="cards-sliders" >
-            <div class="card" *ngFor="let i of [1,2,3,4,5,6]">
-                <div class="card-content">
-                    <div class="card-preview">
-                        <img src="../../../assets/caixa_de_presente.jpg" alt="">
-                    </div>
-                    <div class="card-description">
-                        <h2 class="title">{{'Produto'}}</h2>
-                        <p class="description">
-                            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Temporibus architecto non quasi!
-                        </p>
-                        <h2 class="price">
-                            {{ 0 | currency : "BRL" : "symbol-narrow" }}
-                        </h2>
+        <ng-container *ngIf="cadastredProduct.length > 0; else Empty">
+            <div class="search">
+                <input type="text" placeholder="Pesquisar" />
+                <button class="icon">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+            </div>
+            <div class="cards-sliders">
+                <div class="card" *ngFor="let i of cadastredProduct" (click)="setFormProductValue(i);createProduct.open = true">
+                    <div class="card-content">
+                        <div class="card-preview">
+                            <img [src]="i.photoObject" alt="">
+                        </div>
+                        <div class="card-description">
+                            <h2 class="title">{{i.productName}}</h2>
+                            <p class="description">
+                                {{i.description}}
+                            </p>
+                            <h2 class="price">
+                                {{ i.basePrice | currency : "BRL" : "symbol-narrow" }}
+                            </h2>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </ng-container>
+        </ng-container>
     </div>
-    <div id="item-4" class="box"><img src="../../../assets/Add to Cart-bro.svg" alt=""></div>
+    <div id="item-4" class="box">
+        <!-- <img src="../../../assets/Add to Cart-bro.svg" alt=""> -->
+    </div>
     <div id="item-1" class="box" style="background: #ff4d7a48;">
         <h2>Ações</h2>
         <div class="acts">
-            <button><i class="fi fi-rr-plus"></i>&nbsp;&nbsp;Adicionar</button>
+            <button (click)="createProduct.open = !createProduct.open"><i
+                    class="fi fi-rr-plus"></i>&nbsp;&nbsp;Adicionar</button>
             <button><i class="fi fi-rr-pencil"></i>&nbsp;&nbsp;Editar</button>
             <button><i class="fi fi-rr-trash-xmark"></i>&nbsp;&nbsp;Remover</button>
         </div>
@@ -54,32 +57,76 @@
 
 <ng-template #Empty>
     <section class="item empty">
-      <div class="side-left">
-        <img src="../../../assets/Empty-bro.svg" alt="">
-      </div>
-      <div class="side-right" style="justify-content: center;">
-        <h1>Nenhum produto cadastrado</h1>
-        <span><a>Começar às vendas</a></span>
-      </div>
+        <div class="side-left">
+            <img src="../../../assets/Empty-bro.svg" alt="">
+        </div>
+        <div class="side-right" style="justify-content: center;">
+            <h1>Nenhum produto cadastrado</h1>
+            <span><a>Começar às vendas</a></span>
+        </div>
     </section>
 </ng-template>
 
-<div class="fade">
-    <div class="modal">
-        <div class="modal-header">
-            <span>{{'Deletar Produto'}}</span>
-            <span class="close"><i class="fi fi-rr-cross-small"></i></span>
+
+<app-modal #createProduct [open]="false" [title]="'Criar Produto'">
+    <div class="file-img-preview" (drag)="{}" (drop)="{}">
+        <input type="file">
+        <h1><i class="fi fi-rr-cloud-upload-alt"></i></h1>
+        <h2>Clique ou arraste a imagem aqui!</h2>
+    </div>
+    <br>
+    <div class="fields" [formGroup]="productForm">
+        <div class="box-field">
+            <label for="productName">Nome do produto</label>
+            <div class="field">
+                <input id="productName" type="text" placeholder="Nome" formControlName="productName" />
+            </div>
+            <div class="validate">
+            </div>
         </div>
-        <div class="modal-content">
-            <section class="item empty">
-                <div class="side-left">
-                  <img src="../../../assets/Empty-bro.svg" alt="">
-                </div>
-                <div class="side-right" style="justify-content: center;">
-                  <h1>Nenhum produto cadastrado</h1>
-                  <span><a>Começar às vendas</a></span>
-                </div>
-              </section>
+        <div class="box-field">
+            <label for="category">categoria</label>
+            <div class="field">
+                <input id="category" type="text" placeholder="Categoria" formControlName="category" />
+            </div>
+            <div class="validate">
+            </div>
+        </div>
+        <div class="box-field">
+            <label for="description">Descrição simples</label>
+            <div class="field">
+                <input id="description" type="text" placeholder="Descrição simples" formControlName="description" />
+            </div>
+            <div class="validate">
+            </div>
+        </div>
+        <div class="box-field">
+            <label for="allDescription">Descrição completa</label>
+            <div class="field">
+                <input id="allDescription" type="text" placeholder="Descrição completa"
+                    formControlName="allDescription" />
+            </div>
+            <div class="validate">
+            </div>
+        </div>
+        <div class="box-field">
+            <label for="basePrice">Preço base</label>
+            <div class="field">
+                <input id="basePrice" type="text" placeholder="Preço base" formControlName="basePrice" />
+            </div>
+            <div class="validate">
+            </div>
+        </div>
+        <div class="box-field">
+            <label for="available">Quantidade Disponivel</label>
+            <div class="field">
+                <input id="available" type="text" placeholder="Quantidade" formControlName="available" />
+            </div>
+            <div class="validate">
+            </div>
+        </div>
+        <div class="acts">
+            <button class="btn-primary" style="width: 200px;" (click)="saveProduct()"><i class="fi fi-rr-download"></i>&nbsp; Salvar</button>
         </div>
     </div>
-</div>
+</app-modal>

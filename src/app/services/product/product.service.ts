@@ -11,6 +11,10 @@ export class ProductService {
 
   constructor(private http:  HttpClient) { }
 
+  save(product : Product){
+    return this.http.post<Product>(`${UrlApiService.URL_API}/product/save`, product)
+  }
+
   getFindById(id: string){
     return this.http.get<Product>(`${UrlApiService.URL_API}/product/findById/${id}`)
   }

@@ -20,6 +20,7 @@ import { RegisterProductComponent } from './pages/register-product/register-prod
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 import { ProductManagerComponent } from './pages/product-manager/product-manager.component';
 import { AdmPageComponent } from './pages/adm-page/adm-page.component';
+import { ModalComponent } from './shared/comp/modal/modal.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'm', pathMatch: 'full' },
@@ -71,6 +72,7 @@ const routes: Routes = [
     RegisterProductComponent,
     ProductManagerComponent,
     AdmPageComponent,
+    ModalComponent,
   ],
   imports: [
     BrowserModule,
