@@ -15,6 +15,10 @@ export class ProductService {
     return this.http.post<Product>(`${UrlApiService.URL_API}/product/save`, product)
   }
 
+  delete(id: string){
+    return this.http.delete<any>(`${UrlApiService.URL_API}/product/delete/${id}`)
+  }
+
   getFindById(id: string){
     return this.http.get<Product>(`${UrlApiService.URL_API}/product/findById/${id}`)
   }

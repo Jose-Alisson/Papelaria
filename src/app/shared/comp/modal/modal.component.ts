@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-modal',
@@ -7,8 +7,8 @@ import { Component, Input } from '@angular/core';
 })
 export class ModalComponent {
 
-  @Input()
-  open: boolean = false
+  @Output()
+  close: EventEmitter<boolean> = new EventEmitter()
 
   @Input()
   title: string = "modal"

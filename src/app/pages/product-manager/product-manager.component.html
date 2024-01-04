@@ -12,7 +12,7 @@
                 </button>
             </div>
             <div class="cards-sliders">
-                <div class="card" *ngFor="let i of cadastredProduct" (click)="setFormProductValue(i);createProduct.open = true">
+                <div class="card" *ngFor="let i of cadastredProduct" (click)="openModalActionRelative(i)" [ngClass]="{'select' : isModeDelete()}">
                     <div class="card-content">
                         <div class="card-preview">
                             <img [src]="i.photoObject" alt="">
@@ -37,10 +37,10 @@
     <div id="item-1" class="box" style="background: #ff4d7a48;">
         <h2>Ações</h2>
         <div class="acts">
-            <button (click)="createProduct.open = !createProduct.open"><i
+            <button (click)="openModalCreate()"><i
                     class="fi fi-rr-plus"></i>&nbsp;&nbsp;Adicionar</button>
-            <button><i class="fi fi-rr-pencil"></i>&nbsp;&nbsp;Editar</button>
-            <button><i class="fi fi-rr-trash-xmark"></i>&nbsp;&nbsp;Remover</button>
+            <button (click)="typeAction=1;" [ngClass]="{'active' : typeAction === 1}"><i class="fi fi-rr-pencil"></i>&nbsp;&nbsp;Editar</button>
+            <button (click)="typeAction=2;" [ngClass]="{'active' : typeAction === 2}"><i class="fi fi-rr-trash-xmark"></i>&nbsp;&nbsp;Remover</button>
         </div>
     </div>
     <div id="item-2" class="box"></div>
@@ -68,13 +68,18 @@
 </ng-template>
 
 
-<app-modal #createProduct [open]="false" [title]="'Criar Produto'">
-    <div class="file-img-preview" (drag)="{}" (drop)="{}">
-        <input type="file">
+<app-modal *ngIf="isOpenModalCreate" [title]="'Criar Produto'" (close)="isOpenModalCreate = $event">
+    <div class="file-img-preview" (dragover)="onDragOver($event)" (drop)="onDrop($event)"  *ngIf="!fileView;else filePreview">
+        <input type="file" (change)="onFileSelected($event)">
         <h1><i class="fi fi-rr-cloud-upload-alt"></i></h1>
         <h2>Clique ou arraste a imagem aqui!</h2>
     </div>
     <br>
+    <ng-template #filePreview>
+        <div class="file-img-preview" (dragover)="onDragOver($event)" (drop)="onDrop($event)">
+            <img [src]="fileView" alt="">
+        </div>
+    </ng-template>
     <div class="fields" [formGroup]="productForm">
         <div class="box-field">
             <label for="productName">Nome do produto</label>
@@ -128,5 +133,10 @@
         <div class="acts">
             <button class="btn-primary" style="width: 200px;" (click)="saveProduct()"><i class="fi fi-rr-download"></i>&nbsp; Salvar</button>
         </div>
+    </div>
+</app-modal>
+<app-modal #deleteModal [title]="'Deletar Produto'" *ngIf="isOpenModalDelete" (close)="isOpenModalDelete = $event">
+    <div class="acts">
+        <button class="btn-primary" style="width: 200px;" (click)="saveProduct()"><i class="fi fi-rr-download"></i>&nbsp; Deletar</button>
     </div>
 </app-modal>
