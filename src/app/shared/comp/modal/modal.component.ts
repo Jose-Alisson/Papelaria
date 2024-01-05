@@ -13,4 +13,6 @@ export class ModalComponent {
   @Input()
   title: string = "modal"
 
+  @Input()
+  modalStyle: { [klass: string]: any; } | null | undefined
 }

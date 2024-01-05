@@ -1,5 +1,5 @@
 <div class="fade">
-    <div class="modal">
+    <div class="modal" [ngStyle]="modalStyle">
         <div class="modal-header">
             <span>{{title}}</span>
             <span class="close" (click)="close.emit(false)"><i class="fi fi-rr-cross-small"></i></span>

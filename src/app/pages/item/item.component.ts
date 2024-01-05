@@ -80,7 +80,13 @@ export class ItemComponent implements OnInit, AfterViewInit {
     this.productService.getFindById(id ?? '').subscribe({
       next: (data) => {
         this.product = data;
-        this.status = "ok"
+
+        if(data === null){
+          this.status = "notFound"
+          return
+        } else {
+          this.status = "ok"
+        }
 
         if(this.description){
           this.description.nativeElement.innerHTML = this.product.allDescription
@@ -140,6 +146,14 @@ export class ItemComponent implements OnInit, AfterViewInit {
       },
       error: (err: HttpErrorResponse) => {
         //this.status = "fracassado"
+
+        console.log(err)
+
+        console.log('foi erro mano ' + err.status)
+
+        if(err.status === 404){
+          this.status = "notFound"
+        }
       }
     });
   }

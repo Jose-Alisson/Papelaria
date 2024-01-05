@@ -1,4 +1,4 @@
-<div class="container">
+<!-- <div class="container">
 
     <div id="item-0">
         <h1 class="page-title">Meus Produtos</h1>
@@ -32,7 +32,7 @@
         </ng-container>
     </div>
     <div id="item-4" class="box">
-        <!-- <img src="../../../assets/Add to Cart-bro.svg" alt=""> -->
+        <img src="../../../assets/Add to Cart-bro.svg" alt="">
     </div>
     <div id="item-1" class="box" style="background: #ff4d7a48;">
         <h2>Ações</h2>
@@ -45,98 +45,297 @@
     </div>
     <div id="item-2" class="box"></div>
     <div id="item-5" class="box" style="padding: 0;">
-        <!-- <h2>Mais Comprados</h2>
+         <h2>Mais Comprados</h2>
         <div class="cards-sliders">
             <div class="card-information" *ngFor="let i of [1,2,3,4,5,6,7,8,9]">
                 <h2>{{'Produto'}}</h2>
                 <span style="text-wrap: nowrap;">Vendidos: <h3>{{i * 20}}</h3></span>
             </div>
-        </div> -->
+        </div>
     </div>
-</div>
+</div> -->
+<section class="container" *ngIf="cadastredProduct.length > 0; else Empty">
+  <div class="side-top">
+    <h1>Meus Produtos</h1>
+    <img src="../../../assets/Niche service marketplace-bro.svg" alt="" />
+  </div>
+  <div class="side-down">
+    <div class="search">
+      <input type="text" placeholder="Pesquisar" />
+      <button class="icon">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </button>
+    </div>
+    <div class="items">
+      <div
+        class="card"
+        *ngFor="let item of cadastredProduct"
+        (click)="openModalEdit(item)"
+      >
+        <div class="card-preview">
+          <img [src]="item.photoObject" alt="" />
+        </div>
+        <div class="card-content">
+          <h1 class="title">{{ item.productName }}</h1>
+          <p class="description">
+            {{ item.description }}
+          </p>
+          <h1 class="price">
+            {{ item.basePrice | currency : "BRL" : "symbol-narrow" }}
+          </h1>
+        </div>
+      </div>
+      <!-- <div class="card" [routerLink]="['../product-manager']">
+              <div class="icon">
+                  <i class="fi fi-rr-box-open-full"></i>
+              </div>
+              <span class="title">Produto</span>
+          </div> -->
+    </div>
+    <div class="acts">
+      <button (click)="openModalCreate()">Cadastrar produto</button>
+    </div>
+    <br />
+  </div>
+</section>
 
 <ng-template #Empty>
+  <div class="container">
     <section class="item empty">
-        <div class="side-left">
-            <img src="../../../assets/Empty-bro.svg" alt="">
-        </div>
-        <div class="side-right" style="justify-content: center;">
-            <h1>Nenhum produto cadastrado</h1>
-            <span><a>Começar às vendas</a></span>
-        </div>
+      <div class="side-left">
+        <img src="../../../assets/Empty-bro.svg" alt="" />
+      </div>
+      <div class="side-right" style="justify-content: center">
+        <h1>Nenhum produto cadastrado</h1>
+        <span (click)="openModalCreate()"><a>Começar às vendas</a></span>
+      </div>
     </section>
+  </div>
 </ng-template>
 
+<app-modal
+  *ngIf="isOpenModalCreate"
+  [title]="'Cadastrar produto'"
+  (close)="isOpenModalCreate = $event"
+  [modalStyle]="{ width: 'inherit' }"
+>
+  <ng-container *ngTemplateOutlet="fomProduct"></ng-container>
+  <div class="line"></div>
+  <div class="acts" style="justify-content: flex-end;">
+    <button style="flex-grow: 0;">Cadastrar</button>
+  </div>
+</app-modal>
 
-<app-modal *ngIf="isOpenModalCreate" [title]="'Criar Produto'" (close)="isOpenModalCreate = $event">
-    <div class="file-img-preview" (dragover)="onDragOver($event)" (drop)="onDrop($event)"  *ngIf="!fileView;else filePreview">
-        <input type="file" (change)="onFileSelected($event)">
-        <h1><i class="fi fi-rr-cloud-upload-alt"></i></h1>
-        <h2>Clique ou arraste a imagem aqui!</h2>
+<app-modal
+  [title]="'Deletar Produto'"
+  *ngIf="isOpenModalDelete"
+  (close)="isOpenModalDelete = $event"
+>
+  <div class="acts">
+    <button class="btn-primary" (click)="saveProduct()">
+      <i class="fi fi-rr-download"></i>&nbsp; Deletar
+    </button>
+  </div>
+</app-modal>
+
+<app-modal
+  *ngIf="isOpenModalEdit"
+  [title]="'Editar Produto'"
+  (close)="isOpenModalEdit = $event"
+  [modalStyle]="{ width: 'inherit' }"
+>
+<ng-container *ngTemplateOutlet="fomProduct"></ng-container>
+<div class="line"></div>
+<div class="acts" style="justify-content: flex-end;">
+  <button style="flex-grow: 0;">Salvar alterações</button>
+</div>
+</app-modal>
+
+<ng-template #fomProduct>
+  <section class="item item-modal" [formGroup]="productForm">
+    <div class="side-left">
+      <div class="preview">
+        <div class="item-img-preview drag-drop" *ngIf="!productImagePreview; else imageView">
+          <i class="fi fi-rr-cloud-upload-alt"></i>
+          <h1>Arraste e solte uma imagem aqui</h1>
+        </div>
+        <ng-template #imageView>
+          <div class="item-img-preview">
+            <img [src]="productImagePreview" alt="" />
+          </div>
+        </ng-template>
+        <div class="slider-image">
+          <div class="slide" *ngFor="let item of productImages" (click)="setPreviewImage(item)" (mouseover)="setPreviewImage(item)">
+            <img [src]="item" alt="" />
+          </div>
+        </div>
+      </div>
     </div>
+    <div class="side-right">
+      <!-- <h1 class="title" >{{ "Produto" }}</h1> -->
+      <div class="box-field">
+        <div class="field">
+          <input id="productName" style="font-size: 2.6rem;font-weight: bold;" type="text" placeholder="Nome do Produto" formControlName="productName"/>
+        </div>
+        <div class="validate">
+        </div>
+      </div>
+      <div class="box-field">
+        <div class="field">
+          <input id="description" type="text" placeholder="Descrição simples" formControlName="description"/>
+        </div>
+        <div class="validate">
+        </div>
+      </div>
+      <div class="line"></div>
+      <div class="acts">
+        <button style="flex-grow: 0;">Adiconar Atributos</button>
+      </div>
+      <br>
+      <div class="attributes">
+        <div *ngFor="let categoria of allAtributeSelection" class="attribute">
+          <span>Selecione a opção de <strong class="category">{{categoria.categoryName}}</strong></span>
+          <div class="slider-attribute">
+            <span *ngFor="let item of categoria.attributes" (click)="setImagePreviw(item)">{{item.attributeName}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="box-field">
+        <label for="basePrice">Preço base</label>
+        <div class="field">
+          <input id="basePrice" style="font-size: 2.6rem; font-weight: bold;" type="text" placeholder="Preço base do Produto" formControlName="basePrice" prefix="R$ " mask="separator.2" thousandSeparator="." decimalMarker=","/>
+        </div>
+        <div class="validate">
+        </div>
+      </div>
+      <div class="amount">
+        <div class="decrement" (click)="({})">
+          <i class="fa-solid fa-minus"></i>
+        </div>
+        <div class="box-field">
+          <div class="field">
+            <input id="available" type="number"  mask="000000" style="font-weight: bold;" placeholder="Quantidade Disponivel" formControlName="available"/>
+          </div>
+          <div class="validate">
+          </div>
+        </div>
+        <div class="increment" (click)="(0)">
+          <i class="fa-solid fa-plus"></i>
+        </div>
+      </div>
+      <div class="btns"></div>
+      <div class="line"></div>
+    </div>
+  </section>
+  <section class="info"[formGroup]="productForm">
+    <h2>Descrição do produto</h2>
     <br>
-    <ng-template #filePreview>
-        <div class="file-img-preview" (dragover)="onDragOver($event)" (drop)="onDrop($event)">
-            <img [src]="fileView" alt="">
-        </div>
-    </ng-template>
-    <div class="fields" [formGroup]="productForm">
-        <div class="box-field">
-            <label for="productName">Nome do produto</label>
-            <div class="field">
-                <input id="productName" type="text" placeholder="Nome" formControlName="productName" />
-            </div>
-            <div class="validate">
-            </div>
-        </div>
-        <div class="box-field">
-            <label for="category">categoria</label>
-            <div class="field">
-                <input id="category" type="text" placeholder="Categoria" formControlName="category" />
-            </div>
-            <div class="validate">
-            </div>
-        </div>
-        <div class="box-field">
-            <label for="description">Descrição simples</label>
-            <div class="field">
-                <input id="description" type="text" placeholder="Descrição simples" formControlName="description" />
-            </div>
-            <div class="validate">
-            </div>
-        </div>
-        <div class="box-field">
-            <label for="allDescription">Descrição completa</label>
-            <div class="field">
-                <input id="allDescription" type="text" placeholder="Descrição completa"
-                    formControlName="allDescription" />
-            </div>
-            <div class="validate">
-            </div>
-        </div>
-        <div class="box-field">
-            <label for="basePrice">Preço base</label>
-            <div class="field">
-                <input id="basePrice" type="text" placeholder="Preço base" formControlName="basePrice" />
-            </div>
-            <div class="validate">
-            </div>
-        </div>
-        <div class="box-field">
-            <label for="available">Quantidade Disponivel</label>
-            <div class="field">
-                <input id="available" type="text" placeholder="Quantidade" formControlName="available" />
-            </div>
-            <div class="validate">
-            </div>
-        </div>
-        <div class="acts">
-            <button class="btn-primary" style="width: 200px;" (click)="saveProduct()"><i class="fi fi-rr-download"></i>&nbsp; Salvar</button>
-        </div>
+    <div class="box-field" style="width: 100%;">
+      <div class="field">
+        <textarea id="description" style="resize: none;" type="text" placeholder="Descrição Completa" formControlName="allDescription" cols="30" rows="10"></textarea>
+      </div>
+      <div class="validate">
+      </div>
     </div>
-</app-modal>
-<app-modal #deleteModal [title]="'Deletar Produto'" *ngIf="isOpenModalDelete" (close)="isOpenModalDelete = $event">
+  </section>
+</ng-template>
+
+<!-- <div
+    class="file-img-preview"
+    (dragover)="onDragOver($event)"
+    (drop)="onDrop($event)"
+    *ngIf="!fileView; else filePreview"
+  >
+    <input type="file" (change)="onFileSelected($event)" />
+    <h1><i class="fi fi-rr-cloud-upload-alt"></i></h1>
+    <h2>Clique ou arraste a imagem aqui!</h2>
+  </div>
+  <br />
+  <ng-template #filePreview>
+    <div
+      class="file-img-preview"
+      (dragover)="onDragOver($event)"
+      (drop)="onDrop($event)"
+    >
+      <img [src]="fileView" alt="" />
+    </div>
+  </ng-template>
+  <div class="fields" [formGroup]="productForm">
+    <div class="box-field">
+      <label for="productName">Nome do produto</label>
+      <div class="field">
+        <input
+          id="productName"
+          type="text"
+          placeholder="Nome"
+          formControlName="productName"
+        />
+      </div>
+      <div class="validate"></div>
+    </div>
+    <div class="box-field">
+      <label for="category">categoria</label>
+      <div class="field">
+        <input
+          id="category"
+          type="text"
+          placeholder="Categoria"
+          formControlName="category"
+        />
+      </div>
+      <div class="validate"></div>
+    </div>
+    <div class="box-field">
+      <label for="description">Descrição simples</label>
+      <div class="field">
+        <input
+          id="description"
+          type="text"
+          placeholder="Descrição simples"
+          formControlName="description"
+        />
+      </div>
+      <div class="validate"></div>
+    </div>
+    <div class="box-field">
+      <label for="allDescription">Descrição completa</label>
+      <div class="field">
+        <input
+          id="allDescription"
+          type="text"
+          placeholder="Descrição completa"
+          formControlName="allDescription"
+        />
+      </div>
+      <div class="validate"></div>
+    </div>
+    <div class="box-field">
+      <label for="basePrice">Preço base</label>
+      <div class="field">
+        <input
+          id="basePrice"
+          type="text"
+          placeholder="Preço base"
+          formControlName="basePrice"
+        />
+      </div>
+      <div class="validate"></div>
+    </div>
+    <div class="box-field">
+      <label for="available">Quantidade Disponivel</label>
+      <div class="field">
+        <input
+          id="available"
+          type="text"
+          placeholder="Quantidade"
+          formControlName="available"
+        />
+      </div>
+      <div class="validate"></div>
+    </div>
     <div class="acts">
-        <button class="btn-primary" style="width: 200px;" (click)="saveProduct()"><i class="fi fi-rr-download"></i>&nbsp; Deletar</button>
+      <button class="btn-primary" style="width: 200px" (click)="saveProduct()">
+        <i class="fi fi-rr-download"></i>&nbsp; Salvar
+      </button>
     </div>
-</app-modal>
+  </div> -->
