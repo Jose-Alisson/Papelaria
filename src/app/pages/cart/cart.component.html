@@ -63,8 +63,8 @@
               </div>
             </td>
             <td><span attr-data="Produto">{{p.product.productName}}</span></td>
-            <td><span attr-data="Descrição" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">{{p.product.description}}</span></td>
-            <td class="minimize"><span attr-data="Preço" class="text-center super-text" >{{p.product.basePrice | currency: 'BRL' : 'symbol-narrow'}}</span></td>
+            <td><span attr-data="Descrição" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">{{p.productAttributes.length > 0 ? getProductSelectedAttribute(p) : p.product.description}}</span></td>
+            <td class="minimize"><span attr-data="Preço" class="text-center super-text" >{{(getTotalAmount(p) / p.quantity)| currency: 'BRL' : 'symbol-narrow'}}</span></td>
             <!-- <td><span attr-data="Categoria">{{p.product.category}}</span></td> -->
             <td>
               <span attr-data="Quantidade" >
@@ -81,7 +81,7 @@
                 </div>
               </span>
             </td>
-            <td class="super-text">{{(p.product.basePrice * p.quantity) | currency: 'BRL' : 'symbol-narrow'}}</td>
+            <td class="super-text">{{getTotalAmount(p) | currency: 'BRL' : 'symbol-narrow'}}</td>
             <td class="text-center">
               <i class="fi fi-rr-trash-xmark"></i>
               <!-- <div class="action">

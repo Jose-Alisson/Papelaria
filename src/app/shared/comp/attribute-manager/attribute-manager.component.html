@@ -1,0 +1,96 @@
+
+<div class="acts">
+  <button *ngIf="isCreate" (click)="openModalCreate()">Adicionar atributo</button>
+</div>
+<br>
+<div class="attributes" *ngIf="!isLoading; else loading">
+  <div *ngFor="let categoria of allAtributeSelection" class="attribute">
+    <span>Selecione a opção de <strong class="category">{{categoria.categoryName}}</strong></span>
+    <div class="slider-attribute">
+      <span *ngFor="let item of categoria.attributes" (click)="attr = item;openModalAttributeEdit(item); categoria.attributesSelected = item" [ngClass]="">{{item.attributeName}}</span>
+    </div>
+  </div>
+</div>
+
+<ng-template #loading>
+  <p>Carregando...</p>
+</ng-template>
+
+
+<app-modal *ngIf="isopenModalCreate" [title]="'Cadastrar Atributo'"  (close)="isopenModalCreate = $event" [modalStyle]="{ width: 'inherit' }">
+  <ng-container *ngTemplateOutlet="formAttribute"></ng-container>
+
+  <div class="acts" style="justify-content: flex-end;">
+    <button style="flex-grow: 0;" (click)="save(); isopenModalCreate = false">Adicionar Atributo</button>
+  </div>
+</app-modal>
+
+<app-modal *ngIf="isopenModalEdit" [title]="'Editar atributo'" (close)="isopenModalEdit = $event" [modalStyle]="{ width: 'inherit' }">
+  <ng-container *ngTemplateOutlet="formAttribute"></ng-container>
+
+  <div class="acts" style="justify-content: flex-end;">
+    <button  style="flex-grow: 0;" (click)="isopenModalDelete = true">Deletar</button>
+    <button style="flex-grow: 0;" (click)="save();isopenModalEdit = false">Salvar alterações</button>
+  </div>
+</app-modal>
+
+<app-modal *ngIf="isopenModalDelete" [title]="'Deletar atributo'" (close)="isopenModalDelete = $event">
+  <div class="acts">
+    <button class="btn-primary" (click)="delete()">Deletar</button>
+  </div>
+</app-modal>
+
+
+<ng-template #formAttribute>
+  <section class="item item-modal" [formGroup]="attributeForm">
+    <div class="side-left">
+      <div class="preview">
+        <div class="item-img-preview drag-drop" *ngIf="!attributeImagePreview; else imageView" (dragover)="onDragOver($event)" (drop)="onDrop($event)">
+          <input type="file" (change)="onFileSelected($event)" />
+          <i class="fi fi-rr-cloud-upload-alt"></i>
+          <h1>Arraste e solte uma imagem aqui</h1>
+        </div>
+        <ng-template #imageView>
+          <div class="item-img-preview">
+            <img [src]="attributeImagePreview" alt="" />
+          </div>
+        </ng-template>
+        <!-- <div class="slider-image">
+          <div class="slide" *ngFor="let item of productImages" (click)="setPreviewImage(item)" (mouseover)="setPreviewImage(item)">
+            <img [src]="item" alt="" />
+          </div>
+        </div> -->
+      </div>
+    </div>
+    <div class="side-right">
+      <!-- <h1 class="title" >{{ "Produto" }}</h1> -->
+      <div class="box-field">
+        <div class="field">
+          <input id="attributeName" style="font-size: 2.6rem;font-weight: bold;" type="text" placeholder="Nome do Atributo" formControlName="attributeName"/>
+        </div>
+        <div class="validate">
+        </div>
+      </div>
+      <div class="line"></div>
+      <div class="box-field">
+        <label for="attributePrice">Preço adicional</label>
+        <div class="field">
+          <input id="attributePrice" style="font-size: 2.6rem; font-weight: bold;" type="text" placeholder="Preço adicional" formControlName="attributePrice" prefix="R$ " mask="separator.2" thousandSeparator="." decimalMarker=","/>
+        </div>
+        <div class="validate">
+        </div>
+      </div>
+      <div class="amount">
+        <div class="box-field">
+          <div class="field">
+            <input id="available" type="number"  mask="000000" style="font-weight: bold;width: 100px;padding: 10px 15px;" placeholder="Quantidade Disponivel" formControlName="available"/>
+          </div>
+          <div class="validate">
+          </div>
+        </div>
+      </div>
+      <div class="btns"></div>
+      <div class="line"></div>
+    </div>
+  </section>
+</ng-template>

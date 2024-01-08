@@ -21,6 +21,7 @@ import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 import { ProductManagerComponent } from './pages/product-manager/product-manager.component';
 import { AdmPageComponent } from './pages/adm-page/adm-page.component';
 import { ModalComponent } from './shared/comp/modal/modal.component';
+import { AttributeManagerComponent } from './shared/comp/attribute-manager/attribute-manager.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'm', pathMatch: 'full' },
@@ -73,6 +74,7 @@ const routes: Routes = [
     ProductManagerComponent,
     AdmPageComponent,
     ModalComponent,
+    AttributeManagerComponent,
   ],
   imports: [
     BrowserModule,

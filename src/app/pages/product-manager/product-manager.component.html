@@ -67,11 +67,7 @@
       </button>
     </div>
     <div class="items">
-      <div
-        class="card"
-        *ngFor="let item of cadastredProduct"
-        (click)="openModalEdit(item)"
-      >
+      <div class="card" *ngFor="let item of cadastredProduct" (click)="openModalEdit(item)">
         <div class="card-preview">
           <img [src]="item.photoObject" alt="" />
         </div>
@@ -113,49 +109,37 @@
   </div>
 </ng-template>
 
-<app-modal
-  *ngIf="isOpenModalCreate"
-  [title]="'Cadastrar produto'"
-  (close)="isOpenModalCreate = $event"
-  [modalStyle]="{ width: 'inherit' }"
->
+<app-modal *ngIf="isOpenModalCreate" [title]="'Cadastrar produto'"  (close)="isOpenModalCreate = $event" [modalStyle]="{ width: 'inherit' }">
   <ng-container *ngTemplateOutlet="fomProduct"></ng-container>
-  <div class="line"></div>
+
   <div class="acts" style="justify-content: flex-end;">
-    <button style="flex-grow: 0;">Cadastrar</button>
+    <button style="flex-grow: 0;" (click)="saveProduct();">Cadastrar</button>
   </div>
 </app-modal>
 
-<app-modal
-  [title]="'Deletar Produto'"
-  *ngIf="isOpenModalDelete"
-  (close)="isOpenModalDelete = $event"
->
+<app-modal *ngIf="isOpenModalEdit" [title]="'Editar Produto'" (close)="isOpenModalEdit = $event" [modalStyle]="{ width: 'inherit' }">
+  <ng-container *ngTemplateOutlet="fomProduct"></ng-container>
+
+  <div class="acts" style="justify-content: flex-end;">
+    <button  style="flex-grow: 0;" (click)="openModalDelete()">Deletar</button>
+    <button style="flex-grow: 0;" (click)="updateProduct();exibirFormulario()">Salvar alterações</button>
+  </div>
+</app-modal>
+
+<app-modal [title]="'Deletar Produto'" *ngIf="isOpenModalDelete" (close)="isOpenModalDelete  = $event">
   <div class="acts">
-    <button class="btn-primary" (click)="saveProduct()">
-      <i class="fi fi-rr-download"></i>&nbsp; Deletar
-    </button>
+    <button class="btn-primary" (click)="{}">Deletar</button>
   </div>
 </app-modal>
 
-<app-modal
-  *ngIf="isOpenModalEdit"
-  [title]="'Editar Produto'"
-  (close)="isOpenModalEdit = $event"
-  [modalStyle]="{ width: 'inherit' }"
->
-<ng-container *ngTemplateOutlet="fomProduct"></ng-container>
-<div class="line"></div>
-<div class="acts" style="justify-content: flex-end;">
-  <button style="flex-grow: 0;">Salvar alterações</button>
-</div>
-</app-modal>
+<!-- ---------------------------------------------------------------------------- -->
 
 <ng-template #fomProduct>
   <section class="item item-modal" [formGroup]="productForm">
     <div class="side-left">
       <div class="preview">
-        <div class="item-img-preview drag-drop" *ngIf="!productImagePreview; else imageView">
+        <div class="item-img-preview drag-drop" *ngIf="!productImagePreview; else imageView" (dragover)="onDragOver($event)" (drop)="onDrop($event)">
+          <input type="file" (change)="onFileSelected($event)" />
           <i class="fi fi-rr-cloud-upload-alt"></i>
           <h1>Arraste e solte uma imagem aqui</h1>
         </div>
@@ -188,18 +172,16 @@
         </div>
       </div>
       <div class="line"></div>
-      <div class="acts">
-        <button style="flex-grow: 0;">Adiconar Atributos</button>
-      </div>
-      <br>
-      <div class="attributes">
+      <!-- <div class="attributes">
         <div *ngFor="let categoria of allAtributeSelection" class="attribute">
           <span>Selecione a opção de <strong class="category">{{categoria.categoryName}}</strong></span>
           <div class="slider-attribute">
-            <span *ngFor="let item of categoria.attributes" (click)="setImagePreviw(item)">{{item.attributeName}}</span>
+            <span *ngFor="let item of categoria.attributes" (click)="openModalAttributeEdit(item)">{{item.attributeName}}</span>
           </div>
         </div>
-      </div>
+      </div> -->
+      <app-attribute-manager [product]="product" [isCreate]="true" [isEditable]="true" (attrrsEmiter)="setAtributosForm($event)" (attrImgEmmiter)="productImages = $event"></app-attribute-manager>
+
       <div class="box-field">
         <label for="basePrice">Preço base</label>
         <div class="field">
@@ -209,18 +191,12 @@
         </div>
       </div>
       <div class="amount">
-        <div class="decrement" (click)="({})">
-          <i class="fa-solid fa-minus"></i>
-        </div>
         <div class="box-field">
           <div class="field">
-            <input id="available" type="number"  mask="000000" style="font-weight: bold;" placeholder="Quantidade Disponivel" formControlName="available"/>
+            <input id="available" type="number"  mask="000000" style="font-weight: bold;width: 100px;padding: 10px 15px;" placeholder="Quantidade Disponivel" formControlName="available"/>
           </div>
           <div class="validate">
           </div>
-        </div>
-        <div class="increment" (click)="(0)">
-          <i class="fa-solid fa-plus"></i>
         </div>
       </div>
       <div class="btns"></div>
@@ -239,6 +215,9 @@
     </div>
   </section>
 </ng-template>
+
+
+
 
 <!-- <div
     class="file-img-preview"

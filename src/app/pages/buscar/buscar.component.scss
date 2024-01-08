@@ -195,7 +195,9 @@
   display: grid;
   gap: 20px;
   padding: 2em;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  justify-content: center;
+  width: inherit;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 300px));
   background: var(--color-white) /*rgb(245 245 245)*/;
 }
 

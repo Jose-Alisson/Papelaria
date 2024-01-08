@@ -8,6 +8,7 @@ import { CartService } from 'src/app/services/cart/cart.service';
 import { Amount } from 'src/app/model/amount.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ProductAttribute } from 'src/app/model/ProductAttribute.model';
+import { AttributeManagerComponent } from 'src/app/shared/comp/attribute-manager/attribute-manager.component';
 
 @Component({
   selector: 'app-item',
@@ -35,11 +36,9 @@ export class ItemComponent implements OnInit, AfterViewInit {
     allDescription: ''
   };
 
-  allAtributeSelection: {
-    categoryName : string,
-    attributes: ProductAttribute []
-    attributesSelected: ProductAttribute | undefined
-  }[] = []
+
+  @ViewChild('attributes')
+  attributeManager!: AttributeManagerComponent
 
   counter = 1;
 
@@ -81,6 +80,13 @@ export class ItemComponent implements OnInit, AfterViewInit {
       next: (data) => {
         this.product = data;
 
+        console.log(this.attributeManager)
+
+        if(this.attributeManager){
+          this.attributeManager?.autoFind(this.product)
+        }
+
+
         if(data === null){
           this.status = "notFound"
           return
@@ -104,53 +110,8 @@ export class ItemComponent implements OnInit, AfterViewInit {
             this.productImages.push(img)
           },
         });
-
-        data.productAttributes.forEach(attribute => {
-          if(attribute.photoUrl != undefined || attribute.photoUrl != null || attribute.photoUrl == ""){
-            this.imgService.downloadImagem(attribute.photoUrl).subscribe({
-              next: (imageBlob) => {
-
-                let img = this.sanitizer.bypassSecurityTrustUrl(
-                  URL.createObjectURL(imageBlob)
-                )
-                attribute.photoObject = img
-                this.productImages.push(img);
-              },
-            });
-          }
-        })
-
-        this.getAllCategoryAttribute().forEach(category => {
-
-          let numberSelection = 0
-
-          this.getAllAttributeFromCategory(category).forEach(attribute => {
-            if(attribute.numberSelection > numberSelection){
-              numberSelection = attribute.numberSelection
-            }
-          })
-
-          let counter = 0
-
-          do {
-            counter++;
-            this.allAtributeSelection.push({
-              categoryName: `${counter > 1 ? (counter + " " + category) : category}`,
-              attributes: this.getAllAttributeFromCategory(category),
-              attributesSelected: undefined
-            })
-          } while (counter < numberSelection)
-
-        })
-
       },
       error: (err: HttpErrorResponse) => {
-        //this.status = "fracassado"
-
-        console.log(err)
-
-        console.log('foi erro mano ' + err.status)
-
         if(err.status === 404){
           this.status = "notFound"
         }
@@ -178,28 +139,16 @@ export class ItemComponent implements OnInit, AfterViewInit {
     return this.cart.cart.length;
   }
 
-  getAttributeSelect(){
-
-    let attrs: (ProductAttribute)[] = []
-
-    this.allAtributeSelection.filter(attr => attr.attributesSelected != undefined).forEach(attr => {
-      if(attr.attributesSelected != undefined){
-        attrs.push(attr.attributesSelected)
-      }
-    })
-
-    return attrs
-  }
-
   addToNewCart() {
-
     this.cartNewItems[0] = {
       date: new Date().toLocaleDateString('en-Us'),
       checked: true,
       product: this.product,
       quantity: this.counter,
-      productAttributes: [...this.getAttributeSelect()]
+      productAttributes: []
     };
+
+    console.log(this.cartNewItems[0])
   }
 
   addToCart() {
@@ -229,8 +178,6 @@ export class ItemComponent implements OnInit, AfterViewInit {
     let value = 0;
 
     value += amount.product.basePrice
-
-    this.getAttributeSelect().forEach(attr => value += attr.attributePrice)
 
     value = value * amount.quantity;
 
@@ -277,10 +224,6 @@ export class ItemComponent implements OnInit, AfterViewInit {
   getProductPriceWithAttr(){
     let value = this.product.basePrice
 
-    this.allAtributeSelection.filter(attr => attr.attributesSelected != undefined).forEach(attr => {
-      value += attr.attributesSelected?.attributePrice ?? 0
-    })
-
     return value
   }
 
@@ -290,5 +233,18 @@ export class ItemComponent implements OnInit, AfterViewInit {
     } else {
       this.productImagePreview = this.product.photoObject
     }
+  }
+
+  getProductSelectedAttribute(amount: Amount){
+    let str = ""
+    amount.productAttributes.forEach((attribute, index, array) => {
+      str += attribute.attributeName
+
+      if(index + 1 < array.length){
+        str += " + "
+      }
+    })
+
+    return str
   }
 }

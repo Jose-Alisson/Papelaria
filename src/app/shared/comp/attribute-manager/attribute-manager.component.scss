@@ -1,0 +1,17 @@
+
+.slider-attribute{
+  overflow: auto;
+  padding: 5px 0px;
+
+  &::-webkit-scrollbar{
+    opacity: 0;
+  }
+
+  &::-webkit-scrollbar-thumb{
+    opacity: 0;
+  }
+}
+
+.slider-attribute span{
+  text-wrap: nowrap;
+}

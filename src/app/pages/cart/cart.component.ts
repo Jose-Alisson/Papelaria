@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Attribute, Component, OnInit } from '@angular/core';
 import { Amount } from 'src/app/model/amount.model';
 import { CartService } from 'src/app/services/cart/cart.service';
 
@@ -102,7 +102,13 @@ export class CartComponent implements OnInit {
   getTotalAmount(amount: Amount) {
     let value = 0;
 
-    value = amount.product.basePrice * amount.quantity;
+    value = amount.product.basePrice;
+
+    amount.productAttributes.forEach(attribute => {
+      value += attribute.attributePrice
+    })
+
+    value *= amount.quantity
 
     return value;
   }
@@ -117,5 +123,18 @@ export class CartComponent implements OnInit {
       });
 
     return value;
+  }
+
+  getProductSelectedAttribute(amount: Amount){
+    let str = ""
+    amount.productAttributes.forEach((attribute, index, array) => {
+      str += attribute.attributeName
+
+      if(index + 1 < array.length){
+        str += " + "
+      }
+    })
+
+    return str
   }
 }
