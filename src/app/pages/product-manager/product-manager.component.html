@@ -89,7 +89,7 @@
           </div> -->
     </div>
     <div class="acts">
-      <button (click)="openModalCreate()">Cadastrar produto</button>
+      <button (click)="openModalCreate()" style="max-width: none; height: 50px;">Cadastrar produto</button>
     </div>
     <br />
   </div>
@@ -127,8 +127,9 @@
 </app-modal>
 
 <app-modal [title]="'Deletar Produto'" *ngIf="isOpenModalDelete" (close)="isOpenModalDelete  = $event">
+  <h2>Tem Certeza que deseja deletar {{productForm.controls.productName}}</h2>
   <div class="acts">
-    <button class="btn-primary" (click)="{}">Deletar</button>
+    <button class="btn-primary" (click)="deleteProduct()">Deletar</button>
   </div>
 </app-modal>
 
@@ -139,13 +140,15 @@
     <div class="side-left">
       <div class="preview">
         <div class="item-img-preview drag-drop" *ngIf="!productImagePreview; else imageView" (dragover)="onDragOver($event)" (drop)="onDrop($event)">
-          <input type="file" (change)="onFileSelected($event)" />
+          <input type="file" id="input-file-image" (change)="onFileSelected($event)" />
           <i class="fi fi-rr-cloud-upload-alt"></i>
           <h1>Arraste e solte uma imagem aqui</h1>
         </div>
         <ng-template #imageView>
+          <label for="input-file-image" class="btn-pink">Selecionar outra imagem</label>
           <div class="item-img-preview">
             <img [src]="productImagePreview" alt="" />
+            <input type="file" id="input-file-image" (change)="onFileSelected($event)" />
           </div>
         </ng-template>
         <div class="slider-image">
@@ -158,6 +161,7 @@
     <div class="side-right">
       <!-- <h1 class="title" >{{ "Produto" }}</h1> -->
       <div class="box-field">
+        <label for="productName">Nome do produto</label>
         <div class="field">
           <input id="productName" style="font-size: 2.6rem;font-weight: bold;" type="text" placeholder="Nome do Produto" formControlName="productName"/>
         </div>
@@ -165,6 +169,7 @@
         </div>
       </div>
       <div class="box-field">
+        <label for="description">Descrição</label>
         <div class="field">
           <input id="description" type="text" placeholder="Descrição simples" formControlName="description"/>
         </div>
@@ -180,7 +185,7 @@
           </div>
         </div>
       </div> -->
-      <app-attribute-manager [product]="product" [isCreate]="true" [isEditable]="true" (attrrsEmiter)="setAtributosForm($event)" (attrImgEmmiter)="productImages = $event"></app-attribute-manager>
+      <app-attribute-manager #attrManager [product]="product" [isCreate]="true" [isEditable]="true" (attrrsEmiter)="setAtributosForm($event)" (attrImgEmmiter)="setImages($event)"></app-attribute-manager>
 
       <div class="box-field">
         <label for="basePrice">Preço base</label>
@@ -192,6 +197,7 @@
       </div>
       <div class="amount">
         <div class="box-field">
+          <label for="available">Quantidade</label>
           <div class="field">
             <input id="available" type="number"  mask="000000" style="font-weight: bold;width: 100px;padding: 10px 15px;" placeholder="Quantidade Disponivel" formControlName="available"/>
           </div>

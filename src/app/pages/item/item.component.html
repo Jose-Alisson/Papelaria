@@ -103,7 +103,7 @@
       </div>
     </div> -->
 
-    <app-attribute-manager [product]="product" #attributes></app-attribute-manager>
+    <app-attribute-manager [product]="product" #attributes [isSelection]="true" (attrImgEmmiter)="setImages($event)" (attrSelectImgEmitter)="productImagePreview = $event"></app-attribute-manager>
 
     <h1 class="price">{{ getProductPriceWithAttr() | currency : "BRL" : "symbol-narrow" }}</h1>
     <div class="amount">

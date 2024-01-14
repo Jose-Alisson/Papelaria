@@ -1,7 +1,14 @@
 import { ImageService } from './../../services/imgService/img-service.service';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ProductService } from './../../services/product/product.service';
-import { Component, ViewChild, ElementRef, OnInit, Attribute, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  ViewChild,
+  ElementRef,
+  OnInit,
+  Attribute,
+  AfterViewInit,
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from 'src/app/model/product.model';
 import { CartService } from 'src/app/services/cart/cart.service';
@@ -16,12 +23,11 @@ import { AttributeManagerComponent } from 'src/app/shared/comp/attribute-manager
   styleUrls: ['./item.component.scss', '../buscar/buscar.component.scss'],
 })
 export class ItemComponent implements OnInit, AfterViewInit {
+  status = 'ok';
 
-  status = "ok"
+  productImagePreview: SafeUrl = {};
 
-  productImagePreview: SafeUrl = {}
-
-  productImages: SafeUrl[] = []
+  productImages: SafeUrl[] = [];
 
   product: Product = {
     id: '1',
@@ -33,12 +39,11 @@ export class ItemComponent implements OnInit, AfterViewInit {
     photoUrl: '',
     available: 10,
     productAttributes: [],
-    allDescription: ''
+    allDescription: '',
   };
 
-
   @ViewChild('attributes')
-  attributeManager!: AttributeManagerComponent
+  attributeManager!: AttributeManagerComponent;
 
   counter = 1;
 
@@ -50,7 +55,7 @@ export class ItemComponent implements OnInit, AfterViewInit {
       checked: true,
       product: this.product,
       quantity: this.counter,
-      productAttributes: []
+      productAttributes: [],
     },
   ];
 
@@ -68,10 +73,10 @@ export class ItemComponent implements OnInit, AfterViewInit {
   ) {}
 
   @ViewChild('description')
-  description!: ElementRef<HTMLDivElement>
+  description!: ElementRef<HTMLDivElement>;
 
   ngAfterViewInit(): void {
-    this.description.nativeElement.innerHTML = this.product.allDescription
+    this.description.nativeElement.innerHTML = this.product.allDescription;
   }
 
   ngOnInit(): void {
@@ -80,42 +85,41 @@ export class ItemComponent implements OnInit, AfterViewInit {
       next: (data) => {
         this.product = data;
 
-        console.log(this.attributeManager)
+        console.log(this.attributeManager);
 
-        if(this.attributeManager){
-          this.attributeManager?.autoFind(this.product)
+        if (this.attributeManager) {
+          this.attributeManager?.autoFind(this.product);
         }
 
-
-        if(data === null){
-          this.status = "notFound"
-          return
+        if (data === null) {
+          this.status = 'notFound';
+          return;
         } else {
-          this.status = "ok"
+          this.status = 'ok';
         }
 
-        if(this.description){
-          this.description.nativeElement.innerHTML = this.product.allDescription
+        if (this.description) {
+          this.description.nativeElement.innerHTML =
+            this.product.allDescription;
         }
 
         this.imgService.downloadImagem(data.photoUrl).subscribe({
           next: (imageBlob) => {
-
             let img = this.sanitizer.bypassSecurityTrustUrl(
               URL.createObjectURL(imageBlob)
             );
 
             this.product.photoObject = img;
             this.productImagePreview = img;
-            this.productImages.push(img)
+            this.productImages.push(img);
           },
         });
       },
       error: (err: HttpErrorResponse) => {
-        if(err.status === 404){
-          this.status = "notFound"
+        if (err.status === 404) {
+          this.status = 'notFound';
         }
-      }
+      },
     });
   }
 
@@ -145,17 +149,17 @@ export class ItemComponent implements OnInit, AfterViewInit {
       checked: true,
       product: this.product,
       quantity: this.counter,
-      productAttributes: []
+      productAttributes: this.attributeManager.getAllAttributeSelection(),
     };
 
-    console.log(this.cartNewItems[0])
+    console.log(this.cartNewItems[0]);
   }
 
   addToCart() {
     this.cart.cart = [...this.cart.cart, ...this.cartNewItems];
     this.cart.cartNewItems += this.cartNewItems.length;
     this.cartNewItems = [];
-    this.sideActive = false
+    this.sideActive = false;
   }
 
   incrementInCart(amonut: Amount) {
@@ -177,7 +181,7 @@ export class ItemComponent implements OnInit, AfterViewInit {
   getTotalAmount(amount: Amount) {
     let value = 0;
 
-    value += amount.product.basePrice
+    value += amount.product.basePrice;
 
     value = value * amount.quantity;
 
@@ -198,53 +202,73 @@ export class ItemComponent implements OnInit, AfterViewInit {
     return this.cartNewItems.length;
   }
 
-  showProduct(id: number){
-    this.router.navigate([`/m/item/${id}`])
+  showProduct(id: number) {
+    this.router.navigate([`/m/item/${id}`]);
   }
 
-  setPreviewImage(img: SafeUrl){
-    this.productImagePreview = img
+  setPreviewImage(img: SafeUrl) {
+    this.productImagePreview = img;
   }
 
   getAllCategoryAttribute() {
     const categoriaUnicasSet = new Set<string>();
-    this.product.productAttributes.forEach((data) => categoriaUnicasSet.add(data.attributeCategory));
+    this.product.productAttributes.forEach((data) =>
+      categoriaUnicasSet.add(data.attributeCategory)
+    );
     const datasUnicas: string[] = Array.from(categoriaUnicasSet);
     return datasUnicas;
   }
 
   getAllAttributeFromCategory(category: string) {
-    return this.product.productAttributes.filter((attribute) => attribute.attributeCategory === category);
+    return this.product.productAttributes.filter(
+      (attribute) => attribute.attributeCategory === category
+    );
   }
 
-  getSize(size: number){
-    return Array.from({ length: size }, (_, index) => index)
+  getSize(size: number) {
+    return Array.from({ length: size }, (_, index) => index);
   }
 
-  getProductPriceWithAttr(){
-    let value = this.product.basePrice
+  getProductPriceWithAttr() {
+    let value = this.product.basePrice;
 
-    return value
+    if (this.attributeManager) {
+      this.attributeManager.getAllAttributeSelection().forEach((attr) => {
+        value += attr.attributePrice;
+      });
+    }
+
+    return value;
   }
 
-  setImagePreviw(attr: ProductAttribute){
-    if(attr.photoObject != undefined && attr.photoObject != null && attr.photoObject){
-      this.productImagePreview = attr.photoObject
+  setImagePreviw(attr: ProductAttribute) {
+    if (
+      attr.photoObject != undefined &&
+      attr.photoObject != null &&
+      attr.photoObject
+    ) {
+      this.productImagePreview = attr.photoObject;
     } else {
-      this.productImagePreview = this.product.photoObject
+      this.productImagePreview = this.product.photoObject;
     }
   }
 
-  getProductSelectedAttribute(amount: Amount){
-    let str = ""
+  getProductSelectedAttribute(amount: Amount) {
+    let str = '';
     amount.productAttributes.forEach((attribute, index, array) => {
-      str += attribute.attributeName
+      str += attribute.attributeName;
 
-      if(index + 1 < array.length){
-        str += " + "
+      if (index + 1 < array.length) {
+        str += ' + ';
       }
-    })
+    });
 
-    return str
+    return str;
+  }
+
+  setImages(imgs: SafeUrl[]){
+    this.productImages = []
+    this.productImages.push(this.productImagePreview ?? {})
+    this.productImages.push(...imgs)
   }
 }

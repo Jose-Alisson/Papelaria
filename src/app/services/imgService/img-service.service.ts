@@ -5,7 +5,7 @@ import {
   HttpParams,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, throwError } from 'rxjs';
+import { Observable, catchError, of, throwError } from 'rxjs';
 import { UrlApiService } from '../urlApi/url-api.service';
 
 @Injectable({
@@ -46,6 +46,9 @@ export class ImageService {
         responseType: 'blob',
       });
     }
-    throw new Error('path vazio');
+
+
+    console.error('path vazio');
+    return of();
   }
 }

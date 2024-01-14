@@ -13,8 +13,9 @@ import { FormBuilder } from '@angular/forms';
 import { ProductAttribute } from 'src/app/model/ProductAttribute.model';
 import { Product } from 'src/app/model/product.model';
 import { ImageService } from 'src/app/services/imgService/img-service.service';
-import { Observable, of, tap } from 'rxjs';
+import { Observable, catchError, of, tap } from 'rxjs';
 import { PAttributeService } from 'src/app/services/productAttibute/p-attribute.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-attribute-manager',
@@ -68,6 +69,12 @@ export class AttributeManagerComponent implements OnInit {
   @Output()
   attrrsEmiter: EventEmitter<ProductAttribute[]> = new EventEmitter();
 
+  @Output()
+  attrSelect: EventEmitter<ProductAttribute> = new EventEmitter();
+
+  @Output()
+  attrSelectImgEmitter: EventEmitter<SafeUrl> = new EventEmitter()
+
   private form = inject(FormBuilder);
   private imgS = inject(ImageService);
   private sanitizer = inject(DomSanitizer);
@@ -99,25 +106,31 @@ export class AttributeManagerComponent implements OnInit {
             this.isLoading = true;
           })
         )
-        .subscribe((data) => {
-          this.isLoading = false;
-          this.allAttributes = data;
-          let images: SafeUrl[] = [];
+        .subscribe({
+          next: (data) => {
+            this.isLoading = false;
+            this.allAttributes = data;
+            let images: SafeUrl[] = [];
 
-          this.setAttributeSelections(data);
+            data.forEach((attr) => {
+              this.imgS.downloadImagem(attr.photoUrl).subscribe({
+                next: (imageBlob) => {
 
-          data.forEach((attr) => {
-            this.imgS.downloadImagem(attr.photoUrl).subscribe({
-              next: (imageBlob) => {
-                let img = this.sanitizer.bypassSecurityTrustUrl(
-                  URL.createObjectURL(imageBlob)
-                );
-                attr.photoObject = img;
-                images.push(img);
-                this.attrImgEmmiter.emit(images);
-              },
+                  let img = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(imageBlob));
+                  attr.photoObject = img;
+                  images.push(img);
+                  console.log(images)
+                  this.attrImgEmmiter.emit(images);
+                },
+              });
             });
-          });
+
+            this.setAttributeSelections(data);
+          },
+          error: (err: HttpErrorResponse) => {
+            this.isLoading = false;
+            this.allAtributeSelection = [];
+          },
         });
     }
   }
@@ -148,14 +161,23 @@ export class AttributeManagerComponent implements OnInit {
         id: attr.id,
         photoUrl: attr.photoUrl,
         attributeName: attr.attributeName,
-        attributeDescription: null,
-        attributePrice: null,
-        attributeCategory: null,
-        numberSelection: null,
-        available: null,
+        attributeDescription: attr.attributeDescription,
+        attributePrice: attr.attributePrice,
+        attributeCategory: attr.attributeCategory,
+        numberSelection: attr.numberSelection,
+        available: attr.available,
       });
 
+      console.log(attr)
+
+
       this.attributeImagePreview = attr.photoObject;
+
+      this.imgS.downloadImagem(attr.photoUrl).subscribe({next: (data) => {
+        this.attributeImagePreview = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(data))
+      }})
+
+
       this.isopenModalEdit = true;
     }
   }
@@ -180,6 +202,10 @@ export class AttributeManagerComponent implements OnInit {
 
   clearForm() {
     this.attributeForm.reset();
+  }
+
+  clearProductSelections() {
+    this.allAtributeSelection = [];
   }
 
   onDragOver(event: DragEvent) {
@@ -215,23 +241,6 @@ export class AttributeManagerComponent implements OnInit {
     }
   }
 
-  openModalEdit(attr: ProductAttribute) {
-    this.clearForm();
-
-    this.attributeForm.setValue({
-      id: attr.id,
-      photoUrl: attr.photoUrl,
-      attributeName: attr.attributeName,
-      attributeDescription: null,
-      attributePrice: null,
-      attributeCategory: null,
-      numberSelection: null,
-      available: null,
-    });
-
-    this.attributeImagePreview = attr.photoObject;
-    this.isopenModalEdit = true;
-  }
 
   openModalCreate() {
     this.clearForm();
@@ -239,17 +248,41 @@ export class AttributeManagerComponent implements OnInit {
   }
 
   save() {
-    this.attrService.save(this.getAttributeForm()).subscribe((data) => {
-      let index = this.allAttributes.findIndex((attr) => attr.id === data.id);
+    if (this.file) {
+      this.imgS.uploadImage(this.file).subscribe((imgUrl) => {
+        console.log(imgUrl)
 
-      if (index != -1) {
-        this.allAttributes[index] = data;
-      } else {
-        this.allAttributes.push(data);
-      }
-      this.setAttributeSelections(this.allAttributes);
-      this.attrrsEmiter.emit(this.allAttributes);
-    });
+        this.attributeForm.controls.photoUrl.setValue(imgUrl.photoUrl)
+
+        this.attrService.save(this.getAttributeForm()).subscribe((data) => {
+          console.log(data)
+
+          let index = this.allAttributes.findIndex((attr) => attr.id === data.id);
+
+          if (index != -1) {
+            this.allAttributes[index] = data;
+          } else {
+            this.allAttributes.push(data);
+          }
+
+          this.setAttributeSelections(this.allAttributes);
+          this.attrrsEmiter.emit(this.allAttributes);
+
+        });
+      });
+    } else {
+      this.attrService.save(this.getAttributeForm()).subscribe((data) => {
+        let index = this.allAttributes.findIndex((attr) => attr.id === data.id);
+
+        if (index != -1) {
+          this.allAttributes[index] = data;
+        } else {
+          this.allAttributes.push(data);
+        }
+        this.setAttributeSelections(this.allAttributes);
+        this.attrrsEmiter.emit(this.allAttributes);
+      });
+    }
   }
 
   delete() {
@@ -304,10 +337,31 @@ export class AttributeManagerComponent implements OnInit {
       categoryName: string;
       attributes: ProductAttribute[];
       attributesSelected: ProductAttribute | undefined;
-    }, attr: ProductAttribute
+    },
+    attr: ProductAttribute
   ) {
-    if(category.attributesSelected){
+    if (this.isSelection) {
+      if (category.attributesSelected === attr) {
+        category.attributesSelected = undefined;
+        return;
+      }
+      category.attributesSelected = attr;
 
+      if(category.attributesSelected.photoObject){
+        this.attrSelectImgEmitter.emit(category.attributesSelected.photoObject)
+      }
     }
+  }
+
+  getAllAttributeSelection() {
+    let attrs: ProductAttribute[] = [];
+
+    this.allAtributeSelection.forEach((attrsS) => {
+      if (attrsS.attributesSelected) {
+        attrs.push(attrsS.attributesSelected);
+      }
+    });
+
+    return attrs;
   }
 }

@@ -14,6 +14,7 @@ import { Product } from 'src/app/model/product.model';
 import { ImageService } from 'src/app/services/imgService/img-service.service';
 import { ProductService } from 'src/app/services/product/product.service';
 import { PAttributeService } from 'src/app/services/productAttibute/p-attribute.service';
+import { AttributeManagerComponent } from 'src/app/shared/comp/attribute-manager/attribute-manager.component';
 
 @Component({
   selector: 'app-product-manager',
@@ -49,6 +50,9 @@ export class ProductManagerComponent implements OnInit {
 
   @ViewChild('fomProduct')
   fomProduct!: TemplateRef<any>;
+
+  @ViewChild('attrManager')
+  attrManager!: AttributeManagerComponent
 
   isOpenModalEdit = false
   isOpenModalCreate = false
@@ -96,11 +100,21 @@ export class ProductManagerComponent implements OnInit {
       this.imgS.uploadImage(this.file).subscribe((data) => {
         let product = this.getFormProduct();
         product.photoUrl = data.photoUrl;
-
         this.ps.save(product).subscribe((dp) => {
           this.addToCadastricList(dp);
           this.isOpenModalCreate = false;
-          this.clearProductForm();
+          this.clearProductForm()
+          this.imgS.downloadImagem(dp.photoUrl).subscribe(data => {
+            dp.photoObject = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(data))
+          })
+
+          let index = this.cadastredProduct.findIndex(p => p.id === dp.id)
+
+          if(index != -1 ){
+            this.cadastredProduct[index] = dp
+          } else {
+            this.cadastredProduct.push(dp)
+          }
         });
       });
     } else {
@@ -108,6 +122,17 @@ export class ProductManagerComponent implements OnInit {
         this.addToCadastricList(dp);
         this.isOpenModalCreate = false;
         this.clearProductForm();
+        this.imgS.downloadImagem(dp.photoUrl).subscribe(data => {
+          dp.photoObject = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(data))
+        })
+
+        let index = this.cadastredProduct.findIndex(p => p.id === dp.id)
+
+          if(index != -1 ){
+            this.cadastredProduct[index] = dp
+          } else {
+            this.cadastredProduct.push(dp)
+          }
       });
     }
   }
@@ -119,6 +144,12 @@ export class ProductManagerComponent implements OnInit {
 
   openModalCreate() {
     this.clearProductForm();
+
+    if(this.attrManager){
+      console.log('Entrando')
+      this.attrManager.clearProductSelections()
+    }
+
     this.isOpenModalCreate = true;
   }
 
@@ -131,6 +162,11 @@ export class ProductManagerComponent implements OnInit {
     this.product = product
     this.setFormProductValue(product);
     this.productImages.push(product.photoObject);
+
+    if(this.attrManager){
+      this.attrManager.autoFind(product)
+    }
+
     this.isOpenModalEdit = true;
   }
 
@@ -183,6 +219,19 @@ export class ProductManagerComponent implements OnInit {
 
     this.productImagePreview = undefined;
     this.productImages = [];
+
+    this.product = {
+      id: '',
+      photoObject: {},
+      photoUrl: '',
+      productName: '',
+      description: '',
+      allDescription: '',
+      basePrice: 0,
+      category: '',
+      available: 0,
+      productAttributes: []
+    }
   }
 
   addToCadastricList(product: Product) {
@@ -264,5 +313,11 @@ export class ProductManagerComponent implements OnInit {
 
   setAtributosForm(attrs: ProductAttribute[]){
     this.productForm.controls.productAttributes.setValue(attrs)
+  }
+
+  setImages(imgs: SafeUrl[]){
+    this.productImages = []
+    this.productImages.push(this.productImagePreview ?? {})
+    this.productImages.push(...imgs)
   }
 }
