@@ -1,41 +1,40 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit, inject } from '@angular/core';
 import { Amount } from 'src/app/model/amount.model';
 import { Product } from 'src/app/model/product.model';
+import { AmountService } from '../amount/amount.service';
+import { AccountService } from '../account/account.service';
+import { DomSanitizer } from '@angular/platform-browser';
+import { ImageService } from '../imgService/img-service.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class CartService {
+export class CartService implements OnInit{
 
   cartNewItems = 0
 
-  cart: Amount[] = [
-    // {
-    //   date: '12/13/2023',
-    //   checked: true,
-    //   product: {
-    //     id: '0',
-    //     productName: 'Luluzinho',
-    //     category: 'Decoração',
-    //     description: 'Prendedor de cabelo',
-    //     basePrice: 5.0,
-    //     photoObject: '',
-    //     photoUrl: '',
-    //     available: 15,
-    //     productAttributes: [],
-    //     allDescription: ''
-    //   },
-    //   quantity: 1,
-    //   productAttributes: []
-    // },
-  ];
+  cart: Amount[] = [];
+
+  private amountS = inject(AmountService)
+  private as = inject(AccountService)
+  private imgS = inject(ImageService)
+  private sanitizer = inject(DomSanitizer)
 
   constructor() {}
 
-  chekedAllDate(date: string, checked: boolean){
-    const amounts = this.cart.filter(data => data.date === date)
-    amounts.forEach(amount => {
-      amount.checked = checked
-    })
+  ngOnInit(): void {}
+
+  loadCart(){
+    if(this.as.account){
+      this.amountS.findAllByUserId(this.as.account.id).subscribe(data => {
+        this.cart = data
+
+        data.forEach(amount => {
+          this.imgS.downloadImagem(amount.product.photoUrl).subscribe(blob => {
+            amount.product.photoObject = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(blob))
+          })
+        })
+      })
+    }
   }
 }

@@ -1,3 +1,4 @@
+import { ViewportScroller } from '@angular/common';
 import { ImageService } from './../../services/imgService/img-service.service';
 import { ProductService } from './../../services/product/product.service';
 import { CartService } from '../../services/cart/cart.service';
@@ -25,7 +26,8 @@ export class BuscarComponent implements OnInit {
     private cart: CartService,
     private ps: ProductService,
     private imgService: ImageService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private vs : ViewportScroller
   ) {}
 
   ngOnInit(): void {
@@ -50,11 +52,35 @@ export class BuscarComponent implements OnInit {
     }, 200);
   }
 
+  scrollToCategory(id: string){
+
+    let comp = document.getElementById(`ct-${id}`)
+
+    if(comp){
+      let y = comp.getBoundingClientRect().y
+      this.vs.scrollToPosition([0, !!y ? (y - 85) : 0])
+      return
+    }
+
+    this.vs.scrollToPosition([0, 0])
+  }
+
   getProductList() {
     return this.cart.cart;
   }
 
   getCartLength() {
     return this.cart.cart.length;
+  }
+
+  getAllCategory(){
+    const categoriaUnicasSet = new Set<string>();
+    this.products.forEach((data) => categoriaUnicasSet.add(data.category));
+    const categoriaUnicas: string[] = Array.from(categoriaUnicasSet);
+    return categoriaUnicas;
+  }
+
+  gelAllProductCategory(category: string){
+    return this.products.filter(product => product.category === category)
   }
 }

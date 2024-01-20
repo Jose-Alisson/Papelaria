@@ -63,7 +63,7 @@
               </div>
             </td>
             <td><span attr-data="Produto">{{p.product.productName}}</span></td>
-            <td><span attr-data="Descrição" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">{{p.productAttributes.length > 0 ? getProductSelectedAttribute(p) : p.product.description}}</span></td>
+            <td><span attr-data="Descrição" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis; display: block;" [ngClass]="{'max' : !(p.productAttributes.length > 0)}">{{p.productAttributes.length > 0 ? getProductSelectedAttribute(p) : p.product.description}}</span></td>
             <td class="minimize"><span attr-data="Preço" class="text-center super-text" >{{(getTotalAmount(p) / p.quantity)| currency: 'BRL' : 'symbol-narrow'}}</span></td>
             <!-- <td><span attr-data="Categoria">{{p.product.category}}</span></td> -->
             <td>
@@ -83,7 +83,7 @@
             </td>
             <td class="super-text">{{getTotalAmount(p) | currency: 'BRL' : 'symbol-narrow'}}</td>
             <td class="text-center">
-              <i class="fi fi-rr-trash-xmark"></i>
+              <i (click)="delete(p.id)" style="padding: 10px 15px;" class="fi fi-rr-trash-xmark"></i>
               <!-- <div class="action">
                 <button class="btn-ed" (click)="editar(p.idProduct)">Editar</button>
                 <button class="btn-re" (click)="remover(p.idProduct)">Remover</button>
@@ -92,8 +92,8 @@
           </tr>
           <tr>
             <td colspan="1"></td>
-            <td colspan="3">
-              <div class="fields">
+            <td colspan="3" style="text-align: start;">
+              <!-- <div class="fields">
                 <div class="box-field">
                   <label for="cep" style="text-align: start;">Cep</label>
                   <div style="display: flex;gap: 10px;flex-wrap: wrap;">
@@ -106,7 +106,9 @@
                   <div class="validate">
                   </div>
                 </div>
-              </div>
+              </div> -->
+
+              <app-address [typeVisualComp]="0" (addressEmitter)="addressSelected  = $event"></app-address>
             </td>
           </tr>
           <!-- <tr>
@@ -143,7 +145,7 @@
   <div class="line-information">
     <div class="line-action" style="justify-content: flex-end;">
       <a [routerLink]="['/m/buscar']">Continuar comprando</a>
-      <button><i class="fi fi-rr-check"></i> Finalizar Comprar</button>
+      <button (click)="finalizarComprar()"><i class="fi fi-rr-check"></i> Finalizar Comprar</button>
     </div>
   </div>
   </ng-container>

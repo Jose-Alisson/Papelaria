@@ -1,6 +1,14 @@
-import { Attribute, Component, OnInit } from '@angular/core';
+import { Address } from 'src/app/model/address.model';
+import { AmountService } from './../../services/amount/amount.service';
+import { Attribute, Component, OnInit, inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { Amount } from 'src/app/model/amount.model';
+import { Order } from 'src/app/model/order.model';
+import { AccountService } from 'src/app/services/account/account.service';
 import { CartService } from 'src/app/services/cart/cart.service';
+import { OrderService } from 'src/app/services/order/order.service';
+import { PaymentService } from 'src/app/services/payment/payment.service';
+import { Payment } from 'src/app/model/payment.model';
 
 @Component({
   selector: 'app-cart',
@@ -8,35 +16,20 @@ import { CartService } from 'src/app/services/cart/cart.service';
   styleUrls: ['./cart.component.scss', '../buscar/buscar.component.scss'],
 })
 export class CartComponent implements OnInit {
+  private as = inject(AmountService);
+  private os = inject(OrderService);
+  private accS = inject(AccountService);
+  private payS = inject(PaymentService);
+  private router = inject(Router);
+
+  addressSelected: Address | null = null;
 
   constructor(private cart: CartService) {}
 
   ngOnInit(): void {
-    this.cart.cartNewItems = 0
-  }
+    this.cart.cartNewItems = 0;
 
-  /*
-  Paga as tadas diferentes entre os produtos e armazena em uma lista
-  */
-  getAllDateProducts() {
-    const datasUnicasSet = new Set<string>();
-    this.cart.cart.forEach((data) => datasUnicasSet.add(data.date));
-    const datasUnicas: string[] = Array.from(datasUnicasSet);
-    return datasUnicas;
-  }
-
-  /*
-  Filtra os amontoados pela data
-  */
-  getAllProductFromDate(date: string) {
-    return this.cart.cart.filter((amount) => amount.date === date);
-  }
-
-  /*
-  Ativa ou desativa o verificado dos amontodos para uma filtragem posterior
-  */
-  checkedAll(date: string, checked: boolean) {
-    this.cart.chekedAllDate(date, checked);
+    this.cart.loadCart();
   }
 
   /*
@@ -49,34 +42,26 @@ export class CartComponent implements OnInit {
   /*
   Pegar todos os amontuadores do carrinho
   */
-  getAllProductFromCart(){
-    return this.cart.cart
-  }
-
-  /*
-  Retorna true se todos os amontoados da data especifica estiverem ativos
-  */
-  isCheckAllActiveDate(date: string) {
-    let active = true;
-
-    this.cart.cart
-      .filter((amount) => amount.date === date)
-      .forEach((amount) => {
-        if (amount.checked === false) {
-          active = false;
-        }
-      });
-
-    return active;
+  getAllProductFromCart() {
+    return this.cart.cart;
   }
 
   /*
   Incrementar ao amontuador
   */
   increment(amount: Amount) {
-    if(amount.quantity < amount.product.available){
-      amount.quantity++;
+    if (amount.quantity < amount.product.available) {
+      //amount.quantity++;
+      this.as.increment(amount.id).subscribe((data) => {
+        amount.quantity = data;
+      });
     }
+  }
+
+  delete(id: string) {
+    this.as.delete(id).subscribe(() => {
+      this.cart.cart = this.cart.cart.filter((amount_) => amount_.id !== id);
+    });
   }
 
   /*
@@ -84,16 +69,13 @@ export class CartComponent implements OnInit {
   */
   decrement(amount: Amount) {
     if (amount.quantity > 1) {
-      amount.quantity--;
+      //amount.quantity--;
+      this.as.decrement(amount.id).subscribe((data) => {
+        amount.quantity = data;
+      });
     } else {
-      this.cart.cart = this.cart.cart.filter(amount_ => amount_ !== amount)
+      this.delete(amount.id);
     }
-  }
-
-  /*
-   */
-  getCartLengthAmountCheck() {
-    return this.cart.cart.filter((amount) => amount.checked === true).length;
   }
 
   /*
@@ -104,11 +86,11 @@ export class CartComponent implements OnInit {
 
     value = amount.product.basePrice;
 
-    amount.productAttributes.forEach(attribute => {
-      value += attribute.attributePrice
-    })
+    amount.productAttributes.forEach((attribute) => {
+      value += attribute.attributePrice;
+    });
 
-    value *= amount.quantity
+    value *= amount.quantity;
 
     return value;
   }
@@ -116,25 +98,52 @@ export class CartComponent implements OnInit {
   getAllTotalAmountCheck() {
     let value = 0;
 
-    this.cart.cart
-      .filter((amount) => amount.checked === true)
-      .forEach((amount) => {
-        value += this.getTotalAmount(amount);
-      });
+    this.cart.cart.forEach((amount) => {
+      value += this.getTotalAmount(amount);
+    });
 
     return value;
   }
 
-  getProductSelectedAttribute(amount: Amount){
-    let str = ""
+  getProductSelectedAttribute(amount: Amount) {
+    let str = '';
     amount.productAttributes.forEach((attribute, index, array) => {
-      str += attribute.attributeName
+      str += attribute.attributeName;
 
-      if(index + 1 < array.length){
-        str += " + "
+      if (index + 1 < array.length) {
+        str += ' + ';
       }
-    })
+    });
 
-    return str
+    return str;
+  }
+
+  finalizarComprar() {
+    if (this.accS.account) {
+      let payment: Payment = {
+        id: '',
+        status: 'NAO_PAGO',
+        typePay: 'NAO_DEFINIDO',
+        value: this.getAllTotalAmountCheck(),
+        account: this.accS.account,
+      };
+
+      this.payS.criarPagament(payment).subscribe((pay) => {
+
+        let order: Order = {
+          id: '',
+          account: this.accS.account!,
+          amounts: this.cart.cart,
+          status: 'CRIADO',
+          dateCriation: new Date(),
+          address: this.addressSelected,
+          payment: pay,
+        };
+
+        this.os.create(order).subscribe((data) => {
+          this.router.navigate(['/m/pedidos']);
+        });
+      });
+    }
   }
 }

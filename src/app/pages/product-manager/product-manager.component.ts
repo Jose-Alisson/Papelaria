@@ -23,7 +23,6 @@ import { AttributeManagerComponent } from 'src/app/shared/comp/attribute-manager
     '../item/item.component.scss',
     './product-manager.component.scss',
     '../buscar/buscar.component.scss',
-    '../adm-page/adm-page.component.scss',
   ],
 })
 export class ProductManagerComponent implements OnInit {

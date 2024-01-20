@@ -22,6 +22,9 @@ import { ProductManagerComponent } from './pages/product-manager/product-manager
 import { AdmPageComponent } from './pages/adm-page/adm-page.component';
 import { ModalComponent } from './shared/comp/modal/modal.component';
 import { AttributeManagerComponent } from './shared/comp/attribute-manager/attribute-manager.component';
+import { OrderComponent } from './pages/order/order.component';
+import { AdmOrderComponent } from './pages/adm-order/adm-order.component';
+import { AddressComponent } from './shared/comp/address/address.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'm', pathMatch: 'full' },
@@ -35,6 +38,8 @@ const routes: Routes = [
       { path: 'profile', component: ProfileComponent },
       { path: 'cart', component: CartComponent },
       { path: 'item/:id', component: ItemComponent },
+      { path: 'pedidos', component : OrderComponent },
+      { path: 'pedidos/:id', component : OrderComponent },
       {
         path: 'adm',
         children: [
@@ -75,6 +80,9 @@ const routes: Routes = [
     AdmPageComponent,
     ModalComponent,
     AttributeManagerComponent,
+    OrderComponent,
+    AdmOrderComponent,
+    AddressComponent,
   ],
   imports: [
     BrowserModule,

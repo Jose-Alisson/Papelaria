@@ -179,7 +179,7 @@ td {
   // border-bottom: 1px solid #ddd;
   // resize: horizontal;
   overflow: auto;
-  white-space: nowrap;
+  //white-space: nowrap;
 }
 
 .centralize {
@@ -330,4 +330,8 @@ td {
     text-decoration: none;
     font-style: italic;
   }
+}
+
+.max{
+  max-width: 250px;
 }

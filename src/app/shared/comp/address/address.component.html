@@ -1,0 +1,119 @@
+<ng-container [ngSwitch]="typeVisualComp">
+  <ng-container *ngSwitchCase="0">
+    <div class="fields">
+      <div class="box-field">
+        <label for="cep" style="text-align: start">Cep</label>
+        <div style="display: flex; gap: 10px; flex-wrap: wrap">
+          <div class="field">
+            <input id="cep" type="text" placeholder="Cep" [formControl]="cepControl" mask="00000-000" [showMaskTyped]="true" [specialCharacters]="['-']"/>
+            <i class="fa-regular fa-envelope"></i>
+          </div>
+          <button class="calculate-delivery" (click)="findAddress()" [disabled]="!isActiveSearchCep">
+            Calcular preço
+          </button>
+        </div>
+        <div class="validate"></div>
+      </div>
+      <span (click)="openModalAddress()" *ngIf="addrS.addresses.length > 0" style="color: var(--color-primary);font-style: italic;cursor: pointer;">Já tenho um endereço</span>
+    </div>
+    <ng-container *ngIf="isDelevery(); else notDelevery">
+      <div class="delivery">
+        <div class="side-left">
+          <img src="../../../../assets/Delivery address-pana.svg" alt="">
+        </div>
+        <div class="side-right">
+          <h2>{{addrS.getTaxa(result?.distance ?? 0) | currency : "BRL" : "symbol-narrow"}}</h2>
+          <p>{{ result?.end_address }}</p>
+          <button class="btn-pink" style="flex-grow: 0;" (click)="openMsa = true">Cadastrar endereço</button>
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
+  <ng-container *ngSwitchCase="1">
+    <ng-container *ngTemplateOutlet="viewAddress"></ng-container>
+  </ng-container>
+  <ng-container *ngSwitchCase="2">
+    <button class="btn-pink" (click)="openModalAddress()" style="max-width: none;">{{ address ? 'Escolher outro endereço' : 'Selecionar Endereço'}}</button>
+    <ng-container *ngTemplateOutlet="viewAddress"></ng-container>
+  </ng-container>
+</ng-container>
+
+<ng-template #notDelevery>
+  <div *ngIf="result">
+    <p>{{ result?.end_address }}</p>
+    <h2>Infelismente não entregamos em seu endereço...</h2>
+  </div>
+</ng-template>
+
+<ng-template #viewAddress>
+  <div class="address">
+    <p *ngIf="address?.addressName">{{ address?.addressName }}</p>
+    <p *ngIf="address?.houseNumber">{{ address?.houseNumber }}</p>
+    <p *ngIf="address?.cep">{{ address?.cep }}</p>
+    <p *ngIf="address?.complement">{{ address?.complement }}</p>
+    <p *ngIf="address?.taxa"><strong>Taxa:</strong> {{address?.taxa | currency : 'BRL'}}</p>
+  </div>
+</ng-template>
+
+
+<app-modal [title]="'Endereços'" *ngIf="openMsa" (close)="openMsa = $event" [modalStyle]="{'width' : '500px'}">
+  <div class="addresses">
+    <div class="address-select" *ngFor="let item of addrS.addresses" (click)="select(item)">
+      <p *ngIf="item?.addressName">{{ item?.addressName }}</p>
+      <p *ngIf="item?.houseNumber">{{ item?.houseNumber }}</p>
+      <p *ngIf="item?.cep">{{ item?.cep }}</p>
+      <p *ngIf="item?.complement">{{ item?.complement }}</p>
+      <p *ngIf="item?.taxa"><strong>Taxa:</strong> {{item?.taxa | currency : 'BRL'}}</p>
+    </div>
+    <button class="btn-pink" style="max-width: none;" (click)="openMca = true" >Cadastrar novo endereço</button>
+  </div>
+</app-modal>
+
+
+<app-modal [title]="'Cadastrar Endereço'" *ngIf="openMca" (close)="openMca = $event" [modalStyle]="{'width' : '500px'}">
+  <div class="modal-content">
+    <button class="btn-pink" (click)="getAutoLocation()"><i class="fi fi-rr-marker"></i>&nbsp;Localização Atual</button>
+    <div class="fields" [formGroup]="formAddress">
+      <div class="box-field">
+        <label for="address">Endereço</label>
+        <div class="field">
+          <input id="address" type="text" placeholder="Endereço" formControlName="addressName"/>
+        </div>
+        <div class="validate">
+        </div>
+      </div>
+      <div class="box-field">
+        <label for="houseNumber">Numero da residencia</label>
+        <div class="field">
+          <input id="houseNumber" type="text" placeholder="Numero da residencia" formControlName="houseNumber"/>
+        </div>
+        <div class="validate">
+        </div>
+      </div>
+      <div class="box-field">
+        <label for="cep">Cep</label>
+        <div class="field">
+          <input id="cep" type="text" placeholder="Cep" formControlName="cep" [formControl]="cepControl" mask="00000-000" [showMaskTyped]="true" [specialCharacters]="['-']"/>
+        </div>
+        <div class="validate">
+        </div>
+      </div>
+      <div class="box-field">
+        <label for="pointReference">Ponto de referencia</label>
+        <div class="field">
+          <input id="pointReference" type="text" placeholder="Ponto de referencia" formControlName="pointReference"/>
+        </div>
+        <div class="validate">
+        </div>
+      </div>
+      <div class="box-field">
+        <label for="complement">Complento</label>
+        <div class="field">
+          <textarea id="complement" type="text" placeholder="Complemento" formControlName="complement" style="resize: none;height: 125px;"></textarea>
+        </div>
+        <div class="validate">
+        </div>
+      </div>
+    </div>
+  </div>
+</app-modal>

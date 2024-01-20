@@ -1,6 +1,9 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { CartService } from './services/cart/cart.service';
+import { Component, ElementRef, OnInit, ViewChild, inject } from '@angular/core';
 import { AccountService } from './services/account/account.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { OrderService } from './services/order/order.service';
+import { AddressService } from './services/address/address.service';
 
 @Component({
   selector: 'app-root',
@@ -9,10 +12,17 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class AppComponent implements OnInit {
 
+  private cs = inject(CartService)
+  private os = inject(OrderService)
+  private addS = inject(AddressService)
+
   constructor(private as: AccountService){}
 
   ngOnInit(): void {
     this.as.autoSign().subscribe({ next: () => {
+      this.cs.loadCart()
+      this.os.loadOrders()
+      this.addS.loadAddresses()
 
     }, error: (err: HttpErrorResponse) => {
       console.log(err);

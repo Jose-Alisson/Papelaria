@@ -60,7 +60,42 @@
   </div> >--
 </section> -->
 
-<section class="items" *ngIf="products.length > 0; else empty">
+<section class="category">
+  <ul>
+    <li *ngFor="let category of getAllCategory()" (click)="scrollToCategory(category)">
+      <a>{{category}}</a>
+    </li>
+  </ul>
+</section>
+<br>
+<ng-container *ngFor="let category of getAllCategory()">
+  <h1 class="category-title" [id]="'ct-' + category">{{category}}</h1>
+  <section class="items">
+    <div class="card" (click)="viewItem(item.id)" *ngFor="let item of gelAllProductCategory(category)">
+      <div class="card-preview">
+        <img [src]="item.photoObject" alt="" />
+      </div>
+      <div class="card-content">
+        <h1 class="title">{{item.productName}}</h1>
+        <p class="description">
+          {{item.description}}
+        </p>
+        <h1 class="price">
+          {{ item.basePrice | currency : "BRL" : "symbol-narrow" }}
+        </h1>
+        <!-- <div class="stars">
+          <div class="star"></div>
+          <div class="star"></div>
+          <div class="star"></div>
+          <div class="star"></div>
+          <div class="star"></div>
+          <p>1 mil</p>
+        </div> -->
+      </div>
+    </div>
+  </section>
+</ng-container>
+<!-- <section class="items" *ngIf="products.length > 0; else empty">
   <div class="card" (click)="viewItem(item.id)" *ngFor="let item of products">
     <div class="card-preview">
       <img [src]="item.photoObject" alt="" />
@@ -73,9 +108,16 @@
       <h1 class="price">
         {{ item.basePrice | currency : "BRL" : "symbol-narrow" }}
       </h1>
+      <div class="stars">
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+      </div>
     </div>
   </div>
-</section>
+</section> -->
 
 <ng-template #empty>
   <section class="item empty">

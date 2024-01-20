@@ -1,0 +1,60 @@
+
+<section class="container">
+  <div class="side-top">
+    <h1>Meus Pedidos</h1>
+    <img src="../../../assets/Order food-pana.svg" alt="" />
+  </div>
+  <div class="side-down">
+    <div class="orders">
+      <div class="order" *ngFor="let order of os.orders" [ngClass]="{'finality' : order.status === 'FINALIZADO'}">
+        <div class="order-header">
+          <h3>{{order.dateCriation | date : 'dd/MM/yyyy HH:mm:ss'}}</h3>
+          <p class="status" [attr.status]="order.status" ><strong>Status do pedido:</strong> {{order.status}}</p>
+          <p class="status" [attr.status]="order.payment?.status ?? 'NAO_PAGO'"><strong>Status de pagamento:</strong> {{order.payment?.status?.replace("_", " ")}}</p>
+        </div>
+        <div class="list-items">
+          <div class="item-product" *ngFor="let item of order.amounts">
+            <div class="item-view">
+              <img [src]="item.product.photoObject" />
+            </div>
+            <div class="item-description">
+              <h3>{{ item.product.productName }}</h3>
+              <p>{{ item.productAttributes.length > 0 ? getProductSelectedAttribute(item) : ''}}</p>
+              <div class="unique">
+                <p>{{ getProductPriceWithAttr(item) | currency : "BRL" : "symbol-narrow" }}</p>
+                <div class="amount">
+                  <div class="counter">
+                    <p>{{ item.quantity }}</p>
+                  </div>
+                  &nbsp;
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="address">
+          <app-address [address]="order.address" [typeVisualComp]="order.payment?.status === 'NAO_PAGO' ? 2 : 1"></app-address>
+        </div>
+        <div class="total">
+          <div class="valor" *ngIf="order.address?.taxa">
+            <h3>Taxa de entrega</h3><h1>{{order.address?.taxa | currency : 'BRL'}}</h1>
+          </div>
+          <div class="valor">
+            <h3>Total</h3><h1>{{(getTotal(order) + (order.address?.taxa ?? 0)) | currency : 'BRL'}}</h1>
+          </div>
+        </div>
+        <div class="pays" *ngIf="order.payment?.status === 'NAO_PAGO'">
+          <div class="type-pay" [ngClass]="{'active': order.payment?.typePay === 'PIX'}" (click)="definirPagamento(order.payment, 'PIX')">
+            <img src="../../../assets/transferir.png" alt="">
+          </div>
+          <div class="type-pay" [ngClass]="{'active': order.payment?.typePay === 'CARTAO'}"  (click)="definirPagamento(order.payment, 'CARTAO')">
+            <img src="../../../assets/master visa.png" alt="">
+          </div>
+          <div class="type-pay" [ngClass]="{'active': order.payment?.typePay === 'DINHEIRO'}"  (click)="definirPagamento(order.payment, 'DINHEIRO')">
+            <img src="../../../assets/dinheiro.png" alt="">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

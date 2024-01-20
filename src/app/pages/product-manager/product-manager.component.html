@@ -127,7 +127,8 @@
 </app-modal>
 
 <app-modal [title]="'Deletar Produto'" *ngIf="isOpenModalDelete" (close)="isOpenModalDelete  = $event">
-  <h2>Tem Certeza que deseja deletar {{productForm.controls.productName}}</h2>
+  <h2>Tem Certeza que deseja deletar {{productForm.controls.productName.value}}</h2>
+  <br>
   <div class="acts">
     <button class="btn-primary" (click)="deleteProduct()">Deletar</button>
   </div>
@@ -191,6 +192,14 @@
         <label for="basePrice">Preço base</label>
         <div class="field">
           <input id="basePrice" style="font-size: 2.6rem; font-weight: bold;" type="text" placeholder="Preço base do Produto" formControlName="basePrice" prefix="R$ " mask="separator.2" thousandSeparator="." decimalMarker=","/>
+        </div>
+        <div class="validate">
+        </div>
+      </div>
+      <div class="box-field">
+        <label for="category">Categoria</label>
+        <div class="field">
+          <input id="category" type="text" placeholder="Categoria" formControlName="category"/>
         </div>
         <div class="validate">
         </div>
