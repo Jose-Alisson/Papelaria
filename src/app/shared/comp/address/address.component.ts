@@ -87,19 +87,28 @@ export class AddressComponent {
 
   getAutoLocation(){
     if (navigator.geolocation) {
-      // O navegador suporta a API de geolocalização
-      navigator.geolocation.getCurrentPosition(function(position) {
-        // Callback de sucesso
-        var latitude = position.coords.latitude;
-        var longitude = position.coords.longitude;
+      var options = {
+        enableHighAccuracy: true,
+        timeout: 5000,
+        maximumAge: 0
+      };
 
-        alert("Latitude: " + latitude + ", Longitude: " + longitude);
+      navigator.geolocation.getCurrentPosition(
+        function(position) {
+          var latitude = position.coords.latitude;
+          var longitude = position.coords.longitude;
+          var precisao = position.coords.accuracy;
 
-        // Aqui, você pode fazer o que quiser com as coordenadas, como enviar para um servidor, exibir no mapa, etc.
-      }, function(error) {
-        // Callback de erro
-        alert("Erro ao obter a localização: " + error.message);
-      });
+          alert("Latitude: " + latitude + ", Longitude: " + longitude + ", Precisão: " + precisao + " metros");
+
+          // Aqui, você pode fazer o que quiser com as coordenadas, como enviar para um servidor, exibir no mapa, etc.
+        },
+        function(error) {
+          // Callback de erro
+          alert("Erro ao obter a localização: " + error.message);
+        },
+        options
+      );
     } else {
       // O navegador não suporta a API de geolocalização
       alert("Geolocalização não suportada pelo navegador");
